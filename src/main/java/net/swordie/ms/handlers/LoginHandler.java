@@ -151,7 +151,7 @@ public class LoginHandler {
         c.write(Login.checkPasswordResult(success, result, user));
     }
 
-        @Handler(ops = {InHeader.WORLD_INFO_REQUEST, InHeader.WORLD_LIST_REQUEST})
+    @Handler(ops = {InHeader.WORLD_INFO_REQUEST, InHeader.WORLD_LIST_REQUEST})
     public static void handleWorldListRequest(Client c, InPacket inPacket) {
         if (c.getAccount() != null) {
             DatabaseManager.saveToDB(c.getAccount());

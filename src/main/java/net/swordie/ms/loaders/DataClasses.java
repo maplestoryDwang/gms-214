@@ -11,6 +11,7 @@ public class DataClasses {
     public static List<Class> dataClasses = new ArrayList<>();
     public static List<Class> datCreators = new ArrayList<>();
     static {
+        // data和dat有什么区别？
         dataClasses.addAll(Arrays.asList(
                 ItemData.class,
                 SkillData.class,

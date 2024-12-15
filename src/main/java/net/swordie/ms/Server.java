@@ -180,6 +180,11 @@ public class Server extends Properties {
 		}
 	}
 
+	/**
+	 * 通过反射@Loader，调用加载.dat文件到内存
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
 	public void loadWzData() throws IllegalAccessException, InvocationTargetException {
 		String datFolder = ServerConstants.DAT_DIR;
 		for (Class c : DataClasses.dataClasses) {

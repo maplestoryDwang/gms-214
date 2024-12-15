@@ -1,0 +1,20 @@
+
+------------------------ 2024-12-15 12:56:46 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 12:54:07|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||0.0.0.0|State|0|Time1|1217775019|Time2|0|throw CTerminateException|-|3878|HR|570425349|notThrow|false|-|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 12:55:04|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||0.0.0.0|State|0|Time1|1217832365|Time2|0|throw CTerminateException|-|3878|HR|570425349|notThrow|false|-|..
+
+
+------------------------ 2024-12-15 14:38:57 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 14:37:48|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||0.0.0.0|State|0|Time1|1223996559|Time2|0|throw CTerminateException|-|3878|HR|570425349|notThrow|false|-|..
+
+
+------------------------ 2024-12-15 16:38:07 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 16:27:56|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||0.0.0.0|State|0|Time1|1230604759|Time2|0|throw CTerminateException|-|3878|HR|570425349|notThrow|false|-|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 16:36:55|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||0.0.0.0|State|0|Time1|1231143507|Time2|0|throw CTerminateException|-|3878|HR|570425349|notThrow|false|-|..
+
+
+------------------------ 2024-12-16 00:10:48 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/16 00:05:30|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||0.0.0.0|State|0|Time1|1258057349|Time2|0|throw CTerminateException|-|3878|HR|570425349|notThrow|false|-|..
+
+
+------------------------ 2024-12-16 00:38:41 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 18:36:16|NAME|xiaodeng|JOB|400|FID|103000003|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|1259903331|Time2|1259894870|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+

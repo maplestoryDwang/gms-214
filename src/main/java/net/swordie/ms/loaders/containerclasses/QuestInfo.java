@@ -300,4 +300,41 @@ public class QuestInfo {
     public void setMedalItemId(int medalItem) {
         this.medalItemId = medalItem;
     }
+
+    @Override
+    public String toString() {
+        return "QuestInfo{" +
+                "questID=" + questID +
+                ", startNpc=" + startNpc +
+                ", normalAutoStart=" + normalAutoStart +
+                ", questStartRequirements=" + questStartRequirements +
+                ", questProgressRequirements=" + questProgressRequirements +
+                ", questRewards=" + questRewards +
+                ", fieldEnters=" + fieldEnters +
+                ", infoNumber=" + infoNumber +
+                ", end=" + end +
+                ", endT=" + endT +
+                ", startScript='" + startScript + '\'' +
+                ", endScript='" + endScript + '\'' +
+                ", start=" + start +
+                ", startT=" + startT +
+                ", endNpc=" + endNpc +
+                ", subJobFlags=" + subJobFlags +
+                ", completeNpcAutoGuide=" + completeNpcAutoGuide +
+                ", skill=" + skill +
+                ", fieldSetKeepTime=" + fieldSetKeepTime +
+                ", fieldSet='" + fieldSet + '\'' +
+                ", autoStart=" + autoStart +
+                ", deathCount=" + deathCount +
+                ", scenarios=" + scenarios +
+                ", speech=" + speech +
+                ", mobDropMeso=" + mobDropMeso +
+                ", morph=" + morph +
+                ", secret=" + secret +
+                ", transferField=" + transferField +
+                ", nextQuest=" + nextQuest +
+                ", autoComplete=" + autoComplete +
+                ", medalItemId=" + medalItemId +
+                '}';
+    }
 }

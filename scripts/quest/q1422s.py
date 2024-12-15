@@ -1,7 +1,7 @@
 # 1422 - [Job Adv] (Lv.30) Path of the Assassin
 
 darkMarble = 4031013
-job = "Assassin"
+job = "CIKE"
 monster = "Swamp Monster"
 
 sm.setSpeakerID(1052001) # Dark Lord

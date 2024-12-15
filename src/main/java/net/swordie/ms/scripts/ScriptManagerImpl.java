@@ -293,7 +293,8 @@ public class ScriptManagerImpl implements ScriptManager {
         si.setInvocable((Invocable) se);
         try {
             fileReadLock.lock();
-            script.append(Util.readFile(dir, Charset.defaultCharset()));
+//            script.append(Util.readFile(dir, Charset.defaultCharset()));
+            script.append(Util.readFile(dir, Charset.forName("gbk")));
         } catch (IOException e) {
             e.printStackTrace();
             lockInGameUI(false); // so players don't get stuck if a script fails
