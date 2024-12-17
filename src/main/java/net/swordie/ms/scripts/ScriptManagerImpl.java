@@ -69,6 +69,7 @@ import net.swordie.ms.world.field.obtacleatom.ObtacleRadianInfo;
 import net.swordie.ms.world.shop.NpcShopDlg;
 import org.apache.log4j.LogManager;
 
+import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -229,8 +230,8 @@ public class ScriptManagerImpl implements ScriptManager {
             return;
         }
         if (!isField()) {
-            chr.chatMessage(Mob, String.format("Starting script %s, scriptType %s.", scriptName, scriptType));
-            log.debug(String.format("Starting script %s, scriptType %s.", scriptName, scriptType));
+            chr.chatMessage(Mob, String.format("Starting script [ %s ], scriptType [%s].", scriptName, scriptType));
+            log.debug(String.format("Starting script [ %s ] , scriptType [%s].   parentID [ %s ]", scriptName, scriptType));
         }
         resetParam();
         Bindings bindings = getBindingsByType(scriptType);
@@ -288,13 +289,16 @@ public class ScriptManagerImpl implements ScriptManager {
         CompiledScript cs;
         getScriptInfoByType(scriptType).setFileDir(dir);
         StringBuilder script = new StringBuilder();
+        script.append("from __future__ import unicode_literals\n\n");
+
         ScriptEngine se = scriptEngine;
         Bindings bindings = getBindingsByType(scriptType);
         si.setInvocable((Invocable) se);
         try {
             fileReadLock.lock();
 //            script.append(Util.readFile(dir, Charset.defaultCharset()));
-            script.append(Util.readFile(dir, Charset.forName("gbk")));
+//            script.append(Util.readFile(dir, Charset.forName("gbk")));
+            script.append(Util.readFile(dir, StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
             lockInGameUI(false); // so players don't get stuck if a script fails

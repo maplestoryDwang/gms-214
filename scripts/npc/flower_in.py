@@ -1,6 +1,5 @@
 # Mysterious Statue, Sleepywood (105000000)
-response = sm.sendAskYesNo("Once I lay my hand on the statue, a strange light covers me and it feels like I'm being sucked "
-                           + "into somewhere else. Is it okay to be moved to somewhere else randomly just like that?")
+response = sm.sendAskYesNo("曾经我的手放在石像上，一种神奇的光笼罩我让我觉得被吸入了一个神奇的地方。你也想到那里去吗？")
 
 if response:
     sm.warp(910530000)

@@ -1,6 +1,5 @@
 # Mysterious Statue, Forest of Tenacity 1 (910530000)
-response = sm.sendAskYesNo("Once I lay my hand on the statue, a strange light covers me and it feels like I'm being sucked "
-                           + "into where I originally came from. Am I done here? Is it okay to go back to where I came from?")
+response = sm.sendAskYesNo("曾经我的手放在石像上，一种神奇的光笼罩我让我觉得被吸入了一个神奇的地方。我已经来过这个地方了,你想回到之前的地方吗？")
 
 if response:
     sm.warp(105000000)

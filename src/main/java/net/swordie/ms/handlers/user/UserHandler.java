@@ -246,11 +246,11 @@ public class UserHandler {
         } else {
             c.write(FieldPacket.characterInfo(requestChar));
 
-            BufferedImage bImage = ImageIO.read(new File(ServerConstants.RESOURCES_DIR + "/farm.jpeg"));
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ImageIO.write(bImage, "jpeg", bos);
-            byte[] img = bos.toByteArray();
-            requestChar.write(UserLocal.getPhotoResult(c, img));
+//            BufferedImage bImage = ImageIO.read(new File(ServerConstants.RESOURCES_DIR + "/farm.jpeg"));
+//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//            ImageIO.write(bImage, "jpeg", bos);
+//            byte[] img = bos.toByteArray();
+//            requestChar.write(UserLocal.getPhotoResult(c, img));
 
         }
     }
