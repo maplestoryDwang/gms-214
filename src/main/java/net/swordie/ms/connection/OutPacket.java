@@ -1,6 +1,7 @@
 package net.swordie.ms.connection;
 
 import io.netty.util.internal.OutOfDirectMemoryError;
+import net.swordie.ms.ServerConstants;
 import net.swordie.ms.connection.api.ApiOutHeader;
 import net.swordie.ms.handlers.header.OutHeader;
 import net.swordie.ms.util.*;
@@ -197,17 +198,35 @@ public class OutPacket extends Packet {
      *
      * @param s The String to encode.
      */
+//    public void encodeString(String s) {
+//        if (s == null) {
+//            s = "";
+//        }
+//        if (s.length() > Short.MAX_VALUE) {
+//            log.error("Tried to encode a string that is too big.");
+//            return;
+//        }
+//        encodeShort((short) s.length());
+//        encodeString(s, (short) s.length());
+//    }
+
+    /**
+     * 中文编码
+     * Structure: short(size) + char array of <code>s</code>.
+     *
+     * @param s The String to encode.
+     */
     public void encodeString(String s) {
-        if (s == null) {
-            s = "";
-        }
-        if (s.length() > Short.MAX_VALUE) {
+        byte[] data = s != null ? s.getBytes(ServerConstants.ENCODING) : new byte[]{};
+        if (data.length > Short.MAX_VALUE) {
             log.error("Tried to encode a string that is too big.");
             return;
         }
-        encodeShort((short) s.length());
-        encodeString(s, (short) s.length());
+        encodeShort((short) data.length);
+        encodeArr(data);
     }
+
+
 
     /**
      * Writes a String as a character array to this OutPacket.

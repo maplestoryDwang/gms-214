@@ -1,6 +1,7 @@
 package net.swordie.ms.connection;
 
 import io.netty.buffer.*;
+import net.swordie.ms.ServerConstants;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
@@ -95,19 +96,29 @@ public class InPacket extends Packet {
         return byteBuf.readShortLE();
     }
 
+
     /**
-     * Reads a char array of a given length of this ByteBuf.
+     * Reads a char array of a given length of this ByteBuf. 中文编码
      * @param amount The length of the char array
      * @return The char array as a String
      */
     public String decodeString(int amount) {
         byte[] bytes = decodeArr(amount);
-        char[] chars = new char[amount];
-        for(int i = 0; i < amount; i++) {
-            chars[i] = (char) bytes[i];
-        }
-        return String.valueOf(chars);
+        return new String(bytes, ServerConstants.ENCODING);
     }
+//    /**
+//     * Reads a char array of a given length of this ByteBuf.
+//     * @param amount The length of the char array
+//     * @return The char array as a String
+//     */
+//    public String decodeString(int amount) {
+//        byte[] bytes = decodeArr(amount);
+//        char[] chars = new char[amount];
+//        for(int i = 0; i < amount; i++) {
+//            chars[i] = (char) bytes[i];
+//        }
+//        return String.valueOf(chars);
+//    }
 
     /**
      * Reads a String, by first reading a short, then reading a char array of that length.

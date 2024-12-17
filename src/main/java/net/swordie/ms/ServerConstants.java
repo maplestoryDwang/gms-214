@@ -2,6 +2,7 @@ package net.swordie.ms;
 
 import net.swordie.ms.constants.JobConstants;
 
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +29,7 @@ public class ServerConstants {
 	public static boolean LOCAL_HOST_SERVER = false;
 	public static final int RESTART_MINUTES = (int) getTimeTillMidnight();
 	public static final boolean DAILY_RESTART = false;
+	public static final Charset ENCODING = Charset.forName("gbk");
 
 	public static long getTimeTillMidnight() {
 		Calendar c = Calendar.getInstance();
