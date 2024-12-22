@@ -9,7 +9,12 @@
         </File>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <!-- 禁用 Hibernate 的日志 -->
+        <Logger name="org.hibernate" level="off"/>
+        <Logger name="org.hibernate.SQL" level="off"/>
+        <Logger name="org.hibernate.type" level="off"/>
+
+        <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>

@@ -84,32 +84,27 @@ public class Server extends Properties {
 		long startNow = System.currentTimeMillis();
 
 		CustomConfigsLoad.load();
-		LoaderExecutor.load(new Runnable() {
-			@Override
-			public void run() {
 
-				DatabaseManager.init();
-				log.info("Loaded Hibernate in " + (System.currentTimeMillis() - startNow) + "ms");
 
-				// 强依赖数据库加载的
-				FieldData.loadNPCFromSQL();
+		DatabaseManager.init();
+		log.info("Loaded Hibernate in " + (System.currentTimeMillis() - startNow) + "ms");
 
-				MonsterCollectionData.loadFromSQL();
+		// 强依赖数据库加载的
+		FieldData.loadNPCFromSQL();
 
-				worldList.add(new World(ServerConfig.WORLD_ID, ServerConfig.SERVER_NAME, GameConstants.CHANNELS_PER_WORLD, ServerConfig.EVENT_MSG));
-				for (World world : getWorlds()) {
-					for (Channel channel : world.getChannels()) {
-						ChannelAcceptor ca = new ChannelAcceptor();
-						ca.channel = channel;
-						new Thread(ca).start();
-					}
-				}
-				long startCashShop = System.currentTimeMillis();
-				initCashShop();
-				log.info("Loaded CashShop in " + (System.currentTimeMillis() - startCashShop) + "ms");
+		MonsterCollectionData.loadFromSQL();
 
+		worldList.add(new World(ServerConfig.WORLD_ID, ServerConfig.SERVER_NAME, GameConstants.CHANNELS_PER_WORLD, ServerConfig.EVENT_MSG));
+		for (World world : getWorlds()) {
+			for (Channel channel : world.getChannels()) {
+				ChannelAcceptor ca = new ChannelAcceptor();
+				ca.channel = channel;
+				new Thread(ca).start();
 			}
-		});
+		}
+		long startCashShop = System.currentTimeMillis();
+		initCashShop();
+		log.info("Loaded CashShop in " + (System.currentTimeMillis() - startCashShop) + "ms");
 
 		try {
 			checkAndCreateDat();
@@ -143,7 +138,7 @@ public class Server extends Properties {
 
 
 
-		log.info(String.format("Finished loading server in %dms", System.currentTimeMillis() - startNow));
+		log.info(String.format("===========================================[Finished loading server in %dms]===========================================", System.currentTimeMillis() - startNow));
 		new Thread(() -> {
 			// inits the script engine
 			log.info(String.format("Starting %s script engine.", ScriptManagerImpl.SCRIPT_ENGINE_NAME));

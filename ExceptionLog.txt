@@ -18,3 +18,23 @@
 ------------------------ 2024-12-16 00:38:41 ------------------------
 �.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/15 18:36:16|NAME|xiaodeng|JOB|400|FID|103000003|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|1259903331|Time2|1259894870|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
 
+
+------------------------ 2024-12-18 00:47:13 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp&.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/18 00:46:16|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|0|Time1|1433303403|Time2|1433303416|throw CTerminateException|-|324|HR|570425350|notThrow|false|-|..ELog|4|MAJOR|214|MINOR|1|DATETIME|2024/12/18 00:46:16|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|0|Time1|1433303406|Time2|1433303416|LastLoadData in Game(ZException)|Item/Etc/0434.img|Item/Etc/0425.img|Item/Etc/0444.img|Item/Etc/0435.img|Item/Etc/0416.img|Item/Etc/0445.img|Item/Etc/0426.img|Item/Etc/0436.img|Item/Etc/0417.img|Item/Etc/0446.img|Item/Etc/0408.img|Item/Etc/0428.img|Item/Etc/0429.img|Item/Etc/0439.img|Item/ItemOption.img|Item/SkillOption.img/socket|Item/SkillOption.img/skill|Item/SkillOption.img/inc|Item/FamiliarOption.img|Etc/FamiliarData.img|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/18 00:46:16|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|0|Time1|1433303410|Time2|1433303416|throw CTerminateException|-|1466|HR|570425346|notThrow|false|-|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/18 00:46:16|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|0|Time1|1433303414|Time2|1433303416|throw CTerminateException|-|2483|HR|570425346|notThrow|false|-|..
+
+
+------------------------ 2024-12-22 15:51:10 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/22 15:50:11|NAME|(null)|JOB|-1|FID|999999999|WID|1|Channel|0|LastUseName||35.167.153.201|State|2|Time1|1833141124|Time2|1833141121|throw CTerminateException|-|1444|HR|570425346|notThrow|false|10054|0||..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/22 15:50:11|NAME|(null)|JOB|-1|FID|999999999|WID|1|Channel|0|LastUseName||35.167.153.201|State|2|Time1|1833141130|Time2|1833141121|throw CTerminateException|-|2483|HR|570425346|notThrow|false|-|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/22 15:50:11|NAME|(null)|JOB|-1|FID|999999999|WID|1|Channel|0|LastUseName||35.167.153.201|State|2|Time1|1833141131|Time2|1833141121|throw CTerminateException|-|2483|HR|570425346|notThrow|false|-|..
+
+
+------------------------ 2024-12-22 15:58:07 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/22 09:54:49|NAME|VIP|JOB|412|FID|270000000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|1833419213|Time2|1833411921|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-22 16:00:57 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/22 10:00:20|NAME|VIP|JOB|412|FID|270000000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|1833749904|Time2|1833742268|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-22 16:02:31 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|4|MAJOR|214|MINOR|1|DATETIME|2033/01/08 03:23:08|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|1|Time1|1833809485|Time2|1833809478|LastLoadData in ETC(COM error)|Etc/InstanceTable.img|Etc/StarStampEvent.img|Etc/PlantPot2.img|Etc/NavalWarfare.img|Etc/NotShowRemoteSkill.img|Etc/RuneStone.img/arrow2/notice2|Etc/RuneStone.img/arrow/notice2|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/RuneStone.img/arrow2/notice3|Etc/RuneStone.img/arrow/notice3|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/APCPvpData.img|UI/Basic.img/Cursor/4|Etc/11thEvent.img|Etc/11thEvent.img|UI/MapleTV.img/TVmedia|UI/Basic.img/Cursor/1/0|Sound/UI.img/BtMouseOver|..
+

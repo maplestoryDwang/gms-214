@@ -513,7 +513,7 @@ public class LoginHandler {
         byte channelId = c.getChannel();
         Channel channel = Server.getInstance().getWorldById(worldId).getChannelById(channelId);
         System.out.println(name + " is logging in!");
-        FileoutputUtil.log("Chat.txt", "[LOGIN] " + name + " is logging in!");
+//        FileoutputUtil.log("Chat.txt", "[LOGIN] " + name + " is logging in!");
         if (c.isAuthorized() && c.getAccount().hasCharacter(characterId)) {
             Server.getInstance().getWorldById(worldId).getChannelById(channelId).addClientInTransfer(channelId, characterId, c);
             c.write(Login.selectCharacterResult(LoginType.Success, (byte) 0, channel.getPort(), characterId));

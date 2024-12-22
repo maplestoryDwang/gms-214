@@ -32,7 +32,7 @@
         </property>
 
         <property name="hibernate.format_sql">
-            true
+            false
         </property>
 
         <property name="hibernate.use_sql_comments">

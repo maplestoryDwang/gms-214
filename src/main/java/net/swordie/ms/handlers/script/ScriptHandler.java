@@ -123,6 +123,11 @@ public class ScriptHandler {
     public static void handleUserContentsMapRequest(Char chr, InPacket inPacket) {
         inPacket.decodeShort();
         // TODO: verify levels and that the maps are actually in the contents guide
+        // 键盘设置也会进来不懂是什么原因- -
+        if (inPacket.getLength() == 0) {
+            return;
+        }
+
         int fieldID = inPacket.decodeInt();
         Field field = chr.getOrCreateFieldByCurrentInstanceType(fieldID);
         if (field == null || (field.getFieldLimit() & FieldOption.TeleportItemLimit.getVal()) > 0) {

@@ -2,6 +2,7 @@ package net.swordie.ms.connection.netty;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.Server;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.Client;
@@ -30,9 +31,10 @@ import static net.swordie.ms.connection.netty.NettyClient.CLIENT_KEY;
 /**
  * Created by Tim on 2/28/2017.
  */
+@Slf4j
 public class ChannelHandler extends SimpleChannelInboundHandler<InPacket> {
 
-    private static final Logger log = LogManager.getLogger(ChannelHandler.class);
+//    private static final Logger log = LogManager.getLogger(ChannelHandler.class);
     private static final Map<InHeader, Method> handlers = new HashMap<>();
 
     public static void initHandlers(boolean mayOverride) {
