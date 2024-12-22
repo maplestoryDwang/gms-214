@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.Server;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.Client;
@@ -12,16 +13,15 @@ import net.swordie.ms.enums.AccountCreateResult;
 import net.swordie.ms.enums.AccountType;
 import net.swordie.ms.enums.ApiTokenResultType;
 import net.swordie.ms.util.Util;
-import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * @author Sjonnie
  * Created on 10/5/2018.
  */
+@Slf4j
 public class ApiRequestHandler {
 
-    private static final Logger log = Logger.getLogger(ApiRequestHandler.class);
     private static final int TOKEN_LENGTH = 50;
 
     public static void handleTokenRequest(Client c, InPacket inPacket) {

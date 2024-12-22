@@ -10,8 +10,9 @@ import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.loaders.EtcData;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
 import net.swordie.ms.loaders.containerclasses.EquipDrop;
-import org.apache.log4j.LogManager;
 import net.swordie.ms.util.Util;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class ItemConstants {
     public static final int MIN_FACE = 20000;
     public static final int MAX_FACE = 59999;
 
-    static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    static final Logger log = LogManager.getLogger(ItemConstants.class);
 
     public static final int THIRD_LINE_CHANCE = 50;
     public static final int PRIME_LINE_CHANCE = 15;

@@ -1,5 +1,6 @@
 package net.swordie.ms.scripts.scriptMaker;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.constants.QuestConstants;
@@ -20,7 +21,6 @@ import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Portal;
 import net.swordie.ms.world.field.fieldeffect.FieldEffectType;
 import net.swordie.ms.world.field.fieldeffect.GreyFieldType;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -30,8 +30,8 @@ import static net.swordie.ms.life.npc.NpcMessageType.*;
  * @author Sjonnie
  * Created on 2/18/2019.
  */
+@Slf4j
 public class ScriptPacketParser {
-    private static final Logger log = Logger.getLogger(ScriptPacketParser.class);
 
     private ScriptMaker sm;
 

@@ -4,13 +4,15 @@ import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.character.skills.Skill;
 import net.swordie.ms.client.character.skills.SkillStat;
 import net.swordie.ms.client.character.skills.info.SkillInfo;
+import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.enums.WeaponType;
 import net.swordie.ms.life.mob.skill.MobSkillStat;
 import net.swordie.ms.loaders.containerclasses.MakingSkillRecipe;
 import net.swordie.ms.loaders.containerclasses.MobSkillInfo;
 import net.swordie.ms.util.*;
 import net.swordie.ms.util.container.Tuple;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.python.jline.internal.Log;
 import org.w3c.dom.Node;
 
@@ -26,7 +28,7 @@ public class SkillData {
     private static Map<Integer, Map<Integer, Integer>> eliteMobSkills = new HashMap<>();
     private static Map<Short, Map<Short, MobSkillInfo>> mobSkillInfos = new HashMap<>();
     private static Map<Integer, MakingSkillRecipe> makingSkillRecipes = new HashMap<>();
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(SkillData.class);
     private static final boolean LOG_UNKS = false;
 
     public static void saveSkills(String dir) {

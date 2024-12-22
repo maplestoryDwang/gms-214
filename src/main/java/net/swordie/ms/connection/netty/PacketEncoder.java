@@ -27,7 +27,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import net.swordie.ms.connection.Packet;
 import net.swordie.ms.util.Util;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Implementation of a Netty encoder pattern so that encryption of MapleStory
@@ -37,7 +38,7 @@ import org.apache.log4j.LogManager;
  * @author Zygon
  */
 public final class PacketEncoder extends MessageToByteEncoder<Packet> {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(PacketEncoder.class);;
 
     @Override
     protected void encode(ChannelHandlerContext chc, Packet outPacket, ByteBuf bb) {

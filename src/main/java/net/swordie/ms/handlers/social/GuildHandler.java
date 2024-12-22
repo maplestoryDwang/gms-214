@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.social;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.alliance.Alliance;
 import net.swordie.ms.client.alliance.AllianceResult;
@@ -33,14 +34,13 @@ import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.world.World;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class GuildHandler {
 
-    private static final Logger log = Logger.getLogger(GuildHandler.class);
 
 
     @Handler(op = InHeader.GUILD_REQUEST)

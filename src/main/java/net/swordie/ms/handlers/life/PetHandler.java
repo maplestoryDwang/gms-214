@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.life;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.items.Item;
@@ -28,7 +29,6 @@ import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class PetHandler {
 
-    private static final Logger log = Logger.getLogger(PetHandler.class);
 
 
     @Handler(op = InHeader.USER_ACTIVATE_PET_REQUEST)

@@ -1,6 +1,7 @@
 package net.swordie.ms.handlers;
 
-import org.apache.log4j.Logger;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledFuture;
@@ -14,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  * Class that wraps every callable/runnable inside a try/catch block to ensure that Exceptions are caught.
  * http://code.nomad-labs.com/2011/12/09/mother-fk-the-scheduledexecutorservice/
  */
+@Slf4j
 public class CatchingScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor {
-    private static final Logger log = Logger.getLogger(CatchingScheduledThreadPoolExecutor.class);
 
     public CatchingScheduledThreadPoolExecutor(int corePoolSize) {
         super(corePoolSize);

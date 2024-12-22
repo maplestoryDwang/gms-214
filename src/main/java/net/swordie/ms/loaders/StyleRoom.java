@@ -2,13 +2,15 @@ package net.swordie.ms.loaders;
 
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.loaders.containerclasses.Cosmetic;
-import org.apache.log4j.LogManager;
+import net.swordie.ms.util.MetaProgramming;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
 
 public class StyleRoom {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(StyleRoom.class);
 
     public static List<List<Cosmetic>> maleHair = new ArrayList<>();
     public static List<List<Cosmetic>> femaleHair = new ArrayList<>();

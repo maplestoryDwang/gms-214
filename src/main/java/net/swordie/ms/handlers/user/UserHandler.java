@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.user;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.Client;
@@ -49,7 +50,6 @@ import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Instance;
 import net.swordie.ms.world.field.Portal;
-import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.imageio.ImageIO;
@@ -61,9 +61,9 @@ import java.util.*;
 
 import static net.swordie.ms.enums.ChatType.SystemNotice;
 
+@Slf4j
 public class UserHandler {
 
-    private static final Logger log = Logger.getLogger(UserHandler.class);
 
 
     @Handler(op = InHeader.USER_MOVE)

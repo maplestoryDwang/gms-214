@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.user;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.info.ZeroInfo;
@@ -53,7 +54,6 @@ import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,9 +66,9 @@ import static net.swordie.ms.client.character.skills.SkillStat.ppCon;
 import static net.swordie.ms.enums.StealMemoryType.REMOVE_STEAL_MEMORY;
 import static net.swordie.ms.enums.StealMemoryType.STEAL_SKILL;
 
+@Slf4j
 public class JobSkillHandler {
 
-    private static final Logger log = Logger.getLogger(JobSkillHandler.class);
 
     @Handler(op = InHeader.RESET_PATH_PSYCHIC_LOCK)
     public static void handleResetPathPsychicLock(Client c, InPacket inPacket) {//ULTIMATE_PSYCHIC_SHOT

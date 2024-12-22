@@ -20,6 +20,7 @@ import net.swordie.ms.life.mob.MobStat;
 import net.swordie.ms.life.mob.MobTemporaryStat;
 import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.loaders.containerclasses.MobSkillInfo;
+import net.swordie.ms.util.MetaProgramming;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
@@ -28,8 +29,8 @@ import net.swordie.ms.world.field.bosses.lucid.FairyDust;
 import net.swordie.ms.world.field.bosses.lucid.LucidSkillType;
 import net.swordie.ms.world.field.obtacleatom.ObtacleAtomInfo;
 import net.swordie.ms.world.field.obtacleatom.ObtacleRadianInfo;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ import static net.swordie.ms.life.mob.skill.MobSkillStat.*;
  * Created on 2/28/2018.
  */
 public class MobSkill {
-    private static final Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(MobSkill.class);
     private int skillSN;
     private byte action;
     private int level;

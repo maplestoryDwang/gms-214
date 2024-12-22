@@ -2,7 +2,8 @@ package net.swordie.ms.util;
 
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.*;
@@ -11,7 +12,8 @@ import java.util.*;
  * Created on 1/3/2018.
  */
 public class MetaProgramming {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+
+    private static final Logger log = LogManager.getLogger(MetaProgramming.class);
 
     public static void makeStateless() {
         String dir = ServerConstants.SCRIPT_DIR;

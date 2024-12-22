@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.life;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.InPacket;
@@ -10,13 +11,12 @@ import net.swordie.ms.life.Reactor;
 import net.swordie.ms.loaders.ReactorData;
 import net.swordie.ms.loaders.containerclasses.ReactorInfo;
 import net.swordie.ms.scripts.ScriptType;
-import org.apache.log4j.Logger;
 
 import javax.script.ScriptException;
 
+@Slf4j
 public class ReactorHandler {
 
-    private static final Logger log = Logger.getLogger(ReactorHandler.class);
 
 
     @Handler(op = InHeader.REACTOR_CLICK)

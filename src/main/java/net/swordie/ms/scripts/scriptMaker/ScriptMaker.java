@@ -1,5 +1,6 @@
 package net.swordie.ms.scripts.scriptMaker;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.InPacket;
@@ -16,7 +17,6 @@ import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.shop.BuyLimitInfo;
 import net.swordie.ms.world.shop.NpcShopDlg;
 import net.swordie.ms.world.shop.NpcShopItem;
-import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.*;
@@ -25,9 +25,9 @@ import java.util.*;
  * @author Sjonnie
  * Created on 2/18/2019.
  */
+@Slf4j
 public class ScriptMaker {
 
-    private static final Logger log = Logger.getLogger(ScriptMaker.class);
     public static final boolean MAY_OVERRIDE_FILES = false;
 
     private ScriptType type;

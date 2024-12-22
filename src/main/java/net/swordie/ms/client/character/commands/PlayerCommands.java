@@ -1,6 +1,7 @@
 package net.swordie.ms.client.character.commands;
 
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.User;
 import net.swordie.ms.client.character.BroadcastMsg;
@@ -26,8 +27,6 @@ import net.swordie.ms.scripts.ScriptManagerImpl;
 import net.swordie.ms.scripts.ScriptType;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import java.text.NumberFormat;
 import java.util.*;
@@ -38,7 +37,6 @@ import static net.swordie.ms.enums.AccountType.Tester;
 import static net.swordie.ms.enums.ChatType.*;
 
 public class PlayerCommands {
-    private static final Logger log = LogManager.getLogger(PlayerCommands.class);
 
     @Command(names = {"help"}, requiredType = Player)
     public static class Help extends PlayerCommand {

@@ -51,7 +51,8 @@ import net.swordie.ms.world.World;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Foothold;
 import net.swordie.ms.world.field.Portal;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -75,7 +76,7 @@ import static net.swordie.ms.enums.InventoryOperation.Add;
  * Created on 12/22/2017.
  */
 public class AdminCommands {
-    static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    static final Logger log = LogManager.getLogger(AdminCommands.class);
 
     @Command(names = {"help"}, description = "Displays all commands available to you.", requiredType = Player)
     public static class Help extends AdminCommand {

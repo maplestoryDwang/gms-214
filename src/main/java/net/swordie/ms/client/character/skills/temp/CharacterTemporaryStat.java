@@ -1,9 +1,8 @@
 package net.swordie.ms.client.character.skills.temp;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.util.Util;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +14,7 @@ import java.util.*;
 /**
  * Created on 1/2/2018.
  */
+@Slf4j
 public enum CharacterTemporaryStat implements Comparator<CharacterTemporaryStat> {
     IndiePAD(0),
     IndieMAD(1),
@@ -796,7 +796,6 @@ public enum CharacterTemporaryStat implements Comparator<CharacterTemporaryStat>
     private int val;
     private int pos;
     public static final int length = 33;
-    private static final Logger log = LogManager.getLogger(CharacterTemporaryStat.class);
 
 
 

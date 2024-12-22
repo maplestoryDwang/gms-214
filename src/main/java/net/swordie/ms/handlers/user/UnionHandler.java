@@ -14,7 +14,6 @@ import net.swordie.ms.constants.QuestConstants;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.loaders.QuestData;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import java.util.Set;
 
 public class UnionHandler {
 
-    private static final Logger log = Logger.getLogger(UnionHandler.class);
 
 
     @Handler(op = InHeader.UNION_REQUEST)

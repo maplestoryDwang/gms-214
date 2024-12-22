@@ -17,12 +17,14 @@
 */
 package net.swordie.ms.connection.netty;
 
+import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.crypto.MapleCrypto;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -34,7 +36,7 @@ import java.util.List;
  * @author Zygon
  */
 public class PacketDecoder extends ByteToMessageDecoder {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(PacketDecoder.class);
 
     @Override
     protected void decode(ChannelHandlerContext chc, ByteBuf in, List<Object> out) {

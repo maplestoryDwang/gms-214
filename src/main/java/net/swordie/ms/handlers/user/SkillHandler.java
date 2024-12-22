@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.user;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.LinkSkill;
@@ -52,7 +53,6 @@ import net.swordie.ms.scripts.ScriptType;
 import net.swordie.ms.util.*;
 import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -65,9 +65,9 @@ import static net.swordie.ms.client.character.skills.SkillStat.ppCon;
 import static net.swordie.ms.client.jobs.legend.Luminous.PRESSURE_VOID;
 import net.swordie.ms.client.jobs.resistance.Mechanic;
 
+@Slf4j
 public class SkillHandler {
 
-    private static final Logger log = Logger.getLogger(SkillHandler.class);
 
 
     @Handler(op = InHeader.USER_SKILL_CANCEL_REQUEST)

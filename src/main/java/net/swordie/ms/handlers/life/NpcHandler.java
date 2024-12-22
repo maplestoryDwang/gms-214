@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.life;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.anticheat.Offense;
 import net.swordie.ms.client.character.Char;
@@ -39,15 +40,14 @@ import net.swordie.ms.world.shop.NpcShopItem;
 import net.swordie.ms.world.shop.ShopRequestType;
 import net.swordie.ms.world.shop.result.ShopResult;
 import net.swordie.ms.world.shop.result.ShopResultType;
-import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class NpcHandler {
 
-    private static final Logger log = Logger.getLogger(NpcHandler.class);
 
 
     @Handler(op = InHeader.USER_SELECT_NPC)

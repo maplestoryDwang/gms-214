@@ -1,11 +1,11 @@
 package net.swordie.ms.loaders;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.constants.GameConstants;
 import net.swordie.ms.constants.MobConstants;
 import net.swordie.ms.life.drop.DropInfo;
 import net.swordie.ms.ServerConstants;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.w3c.dom.Document;
@@ -19,8 +19,8 @@ import java.util.*;
 /**
  * Created on 2/21/2018.
  */
+@Slf4j
 public class DropData {
-    private static final Logger log = Logger.getLogger(DropData.class);
 
     private static Map<Integer, Set<DropInfo>> drops = new HashMap<>();
 

@@ -25,7 +25,8 @@ import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.container.Tuple;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,7 +41,7 @@ import static net.swordie.ms.client.jobs.resistance.Mechanic.TANK_MECH;
  * Created on 1/3/2018.
  */
 public class TemporaryStatManager {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(TemporaryStatManager.class);
     private final Map<CharacterTemporaryStat, List<Option>> currentStats = new ConcurrentHashMap<>();
     private final Map<CharacterTemporaryStat, List<Option>> newStats = new ConcurrentHashMap<>();
     private final Map<CharacterTemporaryStat, List<Option>> removedStats = new ConcurrentHashMap<>();

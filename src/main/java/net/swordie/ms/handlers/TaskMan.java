@@ -1,16 +1,15 @@
 package net.swordie.ms.handlers;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.util.FileoutputUtil;
 import net.swordie.ms.util.Randomizer;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Slf4j
 public class TaskMan {
 
-    private static final Logger log = LogManager.getLogger(TaskMan.class);
 
     private ScheduledThreadPoolExecutor scheduler;
     private static final AtomicInteger threadNum = new AtomicInteger(0);

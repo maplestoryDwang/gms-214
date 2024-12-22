@@ -9,11 +9,9 @@ import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.life.Dragon;
 import net.swordie.ms.life.movement.MovementInfo;
-import org.apache.log4j.Logger;
 
 public class DragonHandler {
 
-    private static final Logger log = Logger.getLogger(DragonHandler.class);
 
 
     @Handler(op = InHeader.DRAGON_MOVE)

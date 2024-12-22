@@ -1,5 +1,6 @@
 package net.swordie.ms.world.field;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.items.Item;
@@ -41,7 +42,6 @@ import net.swordie.ms.world.field.bosses.gollux.FallingCatcher;
 import net.swordie.ms.world.field.obtacleatom.ObtacleAtomInfo;
 import net.swordie.ms.world.field.obtacleatom.ObtacleInRowInfo;
 import net.swordie.ms.world.field.obtacleatom.ObtacleRadianInfo;
-import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -57,8 +57,8 @@ import static net.swordie.ms.client.character.skills.SkillStat.time;
 /**
  * Created on 12/14/2017.
  */
+@Slf4j
 public class Field {
-    private static final Logger log = Logger.getLogger(Field.class);
     private Rect rect;
     private int vrTop, vrLeft, vrBottom, vrRight;
     private double mobRate;

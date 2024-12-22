@@ -10,11 +10,9 @@ import net.swordie.ms.life.Life;
 import net.swordie.ms.life.drop.Drop;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 public class DropHandler {
 
-    private static final Logger log = Logger.getLogger(DropHandler.class);
 
     @Handler(op = InHeader.DROP_PICK_UP_REQUEST)
     public static void handleDropPickUpRequest(Client c, InPacket inPacket) {

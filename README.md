@@ -30,11 +30,16 @@ Other things just follow the original thread I put above.
 我用新楓之谷236版本（因为手头正好有）做的简单汉化文件下载，可能会因为版本不同导致少数文本不准确（比如版本更新修改了某些技能的效果之类）。链接：https://pan.baidu.com/s/13jZNW3bWqRPtgsi1heRIYA 提取码：8ol1
 
 
+新增：
 中文版步骤
 1. 获取v214-server源码
 2. 获取V214client
-3. AuthHook_v214 获取ijl15.dll
+3. AuthHook_v214 编译获取ijl15.dll，放在214client目录下覆盖 
 4. launcher 编译获取v214.exe
 5. v214.exe 放到客户端目录下
 6. 启动v214-server
 7. 点击v214.exe启动服务
+
+注意事项
+1. 使用了lombok 安装插件和打开annotation
+2. 设置resource文件夹。否则读不到配置文件路径

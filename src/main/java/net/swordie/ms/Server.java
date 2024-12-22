@@ -1,5 +1,6 @@
 package net.swordie.ms;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.BroadcastMsg;
@@ -13,6 +14,7 @@ import net.swordie.ms.enums.ChatType;
 import net.swordie.ms.enums.WorldId;
 import net.swordie.ms.handlers.EventManager;
 import net.swordie.ms.handlers.TaskMan;
+import net.swordie.ms.handlers.threadpool.LoaderExecutor;
 import net.swordie.ms.loaders.*;
 import net.swordie.ms.connection.crypto.MapleCrypto;
 import net.swordie.ms.connection.db.DatabaseManager;
@@ -20,6 +22,7 @@ import net.swordie.ms.connection.netty.ChannelAcceptor;
 import net.swordie.ms.connection.netty.ChatAcceptor;
 import net.swordie.ms.connection.netty.LoginAcceptor;
 import net.swordie.ms.scripts.ScriptManagerImpl;
+import net.swordie.ms.util.CustomConfigsLoad;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.world.Channel;
@@ -27,8 +30,6 @@ import net.swordie.ms.world.World;
 import net.swordie.ms.world.shop.cashshop.CashShop;
 import net.swordie.ms.world.shop.cashshop.CashShopCategory;
 import net.swordie.ms.world.shop.cashshop.CashShopItem;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import net.swordie.ms.util.Loader;
 import net.swordie.ms.util.container.Tuple;
@@ -42,14 +43,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created on 2/18/2017.
  */
+@Slf4j
 public class Server extends Properties {
 
-	final Logger log = LogManager.getRootLogger();
 
 	private static final Server server = new Server();
 
@@ -82,8 +82,34 @@ public class Server extends Properties {
 	private void init(String[] args) {
 		log.info("Starting server.");
 		long startNow = System.currentTimeMillis();
-		DatabaseManager.init();
-		log.info("Loaded Hibernate in " + (System.currentTimeMillis() - startNow) + "ms");
+
+		CustomConfigsLoad.load();
+		LoaderExecutor.load(new Runnable() {
+			@Override
+			public void run() {
+
+				DatabaseManager.init();
+				log.info("Loaded Hibernate in " + (System.currentTimeMillis() - startNow) + "ms");
+
+				// 强依赖数据库加载的
+				FieldData.loadNPCFromSQL();
+
+				MonsterCollectionData.loadFromSQL();
+
+				worldList.add(new World(ServerConfig.WORLD_ID, ServerConfig.SERVER_NAME, GameConstants.CHANNELS_PER_WORLD, ServerConfig.EVENT_MSG));
+				for (World world : getWorlds()) {
+					for (Channel channel : world.getChannels()) {
+						ChannelAcceptor ca = new ChannelAcceptor();
+						ca.channel = channel;
+						new Thread(ca).start();
+					}
+				}
+				long startCashShop = System.currentTimeMillis();
+				initCashShop();
+				log.info("Loaded CashShop in " + (System.currentTimeMillis() - startCashShop) + "ms");
+
+			}
+		});
 
 		try {
 			checkAndCreateDat();
@@ -95,12 +121,15 @@ public class Server extends Properties {
 		FieldData.loadWorldMap();
 		ChannelHandler.initHandlers(false);
 		SkillData.loadAllSkills();
-		FieldData.loadNPCFromSQL();
 		DressingRoom.load();
 		StyleRoom.load();
 
-		ShutDownTask shutDownTask = new ShutDownTask();
-		shutDownTask.start();
+		// 服务重启时间
+		if (!Boolean.parseBoolean(CustomConfigsLoad.getConfig("app.debug"))) {
+			ShutDownTask shutDownTask = new ShutDownTask();
+			shutDownTask.start();
+		}
+
 
 		TaskMan.FieldUpdate.getInstance().start();
 
@@ -108,24 +137,12 @@ public class Server extends Properties {
 		new Thread(new ApiAcceptor()).start();
 		new Thread(new LoginAcceptor()).start();
 		new Thread(new ChatAcceptor()).start();
-		worldList.add(new World(ServerConfig.WORLD_ID, ServerConfig.SERVER_NAME, GameConstants.CHANNELS_PER_WORLD, ServerConfig.EVENT_MSG));
         long start = System.currentTimeMillis();
         VCoreData.loadVCoreData();
         log.info("Loaded VCore in " + (System.currentTimeMillis() - start) + "ms");
 
-        long startCashShop = System.currentTimeMillis();
-		initCashShop();
-		log.info("Loaded CashShop in " + (System.currentTimeMillis() - startCashShop) + "ms");
 
-		MonsterCollectionData.loadFromSQL();
 
-		for (World world : getWorlds()) {
-			for (Channel channel : world.getChannels()) {
-				ChannelAcceptor ca = new ChannelAcceptor();
-				ca.channel = channel;
-				new Thread(ca).start();
-			}
-		}
 		log.info(String.format("Finished loading server in %dms", System.currentTimeMillis() - startNow));
 		new Thread(() -> {
 			// inits the script engine

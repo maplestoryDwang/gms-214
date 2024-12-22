@@ -3,6 +3,7 @@ package net.swordie.ms.loaders;
 import net.swordie.ms.Server;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.character.items.*;
+import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.constants.GameConstants;
 import net.swordie.ms.constants.ItemConstants;
@@ -12,7 +13,8 @@ import net.swordie.ms.loaders.containerclasses.ItemRewardInfo;
 import net.swordie.ms.loaders.containerclasses.PetInfo;
 import net.swordie.ms.loaders.containerclasses.ItemSet;
 import net.swordie.ms.util.*;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -34,7 +36,7 @@ public class ItemData {
     public static Map<Integer, ItemSet> itemSets = new HashMap<>();
     public static Map<Integer, Integer> skillIdByItemId = new HashMap<>();
     private static Set<Integer> startingItems = new HashSet<>();
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(ItemData.class);
     private static final boolean LOG_UNKS = false;
 
     public static Equip getEquipDeepCopyFromID(int itemId, boolean randomizeStats) {

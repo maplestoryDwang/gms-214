@@ -3,7 +3,9 @@ package net.swordie.ms.client.character.quest.requirement;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.quest.QuestManager;
 import net.swordie.ms.loaders.DatSerializable;
-import org.apache.log4j.LogManager;
+import net.swordie.ms.util.MetaProgramming;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,7 +15,7 @@ import java.io.IOException;
  * Created on 3/2/2018.
  */
 public class QuestStartCompletionRequirement implements QuestStartRequirement {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(QuestStartCompletionRequirement.class);;
     private int questID;
     private byte questStatus;
 

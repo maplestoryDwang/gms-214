@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.item;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.BroadcastMsg;
 import net.swordie.ms.client.character.Char;
@@ -15,7 +16,6 @@ import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.util.Util;
-import org.apache.log4j.Logger;
 
 import java.util.Map;
 
@@ -24,9 +24,9 @@ import static net.swordie.ms.enums.ChatType.SystemNotice;
 import static net.swordie.ms.enums.EquipBaseStat.*;
 import static net.swordie.ms.enums.InvType.*;
 
+@Slf4j
 public class ItemUpgradeHandler {
 
-    private static final Logger log = Logger.getLogger(ItemUpgradeHandler.class);
 
 
     @Handler(op = InHeader.USER_EX_ITEM_UPGRADE_ITEM_USE_REQUEST)

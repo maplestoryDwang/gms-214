@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.item;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.Server;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.BroadcastMsg;
@@ -35,7 +36,6 @@ import net.swordie.ms.util.Util;
 import net.swordie.ms.world.World;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Portal;
-import org.apache.log4j.Logger;
 
 import java.text.NumberFormat;
 import java.util.*;
@@ -46,9 +46,9 @@ import static net.swordie.ms.enums.EquipBaseStat.tuc;
 import static net.swordie.ms.enums.InvType.*;
 import static net.swordie.ms.enums.InventoryOperation.Move;
 
+@Slf4j
 public class ItemHandler {
 
-    private static final Logger log = Logger.getLogger(ItemHandler.class);
 
     private int weatherItemID;
     private String weatherMsg;

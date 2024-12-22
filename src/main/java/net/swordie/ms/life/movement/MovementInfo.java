@@ -1,12 +1,12 @@
 package net.swordie.ms.life.movement;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.Encodable;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.life.Life;
 import net.swordie.ms.util.Position;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.List;
  * @author Sjonnie
  * Created on 8/16/2018.
  */
+@Slf4j
 public class MovementInfo implements Encodable {
-    private static final Logger log = Logger.getLogger(MovementInfo.class);
 
     private int encodedGatherDuration;
     private Position oldPos;

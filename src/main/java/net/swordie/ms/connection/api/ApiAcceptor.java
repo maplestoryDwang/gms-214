@@ -10,7 +10,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.Client;
-import org.apache.log4j.Logger;
+import net.swordie.ms.client.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static net.swordie.ms.connection.netty.NettyClient.CLIENT_KEY;
 
@@ -20,7 +22,7 @@ import static net.swordie.ms.connection.netty.NettyClient.CLIENT_KEY;
  */
 public class ApiAcceptor implements Runnable {
 
-    private static final Logger log = Logger.getLogger(ApiAcceptor.class);
+    private static final Logger log = LogManager.getLogger(ApiAcceptor.class);
 
     @Override
     public void run() {

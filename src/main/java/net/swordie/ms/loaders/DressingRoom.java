@@ -3,7 +3,10 @@ package net.swordie.ms.loaders;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.character.items.Equip;
 import net.swordie.ms.constants.ItemConstants;
-import org.apache.log4j.LogManager;
+import net.swordie.ms.handlers.threadpool.LoaderExecutor;
+import net.swordie.ms.util.CustomConfigsLoad;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DressingRoom {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(DressingRoom.class);
 
 
     public static List<Equip> hats = new ArrayList<>();
@@ -60,36 +63,75 @@ public class DressingRoom {
     public static void load() {
         long start = System.currentTimeMillis();
         File dir =  new File(String.format("%s/equips/", ServerConstants.DAT_DIR));
-        for (File file : dir.listFiles()) {
-            Equip equip = ItemData.readEquipFromFile(file);
-
-            if (equip.isCash() && !ItemConstants.isRemovedFromCashShop(equip.getItemId())) {
-                if (ItemConstants.isHat(equip.getItemId())) {
-                    hats.add(equip);
-                } else if (ItemConstants.isTop(equip.getItemId())) {
-                    tops.add(equip);
-                } else if (ItemConstants.isBottom(equip.getItemId())) {
-                    bottoms.add(equip);
-                } else if (ItemConstants.isOverall(equip.getItemId())) {
-                    overalls.add(equip);
-                } else if (ItemConstants.isShoe(equip.getItemId())) {
-                    shoes.add(equip);
-                } else if (ItemConstants.isGlove(equip.getItemId())) {
-                    gloves.add(equip);
-                } else if (ItemConstants.isCape(equip.getItemId())) {
-                    capes.add(equip);
-                } else if (ItemConstants.isWeapon(equip.getItemId())) {
-                    weapons.add(equip);
-                } else if (ItemConstants.isFaceAccessory(equip.getItemId())) {
-                    faceAccessory.add(equip);
-                } else if (ItemConstants.isEyeAccessory(equip.getItemId())) {
-                    eyeAccessory.add(equip);
-                } else if (ItemConstants.isRing(equip.getItemId())) {
-                    rings.add(equip);
-                }
-            }
+        File[] files = dir.listFiles();
+        if (files == null) {
+            return;
         }
-        log.info(String.format("Loaded Dressing Room in %dms.", System.currentTimeMillis() - start));
+        int length = files.length;
+        Arrays.stream(files).forEach(file -> {
+            LoaderExecutor.load(new Runnable() {
+                @Override
+                public void run() {
+                    Equip equip = ItemData.readEquipFromFile(file);
+                    if (equip.isCash() && !ItemConstants.isRemovedFromCashShop(equip.getItemId())) {
+                        if (ItemConstants.isHat(equip.getItemId())) {
+                            hats.add(equip);
+                        } else if (ItemConstants.isTop(equip.getItemId())) {
+                            tops.add(equip);
+                        } else if (ItemConstants.isBottom(equip.getItemId())) {
+                            bottoms.add(equip);
+                        } else if (ItemConstants.isOverall(equip.getItemId())) {
+                            overalls.add(equip);
+                        } else if (ItemConstants.isShoe(equip.getItemId())) {
+                            shoes.add(equip);
+                        } else if (ItemConstants.isGlove(equip.getItemId())) {
+                            gloves.add(equip);
+                        } else if (ItemConstants.isCape(equip.getItemId())) {
+                            capes.add(equip);
+                        } else if (ItemConstants.isWeapon(equip.getItemId())) {
+                            weapons.add(equip);
+                        } else if (ItemConstants.isFaceAccessory(equip.getItemId())) {
+                            faceAccessory.add(equip);
+                        } else if (ItemConstants.isEyeAccessory(equip.getItemId())) {
+                            eyeAccessory.add(equip);
+                        } else if (ItemConstants.isRing(equip.getItemId())) {
+                            rings.add(equip);
+                        }
+                    }
+                }
+            });
+        });
+
+//        for (File file : files) {
+//            Equip equip = ItemData.readEquipFromFile(file);
+//
+//            if (equip.isCash() && !ItemConstants.isRemovedFromCashShop(equip.getItemId())) {
+//                if (ItemConstants.isHat(equip.getItemId())) {
+//                    hats.add(equip);
+//                } else if (ItemConstants.isTop(equip.getItemId())) {
+//                    tops.add(equip);
+//                } else if (ItemConstants.isBottom(equip.getItemId())) {
+//                    bottoms.add(equip);
+//                } else if (ItemConstants.isOverall(equip.getItemId())) {
+//                    overalls.add(equip);
+//                } else if (ItemConstants.isShoe(equip.getItemId())) {
+//                    shoes.add(equip);
+//                } else if (ItemConstants.isGlove(equip.getItemId())) {
+//                    gloves.add(equip);
+//                } else if (ItemConstants.isCape(equip.getItemId())) {
+//                    capes.add(equip);
+//                } else if (ItemConstants.isWeapon(equip.getItemId())) {
+//                    weapons.add(equip);
+//                } else if (ItemConstants.isFaceAccessory(equip.getItemId())) {
+//                    faceAccessory.add(equip);
+//                } else if (ItemConstants.isEyeAccessory(equip.getItemId())) {
+//                    eyeAccessory.add(equip);
+//                } else if (ItemConstants.isRing(equip.getItemId())) {
+//                    rings.add(equip);
+//                }
+//            }
+//        }
+        log.info(String.format("Loaded Dressing Room in %dms  load num %d. ", System.currentTimeMillis() - start, length));
     }
 
     public static List<Equip> getHats() {

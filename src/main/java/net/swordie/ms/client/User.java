@@ -5,6 +5,7 @@ import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.anticheat.OffenseManager;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.friend.Friend;
+import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.connection.db.converters.FileTimeConverter;
 import net.swordie.ms.connection.packet.UserPacket;
@@ -13,7 +14,8 @@ import net.swordie.ms.enums.PicStatus;
 import net.swordie.ms.enums.ProgressMessageColourType;
 import net.swordie.ms.enums.ProgressMessageFontType;
 import net.swordie.ms.util.FileTime;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -30,7 +32,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Transient
-    private static final Logger log = Logger.getLogger(Account.class);
+    private static final Logger log = LogManager.getLogger(User.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

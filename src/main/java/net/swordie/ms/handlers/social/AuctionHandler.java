@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.social;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.items.Item;
@@ -15,14 +16,13 @@ import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.world.World;
 import net.swordie.ms.world.auction.*;
-import org.apache.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 public class AuctionHandler {
 
-    private static final Logger log = Logger.getLogger(AuctionHandler.class);
 
 
     @Handler(op = InHeader.AUCTION_REQUEST)

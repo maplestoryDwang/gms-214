@@ -1,11 +1,11 @@
 package net.swordie.ms.client.character.items;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.db.converters.FileTimeConverter;
 import net.swordie.ms.life.pet.Pet;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.life.pet.PetSkill;
-import org.apache.log4j.Logger;
 import net.swordie.ms.util.FileTime;
 
 import javax.persistence.*;
@@ -16,9 +16,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "petitems")
 @PrimaryKeyJoinColumn(name = "itemId")
+@Slf4j
 public class PetItem extends Item {
     @Transient
-    private final Logger log = Logger.getLogger(PetItem.class);
 
     private String name;
     private byte level;

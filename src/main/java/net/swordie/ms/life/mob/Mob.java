@@ -2,6 +2,8 @@ package net.swordie.ms.life.mob;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
+
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.info.ExpIncreaseInfo;
 import net.swordie.ms.client.character.items.Item;
@@ -37,7 +39,6 @@ import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Foothold;
 import net.swordie.ms.world.field.fieldeffect.FieldEffect;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,9 +49,9 @@ import net.swordie.ms.util.FileTime;
 import org.python.google.common.collect.ArrayListMultimap;
 import org.python.google.common.collect.ListMultimap;
 
+@Slf4j
 public class Mob extends Life {
 
-    private static final Logger log = Logger.getLogger(Mob.class);
     private boolean sealedInsteadDead, patrolMob;
     private int option, effectItemID, range, detectX, senseX, phase, curZoneDataType;
     private int refImgMobID, lifeReleaseOwnerAID, afterAttack, currentAction, scale, eliteGrade, eliteType, targetUserIdFromServer;

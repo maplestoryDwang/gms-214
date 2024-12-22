@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.packet.Effect;
@@ -7,11 +8,10 @@ import net.swordie.ms.connection.packet.FieldPacket;
 import net.swordie.ms.connection.packet.UserPacket;
 import net.swordie.ms.connection.packet.UserRemote;
 import net.swordie.ms.handlers.header.InHeader;
-import org.apache.log4j.Logger;
 
+@Slf4j
 public class FieldHandler {
 
-    private static final Logger log = Logger.getLogger(FieldHandler.class);
 
     @Handler(op = InHeader.BROADCAST_EFFECT_TO_SPLIT)
     public static void handleBroadcastEffectToSplit(Char chr, InPacket inPacket) {

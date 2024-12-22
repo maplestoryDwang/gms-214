@@ -73,6 +73,9 @@ public class World {
         }
     }
 
+    /**
+     * 加载拍卖行
+     */
     private void initAuctionHouse() {
         List<AuctionItem> auctions = (List<AuctionItem>) DatabaseManager.getObjListFromDB(AuctionItem.class);
         for (AuctionItem ai : auctions) {

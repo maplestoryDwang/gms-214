@@ -14,6 +14,7 @@ import net.swordie.ms.client.character.items.BodyPart;
 import net.swordie.ms.client.character.items.Equip;
 import net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat;
 import net.swordie.ms.client.jobs.JobManager;
+import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.netty.ChannelHandler;
 import net.swordie.ms.connection.packet.MapLoadable;
@@ -33,10 +34,11 @@ import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.world.World;
 import net.swordie.ms.world.field.MapTaggedObject;
-import org.apache.log4j.LogManager;
 import net.swordie.ms.connection.packet.Login;
 import net.swordie.ms.world.Channel;
 import net.swordie.ms.Server;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.File;
@@ -51,13 +53,12 @@ import net.swordie.ms.discord.DiscordWebhook;
 import static net.swordie.ms.enums.InvType.EQUIPPED;
 
 import net.swordie.ms.util.FileoutputUtil;
-import org.apache.log4j.Logger;
 
 /**
  * Created on 4/28/2017.
  */
 public class LoginHandler {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(LoginHandler.class);
 
 
     @Handler(op = InHeader.PERMISSION_REQUEST)

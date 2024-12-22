@@ -52,10 +52,7 @@ import net.swordie.ms.loaders.*;
 import net.swordie.ms.loaders.containerclasses.Cosmetic;
 import net.swordie.ms.loaders.containerclasses.VCoreInfo;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
-import net.swordie.ms.util.FileTime;
-import net.swordie.ms.util.Position;
-import net.swordie.ms.util.Rect;
-import net.swordie.ms.util.Util;
+import net.swordie.ms.util.*;
 import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.World;
 import net.swordie.ms.world.field.*;
@@ -67,7 +64,8 @@ import net.swordie.ms.world.field.obtacleatom.ObtacleAtomInfo;
 import net.swordie.ms.world.field.obtacleatom.ObtacleInRowInfo;
 import net.swordie.ms.world.field.obtacleatom.ObtacleRadianInfo;
 import net.swordie.ms.world.shop.NpcShopDlg;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
@@ -107,7 +105,7 @@ public class ScriptManagerImpl implements ScriptManager {
     public static final String QUEST_START_SCRIPT_END_TAG = "s";
     public static final String QUEST_COMPLETE_SCRIPT_END_TAG = "e";
     private static final String INTENDED_NPE_MSG = "Intended NPE by forceful script stop.";
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(ScriptManagerImpl.class);
 
     private static final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(SCRIPT_ENGINE_NAME);
 
@@ -231,7 +229,7 @@ public class ScriptManagerImpl implements ScriptManager {
         }
         if (!isField()) {
             chr.chatMessage(Mob, String.format("Starting script [ %s ], scriptType [%s].", scriptName, scriptType));
-            log.debug(String.format("Starting script [ %s ] , scriptType [%s].   parentID [ %s ]", scriptName, scriptType));
+            log.debug(String.format("Starting script [ %s ] , scriptType [%s].   parentID [ %s ]", scriptName, scriptType, parentID));
         }
         resetParam();
         Bindings bindings = getBindingsByType(scriptType);

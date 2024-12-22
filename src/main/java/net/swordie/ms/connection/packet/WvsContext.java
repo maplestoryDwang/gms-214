@@ -25,6 +25,7 @@ import net.swordie.ms.client.jobs.resistance.WildHunterInfo;
 import net.swordie.ms.client.party.Party;
 import net.swordie.ms.client.party.PartyMember;
 import net.swordie.ms.client.party.PartyResult;
+import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.constants.ItemConstants;
 import net.swordie.ms.enums.*;
@@ -33,7 +34,8 @@ import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.util.AntiMacro;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Position;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,7 +48,7 @@ import static net.swordie.ms.enums.MessageType.*;
  * Created on 12/22/2017.
  */
 public class WvsContext {
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(WvsContext.class);
 
 
     public static OutPacket exclRequest() {

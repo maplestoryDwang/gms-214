@@ -1,9 +1,11 @@
 package net.swordie.ms.client.anticheat;
 
+import net.swordie.ms.client.User;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.util.FileTime;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,7 +15,7 @@ import java.util.Set;
 @Table(name = "offense_managers")
 public class OffenseManager {
     @Transient
-    private static final Logger log = Logger.getLogger(DatabaseManager.class);
+    private static final Logger log = LogManager.getLogger(OffenseManager.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.social;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.anticheat.Offense;
 import net.swordie.ms.client.character.Char;
@@ -20,13 +21,12 @@ import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 public class RoomHandler {
 
-    private static final Logger log = Logger.getLogger(RoomHandler.class);
 
     @Handler(op = InHeader.MINI_ROOM)
     public static void handleMiniRoom(Char chr, InPacket inPacket) {

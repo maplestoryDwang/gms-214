@@ -1,5 +1,6 @@
 package net.swordie.ms.loaders;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.constants.MonsterCollectionGroup;
 import net.swordie.ms.constants.MonsterCollectionRegion;
@@ -9,7 +10,6 @@ import net.swordie.ms.loaders.containerclasses.MonsterCollectionMobInfo;
 import net.swordie.ms.loaders.containerclasses.MonsterCollectionSessionRewardInfo;
 import net.swordie.ms.util.container.Triple;
 import net.swordie.ms.util.container.Tuple;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -20,8 +20,8 @@ import java.util.*;
  * @author Sjonnie
  * Created on 7/23/2018.
  */
+@Slf4j
 public class MonsterCollectionData {
-    private static final Logger log = Logger.getLogger(MonsterCollectionData.class);
 
     private static Map<Integer, MonsterCollectionRegion> monsterCollectionInfo = new HashMap<>();
     private static Map<Integer, Triple<Integer, Integer, Integer>> monsterInfo = new HashMap<>();

@@ -1,9 +1,9 @@
 package net.swordie.ms.loaders;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.life.Reactor;
 import net.swordie.ms.loaders.containerclasses.ReactorInfo;
-import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
@@ -15,10 +15,10 @@ import java.util.HashMap;
 /**
  * Created on 4/21/2018.
  */
+@Slf4j
 public class ReactorData {
 
     private static final boolean LOG_UNKS = false;
-    private static final Logger log = Logger.getLogger(ReactorData.class);
     private static HashMap<Integer, ReactorInfo> reactorInfo = new HashMap<>();
 
     private static void loadReactorsFromWZ() {

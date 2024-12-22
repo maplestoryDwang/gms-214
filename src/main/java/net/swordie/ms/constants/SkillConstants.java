@@ -1,5 +1,6 @@
 package net.swordie.ms.constants;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.skills.SkillStat;
 import net.swordie.ms.client.character.skills.info.SkillInfo;
 import net.swordie.ms.client.jobs.Job;
@@ -46,7 +47,6 @@ import net.swordie.ms.client.jobs.sengoku.Kanna;
 import net.swordie.ms.enums.BaseStat;
 import net.swordie.ms.enums.BeastTamerBeasts;
 import net.swordie.ms.loaders.SkillData;
-import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -73,11 +73,11 @@ import static net.swordie.ms.client.jobs.sengoku.Kanna.*;
 /**
  * Created on 12/18/2017.
  */
+@Slf4j
 public class SkillConstants {
     public static final short PASSIVE_HYPER_MIN_LEVEL = 140;
     public static final List<Short> ACTIVE_HYPER_LEVELS = Arrays.asList((short) 150, (short) 170, (short) 200);
 
-    private static final Logger log = Logger.getLogger(SkillConstants.class);
 
     public static final int LEVEL_UP_DAMAGE_SKILL_ID = 80001770;
 

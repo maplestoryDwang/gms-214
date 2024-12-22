@@ -1,5 +1,6 @@
 package net.swordie.ms.life;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.skills.Option;
 import net.swordie.ms.client.character.skills.Skill;
@@ -32,7 +33,6 @@ import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.loaders.containerclasses.MobSkillInfo;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
@@ -44,8 +44,8 @@ import static net.swordie.ms.client.jobs.sengoku.Kanna.*;
 /**
  * Created on 1/6/2018.
  */
+@Slf4j
 public class AffectedArea extends Life {
-    private static final Logger log = Logger.getLogger(AffectedArea.class);
 
     private Char owner;
     private Rect rect, skillRect;

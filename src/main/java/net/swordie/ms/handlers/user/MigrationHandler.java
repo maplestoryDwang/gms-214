@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.user;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.Server;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.Client;
@@ -34,7 +35,6 @@ import net.swordie.ms.world.auction.AuctionResult;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Portal;
 import net.swordie.ms.world.shop.cashshop.CashShop;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,9 +43,9 @@ import java.util.List;
 
 import static net.swordie.ms.enums.ChatType.Notice2;
 
+@Slf4j
 public class MigrationHandler {
 
-    private static final Logger log = Logger.getLogger(MigrationHandler.class);
 
 
     @Handler(op = InHeader.MIGRATE_IN)

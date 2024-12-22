@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.life;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.quest.Quest;
@@ -36,14 +37,13 @@ import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Portal;
 import net.swordie.ms.world.field.fieldeffect.FieldEffect;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class MobHandler {
 
-    private static final Logger log = Logger.getLogger(MobHandler.class);
 
 
     @Handler(op = InHeader.MOB_APPLY_CTRL)

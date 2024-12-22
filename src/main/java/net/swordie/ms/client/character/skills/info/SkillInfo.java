@@ -1,5 +1,6 @@
 package net.swordie.ms.client.character.skills.info;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.skills.SkillStat;
 import net.swordie.ms.constants.SkillConstants;
@@ -9,7 +10,6 @@ import net.swordie.ms.enums.WeaponType;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.container.Tuple;
-import org.apache.log4j.Logger;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -19,8 +19,8 @@ import java.util.*;
 /**
  * Created on 12/20/2017.
  */
+@Slf4j
 public class SkillInfo {
-    private static final Logger log = Logger.getLogger(SkillInfo.class);
 
     private int skillId;
     private int rootId;

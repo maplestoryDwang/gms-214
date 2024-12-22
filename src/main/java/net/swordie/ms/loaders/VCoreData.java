@@ -1,12 +1,12 @@
 package net.swordie.ms.loaders;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.character.skills.MatrixRecord;
 import net.swordie.ms.loaders.containerclasses.VCoreInfo;
 import net.swordie.ms.loaders.containerclasses.VNodeInfo;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.XMLApi;
-import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 
 import java.io.*;
@@ -16,8 +16,8 @@ import java.util.*;
  * @author Sjonnie
  * Created on 10/1/2018.
  */
+@Slf4j
 public class VCoreData {
-    private static final Logger log = Logger.getLogger(VCoreData.class);
 
     // job -> [(skillID, iconID)]
     private static Map<Integer, List<VCoreInfo>> jobSkills = new HashMap<>();

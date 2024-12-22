@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.social;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.party.Party;
@@ -12,7 +13,6 @@ import net.swordie.ms.connection.packet.WvsContext;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 import static net.swordie.ms.enums.ChatType.SystemNotice;
 
+@Slf4j
 public class PartyHandler {
 
-    private static final Logger log = Logger.getLogger(PartyHandler.class);
 
 
     @Handler(op = InHeader.PARTY_INVITABLE_SET)

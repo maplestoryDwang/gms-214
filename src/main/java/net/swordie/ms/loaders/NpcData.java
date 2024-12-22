@@ -1,5 +1,6 @@
 package net.swordie.ms.loaders;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.life.npc.Npc;
 import net.swordie.ms.world.shop.NpcShopDlg;
@@ -7,7 +8,6 @@ import net.swordie.ms.world.shop.NpcShopItem;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.util.dsl.SWEntity;
 import net.swordie.ms.util.dsl.SWParser;
-import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.XMLApi;
@@ -18,8 +18,8 @@ import java.util.*;
 /**
  * Created on 2/19/2018.
  */
+@Slf4j
 public class NpcData {
-	private static final Logger log = Logger.getLogger(NpcData.class);
 	private static final boolean LOG_UNKS = false;
 
 	private static Set<Npc> npcs = new HashSet<>();

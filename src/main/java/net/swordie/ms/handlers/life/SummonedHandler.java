@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.life;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.jobs.flora.Illium;
@@ -16,11 +17,10 @@ import net.swordie.ms.life.Life;
 import net.swordie.ms.life.Summon;
 import net.swordie.ms.life.movement.MovementInfo;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
+@Slf4j
 public class SummonedHandler {
 
-    private static final Logger log = Logger.getLogger(SummonedHandler.class);
 
     @Handler(op = InHeader.SUMMONED_MOVE)
     public static void handleSummonedMove(Char chr, InPacket inPacket) {

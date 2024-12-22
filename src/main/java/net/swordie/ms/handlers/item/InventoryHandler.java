@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.item;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.BroadcastMsg;
 import net.swordie.ms.client.character.Char;
@@ -25,7 +26,6 @@ import net.swordie.ms.loaders.containerclasses.ItemInfo;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.Foothold;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 
@@ -33,9 +33,9 @@ import static net.swordie.ms.enums.InvType.EQUIP;
 import static net.swordie.ms.enums.InvType.EQUIPPED;
 import static net.swordie.ms.enums.InventoryOperation.*;
 
+@Slf4j
 public class InventoryHandler {
 
-    private static final Logger log = Logger.getLogger(InventoryHandler.class);
 
 
     @Handler(op = InHeader.USER_CHANGE_SLOT_POSITION_REQUEST)

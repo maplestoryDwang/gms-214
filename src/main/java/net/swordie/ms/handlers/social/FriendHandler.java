@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.social;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.User;
 import net.swordie.ms.client.character.Char;
@@ -12,13 +13,12 @@ import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.connection.packet.WvsContext;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
-import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 
+@Slf4j
 public class FriendHandler {
 
-    private static final Logger log = Logger.getLogger(FriendHandler.class);
 
 
     @Handler(op = InHeader.LOAD_ACCOUNT_ID_OF_CHARACTER_FRIEND_REQUEST)

@@ -1,5 +1,6 @@
 package net.swordie.ms.loaders;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.loaders.containerclasses.AndroidInfo;
 import net.swordie.ms.util.Loader;
@@ -8,7 +9,6 @@ import net.swordie.ms.client.character.items.BossSoul;
 import net.swordie.ms.enums.SoulType;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.XMLApi;
-import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 
 import java.io.*;
@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
  * @author Sjonnie
  * Created on 1/4/2019.
  */
+@Slf4j
 public class EtcData {
-    private static final Logger log = Logger.getLogger(EtcData.class);
 
     private static final Map<Integer, AndroidInfo> androidInfo = new HashMap<>();
     private static final Map<Integer, Integer> familiarSkills = new HashMap<>();

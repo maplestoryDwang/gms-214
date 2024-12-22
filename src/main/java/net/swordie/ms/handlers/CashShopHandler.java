@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.Server;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.Client;
@@ -20,7 +21,6 @@ import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.world.shop.cashshop.CashItemInfo;
 import net.swordie.ms.world.shop.cashshop.CashShop;
 import net.swordie.ms.world.shop.cashshop.CashShopItem;
-import org.apache.log4j.Logger;
 
 import static net.swordie.ms.constants.ItemConstants.getRandomRareSSB;
 import static net.swordie.ms.constants.ItemConstants.getRandomSSB;
@@ -28,8 +28,8 @@ import static net.swordie.ms.constants.ItemConstants.getRandomSSB;
 /**
  * Created on 4/23/2018.
  */
+@Slf4j
 public class CashShopHandler {
-    private static final Logger log = Logger.getLogger(CashShopHandler.class);
 
     @Handler(op = InHeader.CASH_SHOP_QUERY_CASH_REQUEST)
     public static void handleCashShopQueryCashRequest(Client c, InPacket inPacket) {

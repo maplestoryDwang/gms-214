@@ -10,6 +10,7 @@ import net.swordie.ms.connection.packet.QuickMoveInfo;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.loaders.EtcData;
 import net.swordie.ms.loaders.ItemData;
+import net.swordie.ms.util.CustomConfigsLoad;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
@@ -21,6 +22,8 @@ import java.util.List;
 
 /**
  * Created on 1/23/2018.
+ *
+ * 游戏配置，
  */
 public class GameConstants {
     public static final int CHANNELS_PER_WORLD = 3;
@@ -31,9 +34,9 @@ public class GameConstants {
     /**
      *
      */
-    public static final int MOB_EXP_RATE = 500;
-    public static final int MOB_MESO_RATE = 1;
-    public static final int MOB_DROP_RATE = 1;
+    public static final int MOB_EXP_RATE = Integer.parseInt(CustomConfigsLoad.getConfig("GameConstants.MOB_EXP_RATE"));
+    public static final int MOB_MESO_RATE = Integer.parseInt(CustomConfigsLoad.getConfig("GameConstants.MOB_MESO_RATE"));;
+    public static final int MOB_DROP_RATE = Integer.parseInt(CustomConfigsLoad.getConfig("GameConstants.MOB_DROP_RATE"));;
 
 
 

@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.user;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.runestones.RuneStone;
@@ -33,16 +34,15 @@ import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.world.field.Field;
 import net.swordie.ms.world.field.fieldeffect.FieldEffect;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static net.swordie.ms.enums.ChatType.*;
 
+@Slf4j
 public class AttackHandler {
 
-    private static final Logger log = Logger.getLogger(AttackHandler.class);
 
     // No handler, gets called from other handlers
     private static void handleAttack(Client c, AttackInfo attackInfo) {

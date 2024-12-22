@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.social;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.User;
 import net.swordie.ms.client.character.BroadcastMsg;
@@ -19,7 +20,6 @@ import net.swordie.ms.loaders.StringData;
 import net.swordie.ms.scripts.ScriptManagerImpl;
 import net.swordie.ms.scripts.ScriptType;
 import net.swordie.ms.util.Util;
-import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -34,9 +34,9 @@ import static net.swordie.ms.enums.ChatType.*;
 import static net.swordie.ms.enums.InvType.EQUIP;
 import static net.swordie.ms.enums.InvType.EQUIPPED;
 
+@Slf4j
 public class ChatHandler {
 
-    private static final Logger log = Logger.getLogger(ChatHandler.class);
 
     @Handler(op = InHeader.USER_CHAT)
     public static void handleUserChat(Client c, InPacket inPacket) {

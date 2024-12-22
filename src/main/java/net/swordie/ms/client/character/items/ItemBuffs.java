@@ -1,20 +1,20 @@
 package net.swordie.ms.client.character.items;
 
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.skills.Option;
 import net.swordie.ms.client.character.skills.temp.TemporaryStatManager;
 import net.swordie.ms.constants.ItemConstants;
 import net.swordie.ms.enums.SpecStat;
 import net.swordie.ms.loaders.ItemData;
-import org.apache.log4j.Logger;
 
 import java.util.Map;
 
 import static net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat.*;
 
+@Slf4j
 public class ItemBuffs {
-    private static final Logger log = Logger.getLogger(ItemBuffs.class);
 
     public static void giveItemBuffsFromItemID(Char chr, TemporaryStatManager tsm, int itemID) {
         Map<SpecStat, Integer> specStats = ItemData.getItemInfoByID(itemID).getSpecStats();

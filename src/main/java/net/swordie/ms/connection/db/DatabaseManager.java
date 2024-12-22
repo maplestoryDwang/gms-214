@@ -1,6 +1,7 @@
 package net.swordie.ms.connection.db;
 
 //import com.mysql.jdbc.Connection;
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.LinkSkill;
 import net.swordie.ms.client.User;
@@ -50,7 +51,6 @@ import net.swordie.ms.world.shop.NpcShopItem;
 import net.swordie.ms.world.shop.cashshop.CashItemInfo;
 import net.swordie.ms.world.shop.cashshop.CashShopCategory;
 import net.swordie.ms.world.shop.cashshop.CashShopItem;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -64,8 +64,8 @@ import java.util.List;
 /**
  * Created on 12/12/2017.
  */
+@Slf4j
 public class DatabaseManager {
-    private static final Logger log = Logger.getLogger(DatabaseManager.class);
     private static final int KEEP_ALIVE_MS = 10 * 60 * 1000; // 10 minutes
 
     private static SessionFactory sessionFactory;
@@ -74,6 +74,15 @@ public class DatabaseManager {
     public static void init() {
         Configuration configuration = new Configuration().configure();
         configuration.setProperty("autoReconnect", "true");
+
+        // 连接池时间
+        configuration.setProperty("hibernate.hikari.maximumPoolSize", "10");
+        configuration.setProperty("hibernate.hikari.minimumIdle", "2");
+        configuration.setProperty("hibernate.hikari.idleTimeout", "30000");
+        configuration.setProperty("hibernate.hikari.connectionTimeout", "30000");
+        configuration.setProperty("hibernate.hikari.maxLifetime", "1800000");
+
+
         Class[] dbClasses = new Class[]{
                 User.class,
                 FileTime.class,

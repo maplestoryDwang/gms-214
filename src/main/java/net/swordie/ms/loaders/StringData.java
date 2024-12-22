@@ -2,7 +2,8 @@ package net.swordie.ms.loaders;
 
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.loaders.containerclasses.SkillStringInfo;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import net.swordie.ms.util.Util;
@@ -22,7 +23,7 @@ public class StringData {
     public static Map<Integer, String> npcStrings = new HashMap<>();
     public static Map<Integer, String> questStrings = new HashMap<>();
 
-    private static final org.apache.log4j.Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getLogger(StringData.class);;
 
     public static Map<Integer, String> getItemStrings() {
         return itemStrings;

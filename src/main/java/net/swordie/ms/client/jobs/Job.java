@@ -1,5 +1,6 @@
 package net.swordie.ms.client.jobs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Account;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.LinkSkill;
@@ -54,7 +55,6 @@ import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.world.field.Field;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
@@ -71,8 +71,8 @@ import static net.swordie.ms.client.jobs.cygnus.Mihile.*;
 /**
  * Created on 1/2/2018.
  */
+@Slf4j
 public abstract class Job {
-    private static final Logger log = Logger.getLogger(Job.class);
     protected Char chr;
     protected Client c;
 

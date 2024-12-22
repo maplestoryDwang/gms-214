@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers.user;
 
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.BroadcastMsg;
 import net.swordie.ms.client.character.Char;
@@ -20,16 +21,15 @@ import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.loaders.containerclasses.MakingSkillRecipe;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class UserStatHandler {
 
-    private static final Logger log = Logger.getLogger(UserStatHandler.class);
 
     @Handler(op = InHeader.USER_SKILL_UP_REQUEST)
     public static void handleUserSkillUpRequest(Client c, InPacket inPacket) {
