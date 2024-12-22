@@ -288,6 +288,7 @@ public class ScriptManagerImpl implements ScriptManager {
         getScriptInfoByType(scriptType).setFileDir(dir);
         StringBuilder script = new StringBuilder();
         script.append("from __future__ import unicode_literals\n\n");
+        script.append("# -*- coding: utf-8 -*-\n");
 
         ScriptEngine se = scriptEngine;
         Bindings bindings = getBindingsByType(scriptType);
