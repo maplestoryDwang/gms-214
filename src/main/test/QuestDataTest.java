@@ -1,5 +1,4 @@
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -9,15 +8,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
 /**
  * Created on 3/2/2018.
  */
+@Slf4j
 public class QuestDataTest {
 
-    static final Logger log = LogManager.getLogger(QuestDataTest.class);
 
 
     private static final Pattern CHINESE_CHAR_PATTERN = Pattern.compile("[\\u4E00-\\u9FFF]");
@@ -29,6 +30,15 @@ public class QuestDataTest {
 
     // 解析 XML 文件为 Document
     private static Document parseXML(File file) throws Exception {
+
+        // 如果不是xml。直接写处出去
+        if (file.getName().indexOf(".xml") == -1) {
+            return null;
+        }
+
+
+
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         return builder.parse(file);
@@ -98,9 +108,11 @@ public class QuestDataTest {
 
 
     static String wzName = "Etc";
-    static String outPath = "E:\\oldmxd\\gms214\\中文\\" + wzName + "\\out\\";
-    static String sourcePath = "E:\\oldmxd\\gms214\\中文\\" + wzName +"\\英语\\";
-    static String targetPath = "E:\\oldmxd\\gms214\\中文\\" +  wzName + "\\简体\\";
+    static String filePath = "E:\\oldmxd\\gms214\\中文\\20241225";
+
+    static String outPath = filePath    + File.separator + wzName + "\\out\\";
+    static String sourcePath = filePath + File.separator + wzName +"\\英语\\";
+    static String targetPath = filePath + File.separator +  wzName + "\\简体\\";
 
     public static void main(String[] args) throws Exception {
 //        String fileName = "QuestInfo.img.xml";
@@ -125,13 +137,6 @@ public class QuestDataTest {
 //        testWZ();
     }
 
-    private static void testWZ() throws Exception {
-        String filePath = "E:\\oldmxd\\gms214\\中文\\Quest\\out\\PQuest.img.xml";
-        Document document = parseXML(new File(filePath));
-        getStringMap(document);
-    }
-
-
     public static void createDirectoryStructure(File sourceDir, File outDir) throws Exception {
         if (!sourceDir.isDirectory()) {
             throw new IllegalArgumentException("源路径必须是文件夹！");
@@ -150,15 +155,23 @@ public class QuestDataTest {
                 createDirectoryStructure(file, newTargetDir);
             } else if (file.isFile()) {
                 String name = file.getName();
-//                String absolutePath = file.getAbsolutePath();
-//                String replace = absolutePath.replace("英语", "简体");
-                File targetFile = new File(targetPath + File.separator + name);
+                String absolutePath = file.getAbsolutePath();
+                String replace = absolutePath.replace("英语", "简体");
+                File targetFile = new File(replace);
+//                File targetFile = new File(targetPath + File.separator + name);
 
                 Document document = updateWZ(file, targetFile);
                 if (document != null) {
 
                     // 将修改后的内容写回文件
                     saveXML(document, new File(outDir, name));
+
+                } else {
+                    // 直接复制源文件
+                    copyFile2(file, new File(outDir, name));
+
+
+
 
                 }
 
@@ -171,6 +184,21 @@ public class QuestDataTest {
 
 
             }
+        }
+    }
+
+    private static void copyFile2(File sourceFile, File destinationFile) {
+        // 创建目标目录（如果不存在）
+        if (!destinationFile.getParentFile().exists()) {
+            destinationFile.getParentFile().mkdirs();
+        }
+
+        try {
+            // 使用 Files.copy 方法复制文件
+            Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("文件复制成功！");
+        } catch (IOException e) {
+            System.out.println("文件复制失败：" + e.getMessage());
         }
     }
 
@@ -187,7 +215,7 @@ public class QuestDataTest {
         String fileName = sourceFile.getName();
         // 就用源文件
         if (!targetFile.exists()) {
-            log.debug(" cant find  " + sourceFile.getAbsolutePath() + " !");
+            log.debug(" cant find  " + targetFile.getAbsolutePath() + " !");
             log.info("=================================================================");
             return parseXML(sourceFile);
         }
