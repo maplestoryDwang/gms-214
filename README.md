@@ -23,3 +23,4 @@ hook和登陆器获取：https://github.com/Toxocious/Moonlight
 1. 为了更新日志版本。使用了lombok，IDEA安装lombok插件、设置搜索打开 Enable annotation processing
 2. IDEA设置项目的resources文件夹。否则读不到配置文件路径
 3. v214.exe 每次重启完服务器都要重新启动
+4. resources/clientFile 放了编译好的hook和launcher 以及 简体中文的汉化
