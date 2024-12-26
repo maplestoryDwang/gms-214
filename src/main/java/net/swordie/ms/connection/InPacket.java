@@ -1,20 +1,64 @@
 package net.swordie.ms.connection;
 
 import io.netty.buffer.*;
+import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
+import net.swordie.ms.handlers.header.InHeader;
+import net.swordie.ms.util.CustomConfigsLoad;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created on 2/18/2017.
  */
+@Slf4j
 public class InPacket extends Packet {
     private final ByteBuf byteBuf;
     private boolean loopback;
     private short packetID;
+
+    // 分析具体包头开关
+    private boolean debugInpacket  = Boolean.parseBoolean(CustomConfigsLoad.getConfig("app.debug.inpacket"));
+
+    List<InHeader> debugHeaderList = Arrays.asList(
+        InHeader.USER_SHOOT_ATTACK
+    );
+
+            /**
+             * todo 后面加别的条件
+             * @return
+             */
+    public boolean debugPacket() {
+        InHeader inHeaderByOp = InHeader.getInHeaderByOp(packetID);
+        boolean debugHeader = debugHeaderList.contains(inHeaderByOp);
+        return debugInpacket && debugHeader;
+    }
+
+    /**
+     * 获取调用的方法
+     * @return
+     */
+    public String getCallerMethodName(String inpacketMethodName, Object result) {
+        // 获取当前线程的调用栈
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        if (stackTrace.length > 3) {
+            StackTraceElement stackTraceElement = stackTrace[3];
+            String methodName = stackTraceElement.getMethodName();
+            String className = stackTraceElement.getClassName();
+            int lineNumber = stackTraceElement.getLineNumber();
+            log.debug("{} {} line:{} cal {} \t result:[{}], leave:{}", className, methodName, lineNumber, inpacketMethodName, result, this);
+            return stackTraceElement.getMethodName();
+        }
+        return "Unknown";
+    }
+
+
+
+
 
     /**
      * Creates a new InPacket with a given buffer.
@@ -23,6 +67,9 @@ public class InPacket extends Packet {
     public InPacket(ByteBuf byteBuf) {
         super(byteBuf.array());
         this.byteBuf = byteBuf.copy();
+        if (debugPacket()) {
+            log.debug("[debug.inpacket]\t InPacket{}", this.toString());
+        }
     }
 
     /**
@@ -60,11 +107,19 @@ public class InPacket extends Packet {
      * @return The byte that has been read.
      */
     public byte decodeByte() {
-        return byteBuf.readByte();
+        byte b = byteBuf.readByte();
+        if (debugPacket()) {
+            getCallerMethodName("decodeByte", b);
+        }
+        return b;
     }
 
     public short decodeUByte() {
-            return byteBuf.readUnsignedByte();
+        short i = byteBuf.readUnsignedByte();
+        if (debugPacket()) {
+            getCallerMethodName("decodeByte", i);
+        }
+        return i;
     }
 
     /**
@@ -77,6 +132,10 @@ public class InPacket extends Packet {
         for(int i = 0; i < amount; i++) {
             arr[i] = byteBuf.readByte();
         }
+        if (debugPacket()) {
+            getCallerMethodName("decodeArr", arr);
+        }
+
         return arr;
     }
 
@@ -85,7 +144,12 @@ public class InPacket extends Packet {
      * @return The integer that has been read.
      */
     public int decodeInt() {
-        return byteBuf.readIntLE();
+        int readIntResult = byteBuf.readIntLE();
+        if (debugPacket()) {
+            getCallerMethodName("decodeInt", readIntResult);
+        }
+        return readIntResult;
+
     }
 
     /**
@@ -93,7 +157,11 @@ public class InPacket extends Packet {
      * @return The short that has been read.
      */
     public short decodeShort() {
-        return byteBuf.readShortLE();
+        short readShortResult = byteBuf.readShortLE();
+        if (debugPacket()) {
+            getCallerMethodName("decodeShort", readShortResult);
+        }
+        return readShortResult;
     }
 
 
@@ -103,8 +171,12 @@ public class InPacket extends Packet {
      * @return The char array as a String
      */
     public String decodeString(int amount) {
-        byte[] bytes = decodeArr(amount);
-        return new String(bytes, ServerConstants.ENCODING);
+        byte[] bytes = decodeArrInner(amount);
+        String strResult = new String(bytes, ServerConstants.ENCODING);
+        if (debugPacket()) {
+            getCallerMethodName("decodeString(int amount)", strResult);
+        }
+        return strResult;
     }
 //    /**
 //     * Reads a char array of a given length of this ByteBuf.
@@ -125,8 +197,12 @@ public class InPacket extends Packet {
      * @return The char array as a String
      */
     public String decodeString() {
-        int amount = decodeShort();
-        return decodeString(amount);
+        int amount = decodeShortInner();
+        String strResult = decodeString(amount);
+        if (debugPacket()) {
+            getCallerMethodName("decodeString()", strResult);
+        }
+        return strResult;
     }
 
     @Override
@@ -140,7 +216,11 @@ public class InPacket extends Packet {
      * @return The long that has been read.
      */
     public long decodeLong() {
-        return byteBuf.readLongLE();
+        long longResult = byteBuf.readLongLE();
+        if (debugPacket()) {
+            getCallerMethodName("decodeLong()", longResult);
+        }
+        return longResult;
     }
 
     /**
@@ -148,7 +228,11 @@ public class InPacket extends Packet {
      * @return The position that has been read.
      */
     public Position decodePosition() {
-        return new Position(decodeShort(), decodeShort());
+        Position position = new Position(decodeShortInner(), decodeShortInner());
+        if (debugPacket()) {
+            getCallerMethodName("decodePosition()", position);
+        }
+        return position;
     }
 
     /**
@@ -156,7 +240,12 @@ public class InPacket extends Packet {
      * @return The position that has been read.
      */
     public Position decodePositionInt() {
-        return new Position(decodeInt(), decodeInt());
+        Position position = new Position(decodeIntInner(), decodeIntInner());
+        if (debugPacket()) {
+            getCallerMethodName("decodePositionInt()", position);
+            log.debug("[debug.inpacket]\t result:[{}], leave:{}", position, this);
+        }
+        return position;
     }
 
     /**
@@ -164,7 +253,11 @@ public class InPacket extends Packet {
      * @return The rectangle that has been read.
      */
     public Rect decodeShortRect() {
-        return new Rect(decodePosition(), decodePosition());
+        Rect rect = new Rect(decodePositionInner(), decodePositionInner());
+        if (debugPacket()) {
+            getCallerMethodName("decodeShortRect()", rect);
+        }
+        return rect;
     }
 
     /**
@@ -172,7 +265,59 @@ public class InPacket extends Packet {
      * @return The rectangle that has been read.
      */
     public Rect decodeIntRect() {
-        return new Rect(decodePositionInt(), decodePositionInt());
+        Rect rect = new Rect(decodePositionIntInner(), decodePositionIntInner());
+        if (debugPacket()) {
+            getCallerMethodName("decodeIntRect()", rect);
+        }
+        return rect;
+    }
+
+
+    /**
+     * ===========================内部调用===========================
+     * @param amount
+     * @return
+     */
+    private byte[] decodeArrInner(int amount) {
+        byte[] arr = new byte[amount];
+        for(int i = 0; i < amount; i++) {
+            arr[i] = byteBuf.readByte();
+        }
+        return arr;
+    }
+
+    /**
+     * Reads a short from the ByteBuf.
+     * @return The short that has been read.
+     */
+    private short decodeShortInner() {
+        return byteBuf.readShortLE();
+    }
+
+
+    /**
+     * Reads an integer from the ByteBuf.
+     * @return The integer that has been read.
+     */
+    private int decodeIntInner() {
+        return byteBuf.readIntLE();
+
+    }
+
+    /**
+     * Reads a position (short x, short y) and returns this.
+     * @return The position that has been read.
+     */
+    private Position decodePositionInner() {
+        return new Position(decodeShortInner(), decodeShortInner());
+    }
+
+    /**
+     * Reads a position (int x, int y) and returns this.
+     * @return The position that has been read.
+     */
+    private Position decodePositionIntInner() {
+        return new Position(decodeIntInner(), decodeIntInner());
     }
 
 
@@ -198,5 +343,9 @@ public class InPacket extends Packet {
 
     public short getPacketID() {
         return packetID;
+    }
+
+    public void setPacketID(short packetID) {
+        this.packetID = packetID;
     }
 }

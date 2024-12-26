@@ -107,8 +107,8 @@ public class QuestDataTest {
 
 
 
-    static String wzName = "Etc";
-    static String filePath = "E:\\oldmxd\\gms214\\中文\\20241225";
+    static String wzName = "UI";
+    static String filePath = "E:\\oldmxd\\gms214\\中文\\";
 
     static String outPath = filePath    + File.separator + wzName + "\\out\\";
     static String sourcePath = filePath + File.separator + wzName +"\\英语\\";

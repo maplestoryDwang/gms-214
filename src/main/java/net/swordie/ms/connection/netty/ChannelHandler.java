@@ -8,17 +8,13 @@ import net.swordie.ms.ServerConstants;
 import net.swordie.ms.client.Client;
 import net.swordie.ms.client.User;
 import net.swordie.ms.client.character.Char;
-import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.util.Util;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -123,25 +119,29 @@ public class ChannelHandler extends SimpleChannelInboundHandler<InPacket> {
             op = c.getEncryptedHeaderToNormalHeaders().getOrDefault(op, InHeader.PRIVATE_SERVER_PACKET.getValue());
         }
         InHeader inHeader = InHeader.getInHeaderByOp(op);
+        inPacket.setPacketID(op);
         if (inHeader == null) {
-            handleUnknown(inPacket, op);
+            handleUnknown(inPacket, op, inHeader);
             return;
         }
-        if (!InHeader.isSpamHeader(InHeader.getInHeaderByOp(op))) {
-            log.debug(String.format("[In]\t| %s, %d/0x%s\t| %s", InHeader.getInHeaderByOp(op), op, Integer.toHexString(op).toUpperCase(), inPacket));
-        }
+
         Method method = handlers.get(inHeader);
         try {
             if (method == null) {
-                handleUnknown(inPacket, op);
+                handleUnknown(inPacket, op, inHeader);
             } else {
                 Class clazz = method.getParameterTypes()[0];
                 try {
                     if (method.getParameterTypes().length == 3) {
+                        printMethodInvokeInfo(op, inPacket, method);
                         method.invoke(this, chr, inPacket, inHeader);
                     } else if (clazz == Client.class) {
+                        printMethodInvokeInfo(op, inPacket, method);
+
                         method.invoke(this, c, inPacket);
                     } else if (clazz == Char.class) {
+                        printMethodInvokeInfo(op, inPacket, method);
+
                         method.invoke(this, chr, inPacket);
                     } else {
                         log.error("Unhandled first param type of handler " + method.getName() + ", type = " + clazz);
@@ -156,10 +156,38 @@ public class ChannelHandler extends SimpleChannelInboundHandler<InPacket> {
         }
     }
 
-    private void handleUnknown(InPacket inPacket, short opCode) {
-        if (!InHeader.isSpamHeader(InHeader.getInHeaderByOp(opCode))) {
-            log.debug(String.format("Unhandled opcode %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
+    private void printMethodInvokeInfo(short op, InPacket inPacket, Method method) {
+
+        InHeader inHeaderByOp = InHeader.getInHeaderByOp(op);
+        if (!InHeader.isSpamHeader(inHeaderByOp)) {
+            log.debug("[In]\t| {}, {}/0x{}\t| {} | {}", inHeaderByOp, op, Integer.toHexString(op), method.getName(), inPacket);
+
+//            log.debug(String.format("[In]\t| %s, %d/0x%s\t| %s", inHeaderByOp, op, Integer.toHexString(op).toUpperCase(), inPacket));
         }
+    }
+
+    /**
+     * 没header和没methods都进的这里，需要区分一下
+     *
+     * @param inPacket
+     * @param opCode
+     * @param inHeader
+     */
+    private void handleUnknown(InPacket inPacket, short opCode, InHeader inHeader) {
+//        if (!InHeader.isSpamHeader(InHeader.getInHeaderByOp(opCode))) {
+//            log.debug(String.format("Unhandled opcode %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
+//        }
+        boolean contains = InHeader.UNKNOW_HEADER.contains(opCode);
+        if (contains) {
+            return;
+        }
+
+        if (inHeader == null) {
+            log.debug(String.format("[Unhandled]\t  %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
+        } else {
+            log.debug(String.format("[method not found!]\t %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
+        }
+        InHeader.UNKNOW_HEADER.add(opCode);
     }
 
     @Override
