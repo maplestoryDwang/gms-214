@@ -25,7 +25,7 @@ public class InPacket extends Packet {
     private boolean debugInpacket  = Boolean.parseBoolean(CustomConfigsLoad.getConfig("app.debug.inpacket"));
 
     List<InHeader> debugHeaderList = Arrays.asList(
-        InHeader.USER_SHOOT_ATTACK
+//        InHeader.USER_SHOOT_ATTACK
     );
 
             /**
