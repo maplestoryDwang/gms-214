@@ -393,6 +393,7 @@ public class AdminCommands {
         }
     }
 
+    // 偷取技能
     @Command(names = {"stealskilllist"}, requiredType = Tester)
     public static class StealSkillList extends AdminCommand {
 

@@ -1302,7 +1302,7 @@ public enum InHeader {
             //  USER_HIT,
             //  USER_EMOTION,
             PASSIVE_SKILL_INFO_UPDATE,
-            USER_CHANGE_STAT_REQUEST,
+//            USER_CHANGE_STAT_REQUEST, 还是要看状态的
             //  SUMMONED_MOVE,
             SPAM_60_SEC,
             USER_TEMPORARY_STAT_UPDATE_REQUEST,

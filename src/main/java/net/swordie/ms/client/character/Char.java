@@ -105,6 +105,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat.*;
+import static net.swordie.ms.enums.AccountType.Player;
 import static net.swordie.ms.enums.ChatType.SpeakerChannel;
 import static net.swordie.ms.enums.ChatType.SystemNotice;
 import static net.swordie.ms.enums.InvType.EQUIP;
@@ -217,6 +218,11 @@ public class Char {
     @JoinColumn(name = "charId")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<MatrixRecord> matrixRecords = new HashSet<>();
+
+    @JoinColumn(name = "charId")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<MatrixEnhanceSlot> matrixEnhanceSlots = new HashSet<>();
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "hyperrockfields", joinColumns = @JoinColumn(name = "charId"))
@@ -1658,7 +1664,7 @@ public class Char {
             for (MatrixRecord mr : activeRecords) {
                 outPacket.encodeInt(matrixRecords.indexOf(mr));
                 outPacket.encodeInt(mr.getPosition()); // slotPos
-                outPacket.encodeInt(0); // nLevel
+                outPacket.encodeInt(getMatrixSlotLevel(mr.getPosition())); // nLevel
                 outPacket.encodeByte(0); // bHide
             }
         }
@@ -1921,8 +1927,53 @@ public class Char {
 
     public List<MatrixRecord> getSortedMatrixRecords() {
         return getMatrixRecords().stream()
-                .sorted(Comparator.comparingLong(MatrixRecord::getId))
+                .sorted(Comparator.comparingLong(MatrixRecord::getIconID)  // 同时比较
+                        .thenComparingLong(MatrixRecord::getId))
                 .collect(Collectors.toList());
+    }
+
+    public List<MatrixRecord> getSortedMatrixRecordsBySkill1() {
+        return getMatrixRecords().stream()
+                .sorted(Comparator.comparingLong(MatrixRecord::getSkillID1))
+                .collect(Collectors.toList());
+    }
+
+
+    /**
+     * 设置使用的V技能坐标
+     */
+    public void positionUpdateMatrixRecords() {
+        var posSortedActiveList = getMatrixRecords().stream().filter(MatrixRecord::isActive).sorted(Comparator.comparingLong(MatrixRecord::getPosition)).toList();
+        for (int i = 0; i < posSortedActiveList.size(); i++) {
+            posSortedActiveList.get(i).setPosition(i);
+        }
+    }
+
+    /**
+     * 获取使用的V仅能坐标
+     * @param pos
+     * @return
+     */
+    public MatrixRecord getActiveSlotMatrixRecord(int pos) {
+        return getMatrixRecords().stream().filter(mr -> mr.isActive() && mr.getPosition() == pos).findFirst().orElse(null);
+    }
+
+
+    /**
+     * 核心槽位等级
+     * @param pos
+     * @return
+     */
+    public int getMatrixSlotLevel(int pos) {
+        return getMatrixEnhanceSlots().stream().filter(mes -> mes.getPosition() == pos).findFirst().map(MatrixEnhanceSlot::getLevel).orElse(0);
+    }
+
+    public Set<MatrixEnhanceSlot> getMatrixEnhanceSlots() {
+        return matrixEnhanceSlots;
+    }
+
+    public void setMatrixEnhanceSlots(Set<MatrixEnhanceSlot> matrixEnhanceSlots) {
+        this.matrixEnhanceSlots = matrixEnhanceSlots;
     }
 
     @Override
@@ -5315,6 +5366,13 @@ public class Char {
             if (getTemporaryStatManager().hasStatBySkillId(RuneStone.LIBERATE_THE_RUNE_OF_SKILL) && cdInMillis > 5000 && !si.isNotCooltimeReset()) {
                 cdInMillis = 5000;
             }
+
+            // todo 管理员5sCD 危险的设置
+            if (getUser().getAccountType().ordinal() >= Player.ordinal()) {
+                cdInMillis = 5000;
+            }
+
+
             if (!hasSkillCDBypass() && cdInMillis > 0) {
                 addSkillCoolTime(skillID, System.currentTimeMillis() + cdInMillis);
             }

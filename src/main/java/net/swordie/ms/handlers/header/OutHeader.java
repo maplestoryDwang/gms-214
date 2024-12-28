@@ -414,7 +414,7 @@ public enum OutHeader {
     NODE_ENHANCE_RESULT(422), // v214
     NODE_DISASSEMBLE_RESULT(423), // v214
     NODE_CRAFT_RESULT(424), // v214
-    NODE_VANISHED(425), // v214
+    NODE_VANISHED(425), // v214  // 特殊核心过期使用
     MATRIX_SPW_RESULT(426), // v214
     AUCTION_MESSAGE(-1), //??
     UNK203_412(427),

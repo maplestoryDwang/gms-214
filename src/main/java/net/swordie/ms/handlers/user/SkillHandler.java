@@ -54,10 +54,7 @@ import net.swordie.ms.util.*;
 import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.field.Field;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -648,14 +645,15 @@ public class SkillHandler {
             log.error(String.format("Unknown matrix udpate request type %d", typeVal));
             return;
         }
+        MatrixRecord mr1;
         switch (type) {
-            case Activate:
+            case Activate -> {
                 int pos = inPacket.decodeInt(); // pos
-                int idk1 = inPacket.decodeInt(); // swapPos
-                int idk2 = inPacket.decodeInt(); // slotPrev
+                int swapPos = inPacket.decodeInt(); // swapPos
+                int slotPre = inPacket.decodeInt(); // slotPrev
                 int toPos = inPacket.decodeInt(); // slot
                 boolean byDrag = inPacket.decodeByte() != 0; // by Dragging Node with the Cursor
-                MatrixRecord mr1 = mrs.get(pos);
+                mr1 = mrs.get(pos);
                 if (pos >= mrs.size()) {
                     return;
                 }
@@ -668,40 +666,47 @@ public class SkillHandler {
                 }
                 if (!mr1.isActive()) {
                     // Check if new position is filled by another Node.
-                    if (idk1 >= 0) {
-                        MatrixRecord oldMR = mrs.get(idk1);
+                    if (swapPos >= 0) {
+                        MatrixRecord oldMR = mrs.get(swapPos);
                         if (oldMR != null) {
-                            if (idk2 < 0) {
+                            if (slotPre < 0) {
                                 oldMR.setActive(false);
                                 oldMR.addSkillsToChar(chr, true);
                             }
-                            oldMR.setPosition(idk2);
+                            oldMR.setPosition(slotPre);
                         }
                     }
                     mr1.activate(chr, pos);
-                    chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
+                    chr.positionUpdateMatrixRecords();
+                    chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
                 }
-                break;
-            case Deactivate: //
-                pos = inPacket.decodeInt();
-                toPos = inPacket.decodeInt();
+
+            }
+            // 不激活
+            case Deactivate -> {
+
+                int pos = inPacket.decodeInt();
+                int toPos = inPacket.decodeInt();
                 if (pos >= 0 && pos < mrs.size()) {
                     mr1 = mrs.get(pos);
                     if (mr1.isActive()) {
                         mr1.setActive(false);
                         mr1.addSkillsToChar(chr, true);
                         mr1.setPosition(toPos);
-                        chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
+                        chr.positionUpdateMatrixRecords();
+                        chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
                     }
                 }
-                break;
-            case Enhance:
+            }
+            // 强化技能
+            case Enhance -> {
+
                 int upgradePos = inPacket.decodeInt();
                 int size = inPacket.decodeInt();
                 MatrixRecord mr = mrs.get(upgradePos);
                 Set<MatrixRecord> removeMrs = new HashSet<>();
                 for (int i = 0; i < size; i++) {
-                    pos = inPacket.decodeInt();
+                    int pos = inPacket.decodeInt();
                     if (pos >= 0 && pos < mrs.size()) {
                         MatrixRecord mr2 = mrs.get(pos);
                         if (!mr2.isActive() && mr2.getIconID() == mr.getIconID()) {
@@ -730,26 +735,81 @@ public class SkillHandler {
                 }
                 chr.getMatrixRecords().removeAll(removeMrs);
                 chr.write(WvsContext.nodeEnhanceResult(upgradePos, exp, oldSlv, mr.getSlv()));
-                chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
-                break;
-            case Disassemble:
-                pos = inPacket.decodeInt();
+                chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
+            }
+
+            // 插槽强化
+            case EnhanceSlot -> {
+
+                final int pos1 = inPacket.decodeInt();
+
+                final Optional<MatrixEnhanceSlot> martrixEnhanceSlot = chr.getMatrixEnhanceSlots().stream().filter(mes -> mes.getPosition() == pos1).findFirst();
+                final MatrixEnhanceSlot enhanceSlot;
+                if (martrixEnhanceSlot.isPresent()) {
+                    enhanceSlot = martrixEnhanceSlot.get();
+                    enhanceSlot.setLevel(enhanceSlot.getLevel() + 1);
+                } else {
+                    enhanceSlot = new MatrixEnhanceSlot(1, pos1);
+                    chr.getMatrixEnhanceSlots().add(enhanceSlot);
+                }
+
+                // update skill lv
+                final MatrixRecord activeMr = chr.getActiveSlotMatrixRecord(pos1);
+                activeMr.updateSkillsToChar(chr);
+
+                chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
+            }
+            // 强化槽位重置
+            case EnhanceReset ->{
+
+                if (chr.getMoney() >= 1000000) {
+                    chr.deductMoney(1000000);
+                    chr.getMatrixEnhanceSlots().clear();
+
+                    // update skill lv
+                    chr.getMatrixRecords().stream().filter(MatrixRecord::isActive).forEach(mrecord -> mrecord.updateSkillsToChar(chr));
+
+                    chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
+                }
+            }
+            // 分解
+            case Disassemble ->{
+                int pos = inPacket.decodeInt();
+                ArrayList<MatrixRecord> disassembles = new ArrayList<>();
+                if (mrs.size() == 1) {
+                    chr.chatMessage("at least have single node!");
+                    return;
+                }
+
                 if (pos >= 0 && pos < mrs.size()) {
-                    mr = mrs.get(pos);
+                    MatrixRecord mr = mrs.get(pos);
                     int shards = VCoreData.getNodeInfo(mr).getExtract();
                     chr.addNodeShards(shards);
                     chr.getMatrixRecords().remove(mr);
                     chr.write(WvsContext.nodeDisassembleResult(shards));
+                    disassembles.add(mr);
+                    mr.updateSkillsToChar(chr);
                 }
-                break;
-            case DisassembleGroup:
-                size = inPacket.decodeInt();
-                removeMrs = new HashSet<>();
+                chr.write(WvsContext.matrixUpdate(chr, true, 0, 1));  // 高亮不移动
+//                chr.write(WvsContext.matrixUpdate(chr, true, 0, 2));   // 光标移动之前一个
+//                chr.write(WvsContext.matrixUpdate(chr, true, 0, 5));
+
+
+            }
+            // 组分解
+            case DisassembleGroup -> {
+                int size = inPacket.decodeInt();
+                if (mrs.size() == size) {
+                    chr.chatMessage("at least have single node!");
+                    return;
+                }
+
+                Set<MatrixRecord> removeMrs = new HashSet<>();
                 int shards = 0;
                 for (int i = 0; i < size; i++) {
-                    pos = inPacket.decodeInt();
+                    int pos = inPacket.decodeInt();
                     if (pos >= 0 && pos < mrs.size()) {
-                        mr = mrs.get(pos);
+                        MatrixRecord mr = mrs.get(pos);
                         if (!mr.isActive()) {
                             removeMrs.add(mr);
                             shards += VCoreData.getNodeInfo(mr).getExtract();
@@ -759,8 +819,13 @@ public class SkillHandler {
                 chr.getMatrixRecords().removeAll(removeMrs);
                 chr.addNodeShards(shards);
                 chr.write(WvsContext.nodeDisassembleResult(shards));
-                break;
-            case CraftNode:
+                if (!chr.getMatrixRecords().isEmpty()) {
+                    chr.write(WvsContext.matrixUpdate(chr, true, 0, 1));  // 高亮不移动
+                }
+            }
+
+            case CraftNode -> {
+
                 int iconID = inPacket.decodeInt();
                 int shardCost = GameConstants.getNodeCreateShardCost(iconID);
                 List<VCoreInfo> infos = new ArrayList<>(VCoreData.getPossibilitiesByJob(chr.getJob()));
@@ -774,42 +839,46 @@ public class SkillHandler {
                     chr.chatMessage("You don't have enough node shards.");
                     return;
                 }
-                mr = new MatrixRecord();
-                mr.setIconID(vci.getIconID());
-                mr.setMaxLevel(vci.getMaxLevel());
-                mr.setSkillID1(vci.getSkillID());
-                mr.setSlv(1);
-                if (vci.isEnforce()) {
-                    for (int i = 0; i < 2; i++) {
-                        VCoreInfo randVci = Util.getRandomFromCollection(infos.stream().filter(VCoreInfo::isEnforce).collect(Collectors.toList()));
-                        infos.remove(randVci);
-                        switch (i) {
-                            case 0:
-                                mr.setSkillID2(randVci.getSkillID());
-                                break;
-                            case 1:
-                                mr.setSkillID3(randVci.getSkillID());
-                                break;
+                int craftLen = inPacket.decodeInt();
+                for (int j = 0; j < craftLen; j++) {
+                    MatrixRecord mr = new MatrixRecord();
+                    mr.setIconID(vci.getIconID());
+                    mr.setMaxLevel(vci.getMaxLevel());
+                    mr.setSkillID1(vci.getSkillID());
+                    mr.setSlv(1);
+                    if (vci.isEnforce()) {
+                        for (int i = 0; i < 2; i++) {
+                            VCoreInfo randVci = Util.getRandomFromCollection(infos.stream().filter(VCoreInfo::isEnforce).collect(Collectors.toList()));
+                            infos.remove(randVci);
+                            switch (i) {
+                                case 0:
+                                    mr.setSkillID2(randVci.getSkillID());
+                                    break;
+                                case 1:
+                                    mr.setSkillID3(randVci.getSkillID());
+                                    break;
+                            }
                         }
                     }
+                    chr.addNodeShards(-shardCost);
+                    chr.getMatrixRecords().add(mr);
+                    chr.write(WvsContext.nodeCraftResult(mr));
                 }
-                chr.addNodeShards(-shardCost);
-                chr.getMatrixRecords().add(mr);
-                chr.write(WvsContext.nodeCraftResult(mr));
-                chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), true, typeVal, 0));
-                break;
-            case CraftNodestone:
+
+                chr.write(WvsContext.matrixUpdate(chr, true, typeVal, 0));
+            }
+            case CraftNodestone -> {
                 Npc npc = (Npc) chr.getField().getLifeByTemplateId(1540945); // Archelle
                 chr.getScriptManager().startScript(npc.getTemplateId(), npc.getObjectId(), "craft_nodestone", ScriptType.Npc);
-                break;
-            case Swap: //
+            }
+            case Swap -> {
                 int switcher_id = inPacket.decodeInt(); // the main node that is dragged
                 int switched_id = inPacket.decodeInt(); // one that is automatically swapped as well
                 int fromPos = inPacket.decodeInt();
                 int toPos1 = inPacket.decodeInt();
 
                 if (switcher_id >= 0 && switcher_id < mrs.size()) {
-                    mr = mrs.get(switcher_id);
+                    MatrixRecord mr = mrs.get(switcher_id);
                     mr.addSkillsToChar(chr, true); // remove Skill
                     mr.setPosition(toPos1);
                     mr.addSkillsToChar(chr, false); // add Skill
@@ -819,10 +888,10 @@ public class SkillHandler {
                         otherMr.setPosition(fromPos);
                         otherMr.addSkillsToChar(chr, false); // add Skill
                     }
-                    chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), true, typeVal, switcher_id));
+                    chr.write(WvsContext.matrixUpdate(chr, true, typeVal, switcher_id));
                 }
-                break;
-            case ExpandSlot:
+            }
+            case ExpandSlot -> {
                 int slot = inPacket.decodeInt();
                 inPacket.decodeInt(); // Always -1
                 int[] aSlotPrice = {0, 0, 0, 0, 25900000, 30800000, 36400000, 43400000, 51800000, 60900000, 72100000,
@@ -833,7 +902,6 @@ public class SkillHandler {
                 int nLevelGap = nReqLevel - chr.getLevel();
                 switch (nLevelGap) {
                     case 1:
-                        dSlotOneMultiplier = 1.0;
                         break;
                     case 2:
                         dSlotOneMultiplier = 1.3656;
@@ -865,12 +933,15 @@ public class SkillHandler {
                 }
                 double dPrice = aSlotPrice[slot] * (nLevelGap <= 5 ? dSlotOneMultiplier : dSlotTwoMultiplier);
                 chr.deductMoney((long) dPrice);
-                chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
-                break;
-            default:
+                chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
+            }
+            default->{
+
                 log.error(String.format("Unhandled matrix udpate request type %s", type));
+                chr.write(WvsContext.matrixUpdate(chr, false, 0, 0)); // Note: This needs to be in each case cause params are not the same
+            }
         }
-        chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0)); // Note: This needs to be in each case cause params are not the same
+//        chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0)); // Note: This needs to be in each case cause params are not the same
     }
 
     @Handler(op = InHeader.SHOOT_OBJECT_CREATE_REQUEST)

@@ -14,6 +14,38 @@
         <Logger name="org.hibernate.SQL" level="off"/>
         <Logger name="org.hibernate.type" level="off"/>
 
+<!--        &lt;!&ndash; 配置 Hibernate 核心日志 &ndash;&gt;-->
+<!--        <logger name="org.hibernate">-->
+<!--            &lt;!&ndash; Hibernate 核心日志级别 &ndash;&gt;-->
+<!--            <level value="DEBUG" />-->
+<!--            <appender-ref ref="console" />-->
+<!--        </logger>-->
+
+        <!-- Hibernate SQL 日志 -->
+<!--        <logger name="org.hibernate.SQL">-->
+<!--            &lt;!&ndash; 仅输出执行的 SQL 语句 &ndash;&gt;-->
+<!--            <level value="DEBUG" />-->
+<!--            <appender-ref ref="console" />-->
+<!--        </logger>-->
+
+<!--        &lt;!&ndash; Hibernate 参数绑定日志 &ndash;&gt;-->
+<!--        <logger name="org.hibernate.type.descriptor.sql.BasicBinder">-->
+<!--            &lt;!&ndash; 显示绑定的具体参数 &ndash;&gt;-->
+<!--            <level value="TRACE" />-->
+<!--            <appender-ref ref="console" />-->
+<!--        </logger>-->
+
+<!--        &lt;!&ndash; 屏蔽 TwoPhaseLoad 等日志 &ndash;&gt;-->
+<!--        <logger name="org.hibernate.loader.plan.exec.process.internal.TwoPhaseLoad">-->
+<!--            <level value="OFF" />-->
+<!--        </logger>-->
+
+<!--        &lt;!&ndash; 屏蔽其他 Hibernate 内部日志 &ndash;&gt;-->
+<!--        <logger name="org.hibernate">-->
+<!--            &lt;!&ndash; 设置为 WARN，避免干扰 &ndash;&gt;-->
+<!--            <level value="WARN" />-->
+<!--        </logger>-->
+
         <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>

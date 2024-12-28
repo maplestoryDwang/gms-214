@@ -22,10 +22,7 @@ import net.swordie.ms.client.character.potential.CharacterPotential;
 import net.swordie.ms.client.character.quest.Quest;
 import net.swordie.ms.client.character.quest.QuestManager;
 import net.swordie.ms.client.character.quest.progress.*;
-import net.swordie.ms.client.character.skills.ChosenSkill;
-import net.swordie.ms.client.character.skills.MatrixRecord;
-import net.swordie.ms.client.character.skills.Skill;
-import net.swordie.ms.client.character.skills.StolenSkill;
+import net.swordie.ms.client.character.skills.*;
 import net.swordie.ms.client.character.union.Union;
 import net.swordie.ms.client.character.union.UnionBoard;
 import net.swordie.ms.client.character.union.UnionMember;
@@ -138,6 +135,7 @@ public class DatabaseManager {
                 Alliance.class,
                 DropInfo.class,
                 MatrixRecord.class,
+                MatrixEnhanceSlot.class,
                 Offense.class,
                 OffenseManager.class,
                 NpcShopItem.class,

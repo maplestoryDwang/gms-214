@@ -1,5 +1,9 @@
 package net.swordie.ms.enums;
 
+/**
+ * 玩家类型 user.accountType
+ * 4 是管理员
+ */
 public enum AccountType {
     Player(0),
     Tester(1 << 5),

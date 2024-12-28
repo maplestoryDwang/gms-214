@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
@@ -38,6 +39,19 @@ public class FileTime implements Serializable {
 	public void setConvertedForClient(boolean convertedForClient) {
 		isConvertedForClient = convertedForClient;
 	}
+
+	public static FileTime getNow() {
+		long currentTimeMillis = System.currentTimeMillis(); // 获取当前时间毫秒值
+		int lowDateTime = (int) currentTimeMillis;           // 截取低 32 位
+		int highDateTime = (int) (currentTimeMillis >>> 32); // 截取高 32 位
+		FileTime fileTime = new FileTime(lowDateTime, highDateTime);
+
+		// 打印验证
+		System.out.println("Start Time (Low Date Time): " + fileTime.getLowDateTime());
+		System.out.println("End Time (High Date Time): " + fileTime.getHighDateTime());
+		return fileTime;
+	}
+
 
     public enum Type {
 		// Mushy

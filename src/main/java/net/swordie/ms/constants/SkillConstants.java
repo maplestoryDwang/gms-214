@@ -1767,7 +1767,7 @@ public class SkillConstants {
             case Noblesse.PHALANX_CHARGE:
             case ThunderBreaker.LIGHTNING_CASCADE:
             case ThunderBreaker.SHARK_TORPEDO:
-            case 400041020:
+            case NightLord.SHURRIKANE:
             case 400011004:
             case Cannonneer.BIG_HUGE_GIGANTIC_ROCKET:
             case Buccaneer.LORD_OF_THE_DEEP:
@@ -1990,7 +1990,7 @@ public class SkillConstants {
             case 400051008:
             case 400051016:
             case 400041034:
-            case 400041020:
+            case NightLord.SHURRIKANE:
             case 400041016:
             case 400021078:
             case 400021080:

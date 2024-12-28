@@ -38,3 +38,163 @@
 ------------------------ 2024-12-22 16:02:31 ------------------------
 �.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|4|MAJOR|214|MINOR|1|DATETIME|2033/01/08 03:23:08|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|1|Time1|1833809485|Time2|1833809478|LastLoadData in ETC(COM error)|Etc/InstanceTable.img|Etc/StarStampEvent.img|Etc/PlantPot2.img|Etc/NavalWarfare.img|Etc/NotShowRemoteSkill.img|Etc/RuneStone.img/arrow2/notice2|Etc/RuneStone.img/arrow/notice2|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/RuneStone.img/arrow2/notice3|Etc/RuneStone.img/arrow/notice3|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/APCPvpData.img|UI/Basic.img/Cursor/4|Etc/11thEvent.img|Etc/11thEvent.img|UI/MapleTV.img/TVmedia|UI/Basic.img/Cursor/1/0|Sound/UI.img/BtMouseOver|..
 
+
+------------------------ 2024-12-22 23:26:39 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/22 17:25:52|NAME|VIP|JOB|412|FID|105200000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|1860482220|Time2|1860462460|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-26 01:27:32 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQpg.Invalid Decoding..PacketDump : Major|214|Minor|1|DataLen|4|Type(USHORT)|1926|23 92 27 92 86 07 27 0a ..
+
+
+------------------------ 2024-12-26 22:38:48 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp,.ELog|4|MAJOR|214|MINOR|1|DATETIME|2024/12/26 22:38:15|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||52.37.193.138|State|1|Time1|169899749|Time2|169899700|LastLoadData in ETC(COM error)|UI/Login.img/WorldSelect/BtChannel/release/layer:18|UI/Login.img/WorldSelect/BtChannel/gauge|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/APCPvpData.img|UI/Login.img/WorldSelect/worldNotice/0|UI/Login.img/WorldSelect/BtChannel/button:10/normal/0|UI/Login.img/WorldSelect/BtChannel/button:30/normal/0|UI/Login.img/WorldSelect/BtChannel/button:11/normal/0|UI/Login.img/WorldSelect/BtChannel/button:31/normal/0|UI/Login.img/WorldSelect/BtChannel/button:12/normal/0|UI/Login.img/WorldSelect/BtChannel/button:32/normal/0|UI/Login.img/WorldSelect/BtChannel/button:13/normal/0|UI/Login.img/WorldSelect/BtChannel/button:33/normal/0|UI/Login.img/WorldSelect/BtChannel/button:14/normal/0|UI/Login.img/WorldSelect/BtChannel/button:34/normal/0|UI/Login.img/WorldSelect/BtChannel/button:15/normal/0|Etc/11thEvent.img|Etc/11thEvent.img|UI/MapleTV.img/TVmedia|..
+
+
+------------------------ 2024-12-26 23:37:15 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/26 17:36:39|NAME|VIP|JOB|412|FID|701100000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|173404055|Time2|173397558|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-27 00:40:06 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/27 00:39:13|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||52.37.193.138|State|2|Time1|177157218|Time2|177157188|throw CTerminateException|-|1444|HR|570425346|notThrow|false|10054|0||..
+
+
+------------------------ 2024-12-27 00:53:18 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/26 18:52:38|NAME|VIP|JOB|412|FID|701100000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|177962753|Time2|177956327|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-27 01:14:30 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/26 19:13:03|NAME|VIP|JOB|412|FID|701100000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|179187332|Time2|179180408|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-27 01:40:19 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/26 19:19:59|NAME|VIP|JOB|412|FID|701100000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|179603465|Time2|179596721|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 00:41:06 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|4|MAJOR|214|MINOR|1|DATETIME|2024/12/28 00:40:33|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||34.215.62.60|State|1|Time1|263637744|Time2|263637748|LastLoadData in ETC(COM error)|Etc/ChewChewFoodTruck.img/merchant|Etc/mapleUnion.img/RaidInfo/attackPower|Etc/InstanceTable.img|Etc/StarStampEvent.img|Etc/PlantPot2.img|Etc/NavalWarfare.img|Etc/NotShowRemoteSkill.img|Etc/RuneStone.img/arrow2/notice2|Etc/RuneStone.img/arrow/notice2|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/RuneStone.img/arrow2/notice3|Etc/RuneStone.img/arrow/notice3|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/APCPvpData.img|UI/Basic.img/Cursor/12|Etc/11thEvent.img|Etc/11thEvent.img|UI/MapleTV.img/TVmedia|..
+
+
+------------------------ 2024-12-28 10:19:59 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 10:18:54|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName|VIP|35.167.153.201|State|5|Time1|4054721|Time2|4049628|throw CTerminateException|-|1444|HR|570425346|notThrow|false|10054|0||..
+
+
+------------------------ 2024-12-28 10:27:56 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 04:27:09|NAME|VIP|JOB|412|FID|701100000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|4550304|Time2|4543582|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 10:28:51 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|4|MAJOR|214|MINOR|1|DATETIME|2024/12/28 10:28:22|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|1|Time1|4623033|Time2|4623023|LastLoadData in ETC(COM error)|Etc/StarStampEvent.img|Etc/PlantPot2.img|Etc/NavalWarfare.img|Etc/NotShowRemoteSkill.img|Etc/RuneStone.img/arrow2/notice2|Etc/RuneStone.img/arrow/notice2|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/RuneStone.img/arrow2/notice3|Etc/RuneStone.img/arrow/notice3|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/APCPvpData.img|UI/Basic.img/Cursor/4|Etc/11thEvent.img|Etc/11thEvent.img|UI/MapleTV.img/TVmedia|UI/Basic.img/Cursor/1/0|UI/Basic.img/Cursor/1/1|UI/Basic.img/Cursor/4|..
+
+
+------------------------ 2024-12-28 10:51:37 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 04:50:53|NAME|VIP|JOB|412|FID|103000000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|5974819|Time2|5956700|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 11:45:02 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 05:42:12|NAME|VIP|JOB|412|FID|220000000|WID|1|Channel|1|LastUseName||54.68.160.34|State|5|Time1|9053974|Time2|9045339|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 12:21:33 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 06:00:06|NAME|VIP|JOB|412|FID|220000000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|10127823|Time2|10118823|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 12:49:17 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|4|MAJOR|214|MINOR|1|DATETIME|2024/12/28 12:48:47|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||52.37.193.138|State|1|Time1|13047865|Time2|13047830|LastLoadData in ETC(COM error)|UI/UIToolTip.img/Item/Equip/Growth/Guage/itemLev/abled/0|UI/UISpinOff.img/spinOffResult/Guage/itemLev/abled/0|UI/UIToolTip.img/Item/Equip/Growth/Guage/itemLev/abled/1|UI/UISpinOff.img/spinOffResult/Guage/itemLev/abled/1|UI/UIWindow2.img/SkillZero/main/Lock/0|UI/UIWindow4.img/GrowHelp/Tooltip|UI/UIWindow2.img/navigation/tooltip/text|UI/UIToolTip.img/Item/Equip/GrowthWedding/Guage/0/0|UI/UIToolTip.img/Item/Equip/GrowthWedding/Guage/itemLev/abled/0|UI/UISpinOff.img/spinOffResult/Guage/itemLev/abled/0|UI/UIToolTip.img/Item/Equip/GrowthWedding/Guage/itemLev/abled/1|UI/UISpinOff.img/spinOffResult/Guage/itemLev/abled/1|UI/Login.img/WorldSelect/BtChannel/button:9|UI/Login.img/WorldSelect/BtChannel/button:9/normal/0|UI/Login.img/WorldSelect/BtChannel/button:9/normal/0|UI/Login.img/WorldSelect/BtChannel/button:9/normal/0|UI/Login.img/WorldSelect/BtChannel/button:9/normal/0|UI/Login.img/WorldSelect/BtChannel/button:9/normal/0|UI/Login.img/WorldSelect/BtChannel/button:9/normal/0|UI/Login.img/WorldSelect/BtChannel/button:9|..
+
+
+------------------------ 2024-12-28 12:57:04 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 06:54:25|NAME|VIP|JOB|412|FID|220000000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|13386104|Time2|13379443|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 13:11:39 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 07:11:02|NAME|VIP|JOB|412|FID|220000000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|14383741|Time2|14372552|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 07:11:02|NAME|VIP|JOB|412|FID|220000000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|14383749|Time2|14372552|throw CTerminateException|-|2483|HR|570425345|notThrow|false|-|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 07:11:05|NAME|VIP|JOB|412|FID|220000000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|14386719|Time2|14372552|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 14:42:01 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 08:41:13|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|19794778|Time2|19788087|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 15:24:10 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 09:23:25|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|22326531|Time2|22319744|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 15:38:03 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 09:36:59|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|2|LastUseName||54.68.160.34|State|5|Time1|23140517|Time2|23133624|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 15:55:12 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 09:53:52|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|24153891|Time2|24138389|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 18:16:28 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 12:15:30|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|32651538|Time2|32643350|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 19:07:28 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 13:06:41|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|1|LastUseName||54.68.160.34|State|5|Time1|35722448|Time2|35715687|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 19:20:13 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 13:19:29|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|36490225|Time2|36483365|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 19:42:41 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQpl.Invalid Decoding..PacketDump : Major|214|Minor|1|DataLen|6|Type(USHORT)|420|f1 5c f7 5c a4 01 00 00 00 00 ..
+
+
+------------------------ 2024-12-28 19:43:32 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|4|MAJOR|214|MINOR|1|DATETIME|2024/12/28 19:43:00|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||35.167.153.201|State|1|Time1|37901603|Time2|37901592|LastLoadData in ETC(COM error)|Etc/InstanceTable.img|Etc/StarStampEvent.img|Etc/PlantPot2.img|Etc/NavalWarfare.img|Etc/NotShowRemoteSkill.img|Etc/RuneStone.img/arrow2/notice2|Etc/RuneStone.img/arrow/notice2|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/RuneStone.img/arrow2/notice3|Etc/RuneStone.img/arrow/notice3|Etc/RuneStone.img/arrow2/base|Etc/RuneStone.img/arrow2/base2|Etc/APCPvpData.img|UI/Basic.img/Cursor/4|UI/Basic.img/Cursor/1/0|Etc/11thEvent.img|Etc/11thEvent.img|UI/MapleTV.img/TVmedia|Sound/UI.img/BtMouseClick|..
+
+
+------------------------ 2024-12-28 19:48:01 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp`.Invalid Decoding..PacketDump : Major|214|Minor|1|DataLen|2|Type(USHORT)|420|a3 13 a1 13 a4 01 ..
+
+
+------------------------ 2024-12-28 20:01:11 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 14:00:17|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|38938126|Time2|38925856|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 20:05:03 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 20:04:18|NAME|(null)|JOB|-1|FID|999999999|WID|0|Channel|0|LastUseName||52.37.193.138|State|2|Time1|39179584|Time2|39179596|throw CTerminateException|-|1444|HR|570425346|notThrow|false|10054|0||..
+
+
+------------------------ 2024-12-28 20:22:32 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 14:21:17|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|40198352|Time2|40190726|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 21:58:59 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 15:46:13|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|45294831|Time2|45279470|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 22:24:22 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 16:23:14|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|1|LastUseName|VIP|54.68.160.34|State|5|Time1|47515502|Time2|47500035|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 22:39:58 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 16:38:38|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName|VIP|54.68.160.34|State|5|Time1|48439877|Time2|48428767|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 22:45:08 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 16:44:11|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|48772234|Time2|48765196|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 22:55:47 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 16:54:59|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|49420757|Time2|49413966|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 23:18:09 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 17:16:26|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|50707389|Time2|50704431|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 17:16:26|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|50707396|Time2|50704431|throw CTerminateException|-|2483|HR|570425345|notThrow|false|-|..ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 17:16:29|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|50710338|Time2|50704431|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 23:24:53 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 17:23:39|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|51140529|Time2|51133521|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 23:29:30 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 17:28:09|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|0|LastUseName||54.68.160.34|State|5|Time1|51410101|Time2|51403250|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2024-12-28 23:33:31 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2024/12/28 17:31:52|NAME|VIP|JOB|412|FID|450001000|WID|1|Channel|1|LastUseName||54.68.160.34|State|5|Time1|51633534|Time2|51626782|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+

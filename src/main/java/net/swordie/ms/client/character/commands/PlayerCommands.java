@@ -137,7 +137,7 @@ public class PlayerCommands {
                 //chr.write(WvsContext.nodestoneOpenResult(mr));*/
                 chr.getMatrixRecords().add(mr);
             }
-            chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
+            chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
         }
     }
 

@@ -96,6 +96,7 @@ public class ItemConstants {
 
     public static final short MAX_HAMMER_SLOTS = 2;
 
+    // 前端脚本使用
     public static final int NODESTONE = 2436324; // 2435719;
 
     public static boolean isBlockedCSItem(int itemID) {

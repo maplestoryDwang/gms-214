@@ -184,6 +184,9 @@ public class Summoned {
         OutPacket outPacket = new OutPacket(OutHeader.SUMMONED_ATTACK);
 
         outPacket.encodeInt(charID);
+        if (ai.summon == null) {
+            return null;
+        }
         outPacket.encodeInt(ai.summon.getObjectId());
 
         outPacket.encodeInt(ai.summon.getCharLevel());

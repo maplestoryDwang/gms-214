@@ -27,6 +27,8 @@ public class MatrixRecord implements Encodable {
     private int skillID3;
     private int slv;
     private int maxLevel;
+
+    @Column(name = "`row`")
     private int row;
     private int exp;
     private long crc;
@@ -179,13 +181,18 @@ public class MatrixRecord implements Encodable {
                     skill = SkillData.getSkillDeepCopyById(skillID);
                     skill.setCurrentLevel(0);
                 }
-                skill.setCurrentLevel(remove ? skill.getCurrentLevel() - getSlv() : skill.getCurrentLevel() + getSlv());
+                int skillCurrentLevel = remove ? 0 : skill.getCurrentLevel() + getSlv() + chr.getMatrixSlotLevel(getPosition());
+                skill.setCurrentLevel(skillCurrentLevel);
                 chr.addSkill(skill);
                 chr.write(WvsContext.changeSkillRecordResult(skill));
             }
         }
     }
 
+    public void updateSkillsToChar(Char chr) {
+        addSkillsToChar(chr, true);
+        addSkillsToChar(chr, false);
+    }
 
     public int getPosition() {
         return position;

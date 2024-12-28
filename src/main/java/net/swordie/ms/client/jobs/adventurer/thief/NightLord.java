@@ -67,6 +67,7 @@ public class NightLord extends Thief {
     // V skills
     public static final int DARK_LORDS_OMEN = 400041038;
     public static final int THROWING_STAR_BARRAGE = 400041001;
+    public static final int SHURRIKANE = 400041020; // 风魔手里剑
 
     public NightLord(Char chr) {
         super(chr);
@@ -241,6 +242,10 @@ public class NightLord extends Thief {
         for (MobAttackInfo mai : attackInfo.mobAttackInfo) {
             int randomInt = new Random().nextInt((360 / starCount) - 1);
             Mob mob = (Mob) field.getLifeByObjectID(mai.mobId);
+            // maybe mob die
+            if (mob == null) {
+                continue;
+            }
             MobTemporaryStat mts = mob.getTemporaryStat();
 
             if (mts.hasBurnFromSkillAndOwner(skill.getSkillId(), chr.getId())) {

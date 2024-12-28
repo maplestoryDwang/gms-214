@@ -68,6 +68,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -3127,7 +3128,7 @@ public class ScriptManagerImpl implements ScriptManager {
             mr.setSkillID1(400001000);
             chr.getMatrixRecords().add(mr);
             chr.write(WvsContext.nodestoneOpenResult(mr));
-            chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
+            chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
         } else if (id == 2438411 || id == 2438412) {
             MatrixRecord mr = new MatrixRecord();
             mr.setIconID(10000024);
@@ -3136,7 +3137,7 @@ public class ScriptManagerImpl implements ScriptManager {
             mr.setSkillID1(400001039);
             chr.getMatrixRecords().add(mr);
             chr.write(WvsContext.nodestoneOpenResult(mr));
-            chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
+            chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
         } else {
             List<VCoreInfo> infos = new ArrayList<>(VCoreData.getPossibilitiesByJob(chr.getJob()));
             int rng = Util.getRandom(99);
@@ -3147,13 +3148,16 @@ public class ScriptManagerImpl implements ScriptManager {
             } else {
                 infos = infos.stream().filter(VCoreInfo::isSpecial).collect(Collectors.toList());
             }
+            VCoreInfo vci = null;
             MatrixRecord mr = new MatrixRecord();
             for (int i = 0; i < 3; i++) {
-                VCoreInfo vci = Util.getRandomFromCollection(infos);
-                infos.remove(Util.findWithPred(infos, v -> v.getIconID() == vci.getIconID()));
+                vci = Util.getRandomFromCollection(infos);
+                // 去掉重复的
+                int iconID = vci.getIconID();
+                infos.remove(Util.findWithPred(infos, v -> v.getIconID() == iconID));
                 switch (i) {
                     case 0:
-                        mr.setIconID(vci.getIconID());
+                        mr.setIconID(iconID);
                         mr.setMaxLevel(vci.getMaxLevel());
                         mr.setSkillID1(vci.getSkillID());
                         mr.setSlv(1);
@@ -3171,9 +3175,18 @@ public class ScriptManagerImpl implements ScriptManager {
                         break;
                 }
             }
+
+            // 添加过期时间
+            if (vci.isSpecial()) {
+                Instant now = Instant.now();
+                long epochMilli = now.toEpochMilli();
+                FileTime fileTime = FileTime.getNow();
+                mr.setExpireDate(fileTime);
+            }
+
             chr.getMatrixRecords().add(mr);
             chr.write(WvsContext.nodestoneOpenResult(mr));
-            chr.write(WvsContext.matrixUpdate(chr.getSortedMatrixRecords(), false, 0, 0));
+            chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
         }
     }
     public void hireTutor(boolean set) {

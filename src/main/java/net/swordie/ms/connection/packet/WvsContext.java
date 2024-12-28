@@ -25,12 +25,10 @@ import net.swordie.ms.client.jobs.resistance.WildHunterInfo;
 import net.swordie.ms.client.party.Party;
 import net.swordie.ms.client.party.PartyMember;
 import net.swordie.ms.client.party.PartyResult;
-import net.swordie.ms.connection.ByteBufOutPacket;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.constants.ItemConstants;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.handlers.header.OutHeader;
-import net.swordie.ms.loaders.ItemData;
 import net.swordie.ms.util.AntiMacro;
 import net.swordie.ms.util.FileTime;
 import net.swordie.ms.util.Position;
@@ -712,6 +710,11 @@ public class WvsContext {
         return outPacket;
     }
 
+    /**
+     * 打开界面
+     * @param succeed
+     * @return
+     */
     public static OutPacket matrixSPWResult(boolean succeed) {
         OutPacket outPacket = new OutPacket(OutHeader.MATRIX_SPW_RESULT);
         outPacket.encodeInt(2);
@@ -1195,6 +1198,7 @@ public class WvsContext {
         return outPacket;
     }
 
+    @Deprecated
     public static OutPacket matrixUpdate(List<MatrixRecord> matrixRecords, boolean remove, int removeType, int removeArg) {
         OutPacket outPacket = new OutPacket(OutHeader.MATRIX_UPDATE);
 
@@ -1218,6 +1222,51 @@ public class WvsContext {
 
         return outPacket;
     }
+
+    /**
+     * 核心消失
+     */
+    public static OutPacket matrixVANISSHED(Char chr, ArrayList<MatrixRecord> disassembles) {
+        OutPacket outPacket = new OutPacket(OutHeader.NODE_VANISHED);
+        outPacket.encodeInt(disassembles.size());
+        for (MatrixRecord mr : disassembles) {
+            outPacket.encode(mr);
+        }
+        return outPacket;
+    }
+
+    public static OutPacket matrixUpdate(Char chr, boolean remove, int removeType, int removeArg) {
+        List<MatrixRecord> matrixRecords = chr.getSortedMatrixRecords();
+        // 设置一下position试试
+
+        OutPacket outPacket = new OutPacket(OutHeader.MATRIX_UPDATE);
+
+        outPacket.encodeInt(matrixRecords.size());
+        for (MatrixRecord mr : matrixRecords) {
+            outPacket.encode(mr);
+        }
+
+
+        final List<MatrixRecord> activeRecords = matrixRecords.stream().filter(MatrixRecord::isActive).sorted(Comparator.comparingLong(MatrixRecord::getPosition)).toList();
+        outPacket.encodeInt(activeRecords.size());
+        for (MatrixRecord mr : activeRecords) {
+            System.out.println("slotLevel: " + mr.getPosition() + " " + chr.getMatrixSlotLevel(mr.getPosition()));
+            outPacket.encodeInt(matrixRecords.indexOf(mr));
+            outPacket.encodeInt(mr.getPosition());
+            outPacket.encodeInt(chr.getMatrixSlotLevel(mr.getPosition())); // nLevel
+            outPacket.encodeByte(1); // bHide
+        }
+        outPacket.encodeByte(remove);
+        outPacket.encodeInt(removeType);
+
+
+        if (removeType == 0) {
+            outPacket.encodeInt(removeArg);
+        }
+
+        return outPacket;
+    }
+
 
     public static OutPacket nodestoneOpenResult(MatrixRecord mr) {
         OutPacket outPacket = new OutPacket(OutHeader.NODE_STONE_OPEN_RESULT);
