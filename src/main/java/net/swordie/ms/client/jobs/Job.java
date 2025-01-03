@@ -283,10 +283,12 @@ public abstract class Job {
         SkillInfo si = null;
         boolean hasHitMobs = attackInfo.mobAttackInfo.size() > 0;
         int slv = 0;
+//        int skillLevel = 0;
         if (skill != null) {
             si = SkillData.getSkillInfoById(skill.getSkillId());
-            slv = (byte) skill.getCurrentLevel();
-            skillID = skill.getSkillId();
+//            slv = (byte) skill.getCurrentLevel();
+              skillID = skill.getSkillId();
+            slv = chr.getSkillLevel(skillID);
         }
 
         // Recovery Rune  HP Recovery
@@ -545,6 +547,16 @@ public abstract class Job {
                         summon = Summon.getSummonBy(c.getChr(), skillID, slv);
                         summon.setMoveAbility(MoveAbility.Stop);
                         field.spawnSummon(summon);
+                        break;
+                    case DECENT_MYSTIC_DOOR_V:
+//                        o1.nOption = 70;
+//                        o1.rOption = 4111002;
+//                        o1.tOption = 200;
+//                        tsm.putCharacterStatValue(ShadowPartner, o1);
+                        o1.nOption = 70;
+                        o1.rOption = skillID;
+                        o1.tOption = 200;
+                        tsm.putCharacterStatValue(ShadowPartner, o1);
                         break;
                 }
             }

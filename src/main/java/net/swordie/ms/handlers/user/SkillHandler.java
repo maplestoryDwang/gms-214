@@ -333,10 +333,14 @@ public class SkillHandler {
         if (skillID == 20038001 || skillID == 8001 || skillID == 60018001 || skillID == 40028001 || skillID == 160008001 || skillID == 30008001 || skillID == 110008001 ||
                 skillID == 20028001 || skillID == 60008001 || skillID == 140008001 || skillID == 10008001 || skillID == 30018001 || skillID == 150018001 || skillID == 20018001 || skillID == 20058001
                 || skillID == 30028001 || skillID == 20008001 || skillID == 20048001 || skillID == 150008001 || skillID == 60028001 || skillID == 40018001 || skillID == 100008001 || skillID == 2311002 ||
-                skillID == 50008001 || skillID == 130008001 || skillID == 400001001) {
+                skillID == 50008001 || skillID == 130008001 ) {
             chr.write(WvsContext.broadcastMsg(BroadcastMsg.popUpMessage("This skill is currently disabled.")));
             chr.dispose();
             return;
+        }
+
+        if(skillID == 400001001) {
+            System.out.println("传送门");
         }
 
         // if (skillID == DarkKnight.RADIANT_EVIL) {
@@ -678,7 +682,7 @@ public class SkillHandler {
                     }
                     mr1.activate(chr, pos);
                     chr.positionUpdateMatrixRecords();
-                    chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
+                    chr.write(WvsContext.matrixUpdate(chr, true, 0, 1));  // 高亮不移动
                 }
 
             }
@@ -694,7 +698,7 @@ public class SkillHandler {
                         mr1.addSkillsToChar(chr, true);
                         mr1.setPosition(toPos);
                         chr.positionUpdateMatrixRecords();
-                        chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
+                        chr.write(WvsContext.matrixUpdate(chr, true, 0, 1));  // 高亮不移动
                     }
                 }
             }

@@ -463,7 +463,14 @@ public class MobTemporaryStat {
 		addStatOptionsAndBroadcast(mobStat, o);
 	}
 
+	// + 捆绑cd
+	public long lastStunEndTime = 0;
 	public void addStatOptions(MobStat mobStat, Option option) {
+		// 90sec stun coolTime
+		if (mobStat == Stun && System.currentTimeMillis() - lastStunEndTime < 90000) {
+			return;
+		}
+
 		if (!option.isInMillis()) {
 			option.tTerm *= 1000;
 			option.tOption *= 1000;
@@ -480,7 +487,10 @@ public class MobTemporaryStat {
 			if (getSchedules().containsKey(mobStat)) {
 				getSchedules().get(mobStat).cancel(true);
 			}
-			ScheduledFuture sf = EventManager.addEvent(() -> removeMobStat(mobStat, true), tAct);
+			ScheduledFuture sf = EventManager.addEvent(() -> {
+				removeMobStat(mobStat, true);
+				lastStunEndTime = System.currentTimeMillis();
+			}, tAct);
 			getSchedules().put(mobStat, sf);
 		}
 	}
