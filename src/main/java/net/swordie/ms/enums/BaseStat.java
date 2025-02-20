@@ -445,7 +445,13 @@ public enum BaseStat {
             case IndieArcaneForce:
                 stats.put(arc, o.nValue);
                 break;
-
+            case Dice:
+                if (o.nOption == 6) {
+                    stats.put(expR, 30);
+                } else {
+                    stats.put(unk, o.nOption);
+                }
+                break;
 				
             default:
                 stats.put(unk, o.nOption);

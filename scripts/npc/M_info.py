@@ -4,7 +4,7 @@ else:
     sm.setReturnField(chr.getFieldID())
     options = ["你需要我的帮助!"]
 
-    options2 = ["城镇地图","自由市场","Boss入口","跳跳地图"]
+    options2 = ["城镇地图","自由市场","Boss入口","跳跳地图", "练级地图"]
 
     maps = [
     [
@@ -30,10 +30,48 @@ else:
     [
                280020000, 910130000, 220000006, 100000202, 921110000, 992017000, 910360000
     ], #Jump Quests
+    [
+        [100040300, 10],
+        [310030310, 20],
+        [120041100, 30],
+        [400010400, 40],
+        [102030000, 45],
+        [102040301, 55],
+        [105010000, 60],
+        [200010200, 70],
+        [211040200, 75],
+        [260020600, 85],
+        [261020600, 90],
+        [240010000, 100],
+        [240010600, 100],
+        [220020600, 110],
+        [224000100, 120],
+        [220060201, 115, 26],
+        [224000142, 140],
+        [211042200, 130, 55],
+        [240040320, 135, 65],
+        [240040512, 135, 70],
+        [103041119, 150, 80],
+        [103041129, 150, 80],
+        [801040004, 169],
+        [402000125, 170],
+        [221030610, 170],
+        [221030660, 170, 140],
+        [273010000, 180],
+        [273040100, 180],
+        [410000123, 185],
+        [310070140, 190],
+        [450001000, 200],
+        [450002000, 210],
+        [450003000, 220],
+        [450005000, 230],
+        [450006130, 235],
+        [450007040, 240],
+    ],  # Leveling Maps
 
     ]
 
-    list = "我可以带你去 #b城镇, #dBoss#k or #r跳跳地图#k !"
+    list = "我可以带你去 #b城镇, #dBoss#k or #r跳跳地图#k  #r练级地图#k!"
     i = 0
     while i < len(options):
         list += "\r\n#b#L" +unicode(i)+ "#" + unicode(options[i])
@@ -56,12 +94,20 @@ else:
             while i < len(maps[ans1]):
                 list += "\r\n#L" + unicode(i) + "##b" + unicode(maps[ans1][i][1])
                 i += 1
+        elif ans1 == 4:  # leveling maps
+            while i < len(maps[ans1]):
+                list += "\r\n#L" + unicode(i) + "##b#m" + unicode(maps[ans1][i][0]) + "# : " + unicode(maps[ans1][i][1]) + " Lv"
+                if len(maps[ans1][i]) == 3:
+                    list += ", 需要星之力： " + unicode(maps[ans1][i][2])
+                i += 1
         else: # town/monster maps
             while i < len(maps[ans1]):
                 list += "\r\n#L" + unicode(i) + "##b#m" + unicode(maps[ans1][i]) + "#"
                 i += 1
         ans2 = sm.sendNext(list)
         if ans1 == 2: # boss maps
+            sm.warp(maps[ans1][ans2][0], 1)
+        if ans1 == 4: # boss maps
             sm.warp(maps[ans1][ans2][0], 1)
         else:
             sm.warp(maps[ans1][ans2], 0)

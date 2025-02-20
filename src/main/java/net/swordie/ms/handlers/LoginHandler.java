@@ -404,7 +404,7 @@ public class LoginHandler {
             if (!Util.isStringBCrypt(user.getPic())) {
                 user.setPic(BCrypt.hashpw(user.getPic(), BCrypt.gensalt(ServerConstants.BCRYPT_ITERATIONS)));
             }
-            if (BCrypt.checkpw(pic, user.getPic())) {
+//            if (BCrypt.checkpw(pic, user.getPic())) {
                 Char chr = acc.getCharById(charId);
                 if (chr != null) {
                     acc.removeChar(chr);
@@ -412,9 +412,9 @@ public class LoginHandler {
                 } else {
                     c.write(Login.sendDeleteCharacterResult(charId, LoginType.UnauthorizedUser));
                 }
-            } else {
+//            } else {
                 c.write(Login.selectCharacterResult(LoginType.IncorrectPassword, (byte) 0, 0, 0));
-            }
+//            }
         }
         // TODO: Update database when deleting a character.
     }

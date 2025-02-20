@@ -824,7 +824,8 @@ public class SkillHandler {
                 chr.addNodeShards(shards);
                 chr.write(WvsContext.nodeDisassembleResult(shards));
                 if (!chr.getMatrixRecords().isEmpty()) {
-                    chr.write(WvsContext.matrixUpdate(chr, true, 0, 1));  // 高亮不移动
+//                    chr.write(WvsContext.matrixUpdate(chr, true, 0, 1));  // 高亮不移动
+                    chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
                 }
             }
 

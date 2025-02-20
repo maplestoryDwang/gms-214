@@ -7,8 +7,8 @@ speaker = 2007 # maple administrator
 
 sm.setSpeakerID(speaker)
 sm.removeEscapeButton()
-sm.sendNext("Welcome to the world of " + server_name + "!")
-sm.sendNext("I will now send you to the player hub to start your adventure!")
+sm.sendNext("欢迎你来到： " + server_name + "!")
+sm.sendNext("我会把你送到出生地，然后开始你的冒险！对了我还会给你一些新手礼包")
 sm.warpToHub()
 sm.doJobStart() # handles job start based on job
 chr.giveStartingItems()

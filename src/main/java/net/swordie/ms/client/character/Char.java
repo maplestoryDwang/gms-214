@@ -3700,6 +3700,7 @@ public class Char {
             getGuild().addCommitmentToChar(this, (int) Math.min(amount, Integer.MAX_VALUE)); // independant of any xp buffs
         }
         long incExp = eii == null ? amount : eii.getIncEXP();
+        // 计算buff增加的经验值
         int expFromExpR = (int) (incExp * (getTotalStat(BaseStat.expR) / 100D));
         amount += expFromExpR;
         int level = getLevel();
@@ -5183,7 +5184,7 @@ public class Char {
             // Stat gained by passives
             stat += getBaseStats().getOrDefault(baseStat, 0L);
             // Stat gained by buffs
-            int ctsStat = getTemporaryStatManager().getBaseStats().getOrDefault(baseStat, 0);
+           int ctsStat = getTemporaryStatManager().getBaseStats().getOrDefault(baseStat, 0);
             stat += ctsStat;
             // Stat gained by the stat's corresponding "per level" value
             if (baseStat.getLevelVar() != null) {

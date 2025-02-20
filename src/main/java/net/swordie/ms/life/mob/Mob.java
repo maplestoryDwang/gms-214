@@ -1515,7 +1515,7 @@ public class Mob extends Life {
         }
         getDamageDone().put(chr, cur);
     }
-
+    // 经验计算
     public void distributeExp() {
         long exp = getForcedMobStat().getExp();
         long totalDamage = getDamageDone().values().stream().mapToLong(l -> l).sum();

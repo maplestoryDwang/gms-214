@@ -185,6 +185,16 @@ public class MatrixRecord implements Encodable {
                 skill.setCurrentLevel(skillCurrentLevel);
                 chr.addSkill(skill);
                 chr.write(WvsContext.changeSkillRecordResult(skill));
+
+                if (skillID == 400051000) {
+                    skillID = 400051001;
+                    skill = SkillData.getSkillDeepCopyById(skillID);
+                    skill.setCurrentLevel(0);
+                    skillCurrentLevel = remove ? 0 : skill.getCurrentLevel() + getSlv() + chr.getMatrixSlotLevel(getPosition());
+                    skill.setCurrentLevel(skillCurrentLevel);
+                    chr.addSkill(skill);
+                    chr.write(WvsContext.changeSkillRecordResult(skill));
+                }
             }
         }
     }
