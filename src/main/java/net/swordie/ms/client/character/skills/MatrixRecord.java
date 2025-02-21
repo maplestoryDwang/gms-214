@@ -5,6 +5,7 @@ import net.swordie.ms.connection.Encodable;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.connection.db.converters.FileTimeConverter;
 import net.swordie.ms.connection.packet.WvsContext;
+import net.swordie.ms.constants.JobConstants;
 import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.loaders.containerclasses.VCoreInfo;
 import net.swordie.ms.util.FileTime;
@@ -186,7 +187,10 @@ public class MatrixRecord implements Encodable {
                 chr.addSkill(skill);
                 chr.write(WvsContext.changeSkillRecordResult(skill));
 
-                if (skillID == 400051000) {
+
+                // 奇袭者、雅克、幻影、力天使、煎饼。才有这个技能
+                if (skillID == 400051000 && (JobConstants.isThunderBreaker(chr.getJob()) || JobConstants.isArk(chr.getJob()) || JobConstants.isHidden(chr.getJob()) || JobConstants.isAngelicBuster(chr.getJob()) || JobConstants.isXenon(chr.getJob()))) {
+
                     skillID = 400051001;
                     skill = SkillData.getSkillDeepCopyById(skillID);
                     skill.setCurrentLevel(0);
