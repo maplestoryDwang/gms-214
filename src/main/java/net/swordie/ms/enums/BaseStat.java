@@ -4,6 +4,7 @@ import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.skills.Option;
 import net.swordie.ms.client.character.skills.info.ToBaseStat;
 import net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat;
+import org.python.indexer.Def;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -446,7 +447,16 @@ public enum BaseStat {
                 stats.put(arc, o.nValue);
                 break;
             case Dice:
-                if (o.nOption == 6) {
+                if (o.nOption == 2) {
+                    stats.put(pddR, 30);
+                } else if (o.nOption == 3) {
+                    stats.put(mhpR, 20);
+                    stats.put(mmpR, 20);
+                } else if (o.nOption == 4) {
+                    stats.put(cr, 15);
+                } else if (o.nOption == 5) {
+                    stats.put(damR, 20);
+                } else if (o.nOption == 6) {
                     stats.put(expR, 30);
                 } else {
                     stats.put(unk, o.nOption);
