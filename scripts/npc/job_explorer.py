@@ -4,15 +4,15 @@ speaker = 2007 # maple administrator
 
 # JobOptions: { string jobName, string jobDesc, int jobId }
 options = [
-    ["Warrior", "powerful and defensive", 100],
-    ["Bowman", "long-ranged and controlled", 300],
-    ["Magician", "intelligent and magical", 200],
-    ["Thief", "speedy and sneaky", 400],
-    ["Pirate", "fancy and unique", 500],
+    ["战士", "powerful and defensive", 100],
+    ["弓箭手", "long-ranged and controlled", 300],
+    ["魔法师", "intelligent and magical", 200],
+    ["飞侠", "speedy and sneaky", 400],
+    ["海盗", "fancy and unique", 500],
     ["Jett", "Not like the other heroes", 508],
 ]
 
-optionText = "It's time for you to pick a job!\r\nAs an #bExplorer#k, you have the option of the " + str(len(options)) + " following options:"
+optionText = "是时候选择你的职业了!\r\n作为一个 #b冒险家#k, 你可以选择下面 " + str(len(options)) + " 种职业:"
 
 for idx, job in enumerate(options):
     optionText += "\r\n#b#L" + str(job[2]) + "#" + job[0] + "#k, " + job[1] + "#l"
