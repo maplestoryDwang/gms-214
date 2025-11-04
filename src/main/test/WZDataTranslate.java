@@ -172,7 +172,7 @@ public class WZDataTranslate {
     }
 
     // 解析 XML 文件为 Document
-    private static Document parseXML(File file) throws Exception {
+    public static Document parseXML(File file) throws Exception {
 
         // 如果不是xml。直接写处出去
         if (file.getName().indexOf(".xml") == -1) {
