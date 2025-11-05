@@ -11,9 +11,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class ServerConstants {
 	public static final String DIR = System.getProperty("user.dir");
+	public static final String SYS_WZ_DIR = System.getProperty("user.wz") == null ? DIR : System.getProperty("user.wz");
 	public static final byte LOCALE = 8;
-	public static final String WZ_DIR = DIR + "/wz";
-	public static final String DAT_DIR = DIR + "/dat";
+	public static final String WZ_DIR = SYS_WZ_DIR + "/wz";
+	public static final String DAT_DIR = SYS_WZ_DIR + "/dat";
 	public static final int MAX_CHARACTERS = JobConstants.LoginJob.values().length * 3;
 	public static final String SCRIPT_DIR = DIR + "/scripts";
 	public static final String RESOURCES_DIR = DIR + "/resources";
