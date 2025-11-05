@@ -156,7 +156,7 @@ public class WvsContext {
         return outPacket;
     }
 
-
+    // 道具操作
     public static OutPacket inventoryOperation(boolean exclRequest, boolean notRemoveAddInfo, InventoryOperation type, short oldPos, short newPos,
                                                int bagPos, Item item) {
         // ignoreExcl if a pet picks up an item

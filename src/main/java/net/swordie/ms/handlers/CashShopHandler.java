@@ -49,7 +49,7 @@ public class CashShopHandler {
 //            c.write(CCashShop.error());
             return;
         }
-        log.debug("Received CASH_SHOP_CASH_ITEM_REQUEST: "+ inPacket);
+        log.debug("Received CASH_SHOP_CASH_ITEM_REQUEST: {}, packet:{}",cit,  inPacket);
         switch (cit) {
             case Req_Buy:
                 inPacket.decodeByte();
@@ -106,10 +106,15 @@ public class CashShopHandler {
                     return;
                 }
                 CashItemInfo cii = csi.toCashItemInfo(account);
-//                DatabaseManager.saveToDB(cii); // ensures the item has a unique ID
-//                trunk.addCashItem(cii);
-                chr.addItemToInventory(cii.getItem());
-                account.addNXCredit(-cost);
+
+                DatabaseManager.saveToDB(cii); // ensures the item has a unique ID
+                trunk.addCashItem(cii);
+
+                // 下面这个会直接放到背包里面
+//                chr.addItemToInventory(cii.getItem());
+//                account.addNXCredit(-cost);
+
+
                 c.write(CCashShop.cashItemResBuyDone(cii, null, null, 0));
                 c.write(CCashShop.queryCashResult(chr));
                 break;

@@ -176,6 +176,8 @@ public class Item implements Serializable, Encodable {
         }
         outPacket.encodeFT(getDateExpire());
         outPacket.encodeInt(-1); // bagIndex if it's in a bag
+        // 虚函数end
+
         outPacket.encodeByte(0); // new 196
         if (getType() == Type.ITEM) { // bundle
             outPacket.encodeShort(getQuantity()); // nQuantity

@@ -245,9 +245,27 @@ public class CCashShop {
         outPacket.encodeByte(CashItemType.Res_MoveLtoS_Done.getVal());
         outPacket.encodeByte(true); // bExclRequestSent
         outPacket.encodeShort(item.getBagIndex());
-        item.encode(outPacket);
+
+
+        // GW_ItemSlotBase
+        int itemId = item.getItemId();
+        outPacket.encodeByte(item.getType().getVal());
+        outPacket.encodeInt(itemId);
+        outPacket.encodeByte(item.isCash());
+        if (item.isCash()) {
+            outPacket.encodeLong(item.getId());  // sid
+        }
+        FileTime fileTime = FileTime.fromType(FileTime.Type.MAX_TIME);
+        outPacket.encodeLong(fileTime.toLong() * 10000L + 116444736000000000L);
+        outPacket.encodeInt(item.getBagIndex()); // bagIndex if it's in a bag
+        // 虚函数end
+//        item.encode(outPacket);
+
         outPacket.encodeInt(0); // List of SNs (longs)
-        outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)
+        outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)  CInPacket::Decode1(thisa);
+
+
+
 
         return outPacket;
     }
