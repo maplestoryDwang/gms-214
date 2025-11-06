@@ -139,6 +139,7 @@ public class CashShopHandler {
                 trunk.getLocker().remove(cii);
                 chr.addItemToInventory(item);
                 c.write(CCashShop.resMoveLtoSDone(item));
+                c.write(CCashShop.queryCashResult(chr));
                 break;
             case Req_MoveStoL:
                 itemSn = inPacket.decodeLong();

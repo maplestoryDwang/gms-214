@@ -77,6 +77,25 @@ public class CashItemInfo implements Encodable {
         }
     }
 
+    public void encode2(OutPacket outPacket) {
+        // size 102
+        outPacket.encodeLong(item.getId());
+        outPacket.encodeInt(getAccountID());
+        outPacket.encodeInt(getCharacterID());
+        outPacket.encodeInt(item.getItemId());
+        outPacket.encodeInt(getCommodityID());
+        outPacket.encodeShort(item.getQuantity());
+        outPacket.encodeString(getBuyCharacterID(), 13); // gifter
+        outPacket.encodeFT(item.getDateExpire());
+        outPacket.encodeInt(getPaybackRate());
+        outPacket.encodeLong((long) getDiscount());
+        outPacket.encodeInt(getOrderNo());
+        outPacket.encodeInt(getProductNo());
+        outPacket.encodeByte(isRefundable());
+        outPacket.encodeByte(getSourceFlag());
+        outPacket.encodeByte(isStoreBank());
+    }
+
     public int getAccountID() {
         return accountID;
     }

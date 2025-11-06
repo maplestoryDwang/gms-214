@@ -168,11 +168,12 @@ public class Item implements Serializable, Encodable {
     public void encode(OutPacket outPacket) {
         int itemId = getItemId();
         outPacket.encodeByte(getType().getVal());
+
         // GW_ItemSlotBase
         outPacket.encodeInt(itemId);
         outPacket.encodeByte(isCash());
         if (isCash()) {
-            outPacket.encodeLong(getId());
+            outPacket.encodeLong(getId());  //设置8字节的SN
         }
         outPacket.encodeFT(getDateExpire());
         outPacket.encodeInt(-1); // bagIndex if it's in a bag

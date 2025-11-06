@@ -44,7 +44,9 @@ public class CCashShop {
         OutPacket outPacket = new OutPacket(OutHeader.CASH_SHOP_CASH_ITEM_RESULT);
 
         outPacket.encodeByte(CashItemType.Res_Buy_Done.getVal());
-        cashItemInfo.encode(outPacket);
+        cashItemInfo.encode2(outPacket);
+        outPacket.encodeByte(false);
+
         boolean hasRegisterDate = registerDate != null;
         outPacket.encodeInt(hasRegisterDate ? 1 : 0);
         if (hasRegisterDate) {
@@ -239,33 +241,46 @@ public class CCashShop {
         return outPacket;
     }
 
+
     public static OutPacket resMoveLtoSDone(Item item) {
         OutPacket outPacket = new OutPacket(OutHeader.CASH_SHOP_CASH_ITEM_RESULT);
 
         outPacket.encodeByte(CashItemType.Res_MoveLtoS_Done.getVal());
         outPacket.encodeByte(true); // bExclRequestSent
         outPacket.encodeShort(item.getBagIndex());
+        item.encode(outPacket);
+        outPacket.encodeInt(0); // List of SNs (longs)
+        outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)
+
+        return outPacket;
+    }
+    public static OutPacket resMoveLtoSDone2(Item item) {
+        OutPacket outPacket = new OutPacket(OutHeader.CASH_SHOP_CASH_ITEM_RESULT);
+//        outPacket.encodeByte(CashItemType.Res_MoveLtoS_Done.getVal());
+        outPacket.encodeByte(39);// 包头错误
 
 
-        // GW_ItemSlotBase
+        outPacket.encodeByte(true); // bExclRequestSent  是否要查询CASH_SHOP
+        outPacket.encodeShort(item.getBagIndex());
+//        item.encode(outPacket);
+
+
+        // GW_ItemSlotBase::decode
         int itemId = item.getItemId();
         outPacket.encodeByte(item.getType().getVal());
+
+        // (*(*v7 + 344))(v7, a2);
         outPacket.encodeInt(itemId);
         outPacket.encodeByte(item.isCash());
         if (item.isCash()) {
-            outPacket.encodeLong(item.getId());  // sid
+            outPacket.encodeLong(item.getId());  //设置8字节的SN
         }
-        FileTime fileTime = FileTime.fromType(FileTime.Type.MAX_TIME);
-        outPacket.encodeLong(fileTime.toLong() * 10000L + 116444736000000000L);
-        outPacket.encodeInt(item.getBagIndex()); // bagIndex if it's in a bag
-        // 虚函数end
-//        item.encode(outPacket);
+        outPacket.encodeFT(FileTime.fromType(FileTime.Type.MAX_TIME));
+//        outPacket.encodeLong(150842304000000000L);
+        outPacket.encodeInt(-1); // bagIndex if it's in a bag
 
         outPacket.encodeInt(0); // List of SNs (longs)
-        outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)  CInPacket::Decode1(thisa);
-
-
-
+        outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)
 
         return outPacket;
     }

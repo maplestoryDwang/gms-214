@@ -1867,11 +1867,13 @@ public abstract class Job {
         }
 
         // starter consumables
+        // 新手礼包
         Item powerElixir = ItemData.getItemDeepCopy(2000005);
         powerElixir.setQuantity(200);
         chr.addItemToInventory(powerElixir);
         Item hyperTp = ItemData.getItemDeepCopy(5040004);
         chr.addItemToInventory(hyperTp);
+        // gms轮回
         Item frenzyTotem = ItemData.getItemDeepCopy(1202236);
         chr.addItemToInventory(frenzyTotem);
     }

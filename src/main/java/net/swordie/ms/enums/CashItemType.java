@@ -63,6 +63,9 @@ public enum CashItemType {
     Req_TradeLog(54),
     Req_CharacterSale(55),
     Req_SellCashItemBundleToShop(56),
+
+
+
     Req_Refund(57),
     Req_ConfirmRefund(58),
     Req_CancelRefund(59),
@@ -122,9 +125,9 @@ public enum CashItemType {
     Res_IncBuyCharCount_Failed(31),
     Res_EnableEquipSlotExt_Done(36),
     Res_EnableEquipSlotExt_Failed(37),
-    Res_MoveLtoS_Done(38),
-    Res_MoveLtoS_Failed(39),
-    Res_MoveStoL_Done(40),
+    Res_MoveLtoS_Done(39),
+    Res_MoveLtoS_Failed(40),
+    Res_MoveStoL_Done(41),
     Res_MoveStoL_Failed(41),
     Res_Destroy_Done(42),
     Res_Destroy_Failed(43),

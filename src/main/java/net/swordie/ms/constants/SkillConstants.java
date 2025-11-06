@@ -1729,7 +1729,8 @@ public class SkillConstants {
     }
 
     public static int getTotalActiveHyperSpByLevel(short level) {
-        return level < 140 ? 0 : level < 170 ? 1 : level < 200 ? 2 : 3;
+//        return level < 140 ? 0 : level < 170 ? 1 : level < 200 ? 2 : 3;
+        return level < 140 ? 0 : level < 160 ? 1 : level < 190 ? 2 : 3;
     }
 
     public static boolean isGuildSkill(int skillID) {
@@ -1981,7 +1982,8 @@ public class SkillConstants {
     }
 
     public static int getHyperActiveSkillSpByLv(int level) {
-        return level == 150 || level == 170 || level == 200 ? 1 : 0;
+//        return level == 150 || level == 170 || level == 200 ? 1 : 0;
+        return level == 140 || level == 160 || level == 190 ? 1 : 0;
     }
 
     public static boolean isSomeFifthSkillForRemote(int skillId) {

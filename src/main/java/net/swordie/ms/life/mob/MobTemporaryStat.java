@@ -614,7 +614,7 @@ public class MobTemporaryStat {
 		bi.setLastUpdate(Util.getCurrentTime());
 		bi.setEnd((int) (System.currentTimeMillis() + time));
 		long damage = bi.getDamage();
-		if (bis != null && bis.size() >= maxDotStacks) {
+		if (bis != null && bis.size() > maxDotStacks) {
 			// replace the oldest one by a new one
 			BurnedInfo toRemove = bis.get(0);
 			removeBurnedInfo(toRemove, false);
