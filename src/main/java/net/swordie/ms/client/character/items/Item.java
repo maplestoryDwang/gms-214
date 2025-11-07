@@ -169,7 +169,7 @@ public class Item implements Serializable, Encodable {
         int itemId = getItemId();
         outPacket.encodeByte(getType().getVal());
 
-        // GW_ItemSlotBase
+        // GW_ItemSlotBase::rawDecode  需要看上面是什么type 1 equip 2 bundle 3 pet
         outPacket.encodeInt(itemId);
         outPacket.encodeByte(isCash());
         if (isCash()) {
@@ -177,7 +177,6 @@ public class Item implements Serializable, Encodable {
         }
         outPacket.encodeFT(getDateExpire());
         outPacket.encodeInt(-1); // bagIndex if it's in a bag
-        // 虚函数end
 
         outPacket.encodeByte(0); // new 196
         if (getType() == Type.ITEM) { // bundle

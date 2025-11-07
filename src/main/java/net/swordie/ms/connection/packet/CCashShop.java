@@ -248,37 +248,7 @@ public class CCashShop {
         outPacket.encodeByte(CashItemType.Res_MoveLtoS_Done.getVal());
         outPacket.encodeByte(true); // bExclRequestSent
         outPacket.encodeShort(item.getBagIndex());
-        item.encode(outPacket);
-        outPacket.encodeInt(0); // List of SNs (longs)
-        outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)
-
-        return outPacket;
-    }
-    public static OutPacket resMoveLtoSDone2(Item item) {
-        OutPacket outPacket = new OutPacket(OutHeader.CASH_SHOP_CASH_ITEM_RESULT);
-//        outPacket.encodeByte(CashItemType.Res_MoveLtoS_Done.getVal());
-        outPacket.encodeByte(39);// 包头错误
-
-
-        outPacket.encodeByte(true); // bExclRequestSent  是否要查询CASH_SHOP
-        outPacket.encodeShort(item.getBagIndex());
-//        item.encode(outPacket);
-
-
-        // GW_ItemSlotBase::decode
-        int itemId = item.getItemId();
-        outPacket.encodeByte(item.getType().getVal());
-
-        // (*(*v7 + 344))(v7, a2);
-        outPacket.encodeInt(itemId);
-        outPacket.encodeByte(item.isCash());
-        if (item.isCash()) {
-            outPacket.encodeLong(item.getId());  //设置8字节的SN
-        }
-        outPacket.encodeFT(FileTime.fromType(FileTime.Type.MAX_TIME));
-//        outPacket.encodeLong(150842304000000000L);
-        outPacket.encodeInt(-1); // bagIndex if it's in a bag
-
+        item.encode(outPacket);   // GW_ItemSlotBase::Decode
         outPacket.encodeInt(0); // List of SNs (longs)
         outPacket.encodeByte(0); // Bonus cash item (CashItemInfo::Decode)
 
