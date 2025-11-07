@@ -36,4 +36,4 @@ if sm.getFieldID() == 120040000:
             sm.warpInstanceIn(destinations[response][2], True)
             sm.setInstanceTime(20*60)
             sleep(1)
-            sm.spawnMob(9420620, -500, 116, False, 200000000)
+            sm.spawnMob(9420620, -500, 116, False, 200)

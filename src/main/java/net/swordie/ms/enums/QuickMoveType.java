@@ -9,12 +9,12 @@ public enum QuickMoveType {
     MonsterPark(1),
     DimensionalPortal(2),
     FreeMarket(3),
-    Ardentmill(4),
+    Ardentmill(4),   // 匠人街
     Boat(5),
     Taxi(6),
     Baret(7),
     Cat(8),
-    Dojo(9),
+    Dojo(9), // 道场
     SpinningGlasses(10),
     BlueKnightOfCygnusWoman(11),
     BlueKnightOfCygnusMan(12),

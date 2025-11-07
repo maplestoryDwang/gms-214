@@ -344,7 +344,7 @@ public class GameConstants {
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
         quickMoveInfos.add(new QuickMoveInfo(0, 9000035, QuickMoveType.Boat, 1, "万能NPC", false,
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
-        quickMoveInfos.add(new QuickMoveInfo(0, 1092014, QuickMoveType.Taxi, 0, "Taxi", false,
+        quickMoveInfos.add(new QuickMoveInfo(0, 1092014, QuickMoveType.Taxi, 0, "叫车", false,
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
         quickMoveInfos.add(new QuickMoveInfo(0, 9000038, QuickMoveType.Cat, 0, "VP / DP Shop", false,
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
@@ -356,8 +356,11 @@ public class GameConstants {
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
         quickMoveInfos.add(new QuickMoveInfo(0, 1012009, QuickMoveType.Bunny, 0, "Storage", false,
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
-        quickMoveInfos.add(new QuickMoveInfo(0, 9900000, QuickMoveType.Baret, 0, "Inventory Seller", false,
+
+        quickMoveInfos.add(new QuickMoveInfo(0, 1540945, QuickMoveType.SpinningGlasses, 0, "V技能大师", false,
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
+
+
         quickMoveInfos.add(new QuickMoveInfo(0, 9900001, QuickMoveType.Waitress, 0, "Job Advancement (Explorers only)", false,
                 FileTime.fromType(FileTime.Type.ZERO_TIME), FileTime.fromType(FileTime.Type.MAX_TIME)));
     }

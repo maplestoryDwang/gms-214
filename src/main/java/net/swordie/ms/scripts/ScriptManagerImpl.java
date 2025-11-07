@@ -256,7 +256,7 @@ public class ScriptManagerImpl implements ScriptManager {
         }
         scriptInfo.setObjectID(objID);
         getScripts().put(scriptType, scriptInfo);
-        EventManager.addEvent(() -> startScript(scriptName, scriptType), 0); // makes the script execute async
+         EventManager.addEvent(() -> startScript(scriptName, scriptType), 0); // makes the script execute async
     }
 
     private boolean isQuestScriptAllowed() {

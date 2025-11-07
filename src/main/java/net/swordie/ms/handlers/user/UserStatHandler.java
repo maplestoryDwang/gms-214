@@ -224,7 +224,7 @@ public class UserStatHandler {
     @Handler(op = InHeader.USER_CHANGE_STAT_REQUEST)
     public static void handleUserChangeStatRequest(Client c, InPacket inPacket) {
         Char chr = c.getChr();
-        c.verifyTick(inPacket);
+         c.verifyTick(inPacket);
         int mask = inPacket.decodeInt();
         List<Stat> stats = Stat.getStatsByFlag(mask); // should be in correct order
         inPacket.decodeInt();

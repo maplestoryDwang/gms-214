@@ -150,6 +150,8 @@ public class MobHandler {
                 long nextUseableTime = curTime + interval;
                 chr.chatMessage(ChatType.Mob, String.format("Mob " + mob + " did skill with ID %d (%s), level = %d",
                         mobSkill.getSkillID(), MobSkillID.getMobSkillIDByVal(mobSkill.getSkillID()), mobSkill.getLevel()));
+                log.info("Mob " + mob + " did skill with ID %d (%s), level = %d",
+                        mobSkill.getSkillID(), MobSkillID.getMobSkillIDByVal(mobSkill.getSkillID()), mobSkill.getLevel());
                 mob.putSkillCooldown(skillID, slv, nextUseableTime);
                 mob.setSkillDelay(5000);
                 if (mobSkill.getSkillAfter() > 0) {

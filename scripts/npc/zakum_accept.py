@@ -1,5 +1,6 @@
 from net.swordie.ms.constants import BossConstants
 from net.swordie.ms.enums import EventType
+from time import sleep
 
 # Mode, Required Level, Map ID, Death Count, Event Type, Cooldown
 
@@ -48,10 +49,19 @@ if sm.getFieldID() == 211042400:
 
 
     elif sm.checkParty() and response != 99:
+#         if is_party_eligible(destinations[response][1], sm.getParty()):
+#           #  sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])
+#             sm.warpInstanceIn(destinations[response][2], True)
+#             sm.setPartyDeathCount(destinations[response][3])
+#             sm.setInstanceTime(BossConstants.ZAKUM_TIME)
+
         if is_party_eligible(destinations[response][1], sm.getParty()):
-          #  sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])
+            sm.setDeathCount(destinations[response][3])
             sm.warpInstanceIn(destinations[response][2], True)
-            sm.setPartyDeathCount(destinations[response][3])
-            sm.setInstanceTime(BossConstants.ZAKUM_TIME)
+            sm.setInstanceTime(20*60)
+            sleep(1)
+            sm.spawnMob(8800002, -54, 86, False)
+#             for i in range(8):
+#                 sm.spawnMob(8800003 + i, -54, 86, False)
         else:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])
