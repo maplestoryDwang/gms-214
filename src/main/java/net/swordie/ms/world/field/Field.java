@@ -1437,7 +1437,7 @@ public class Field {
         mob.setHomeFoothold(fh);
         spawnLife(mob, null);
         if (MobConstants.isTimedDropMob(mob.getTemplateId())) {
-        mob.startDropItemSchedule();
+            mob.startDropItemSchedule();
         }
         return mob;
     }

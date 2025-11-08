@@ -256,7 +256,7 @@ public class ScriptManagerImpl implements ScriptManager {
         }
         scriptInfo.setObjectID(objID);
         getScripts().put(scriptType, scriptInfo);
-         EventManager.addEvent(() -> startScript(scriptName, scriptType), 0); // makes the script execute async
+        EventManager.addEvent(() -> startScript(scriptName, scriptType), 0); // makes the script execute async
     }
 
     private boolean isQuestScriptAllowed() {
@@ -311,6 +311,8 @@ public class ScriptManagerImpl implements ScriptManager {
         } catch (ScriptException e) {
             if (!e.getMessage().contains(INTENDED_NPE_MSG)) {
                 log.error(String.format("Unable to compile script %s!", name));
+                log.error("script path:{}", dir);
+                log.error("script:\n{}", script.toString());
                 e.printStackTrace();
                 lockInGameUI(false); // so players don't get stuck if a script fails
             }
@@ -2099,10 +2101,11 @@ public class ScriptManagerImpl implements ScriptManager {
 
     /**
      * Give an item which has the expiration time
+     *
      * @param id
-     * @param quantity for stackable items
+     * @param quantity  for stackable items
      * @param fixedDate
-     * @param value if fixedDate is false, set expiration time in minutes, if true, set expiration date in yyyyMMddHHmm or yyyyMMddHH, yyyyMMdd format (eg. 202002011200)
+     * @param value     if fixedDate is false, set expiration time in minutes, if true, set expiration date in yyyyMMddHHmm or yyyyMMddHH, yyyyMMdd format (eg. 202002011200)
      */
     public void giveItemWithExpireDate(int id, int quantity, boolean fixedDate, Object value) {
         Item item = ItemData.getItemDeepCopy(id);
@@ -3189,6 +3192,7 @@ public class ScriptManagerImpl implements ScriptManager {
             chr.write(WvsContext.matrixUpdate(chr, false, 0, 0));
         }
     }
+
     public void hireTutor(boolean set) {
         chr.hireTutor(set);
     }

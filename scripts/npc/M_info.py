@@ -110,7 +110,7 @@ else:
         if ans1 == 4: # boss maps
             sm.warp(maps[ans1][ans2][0], 1)
         else:
-            sm.warp(maps[ans1][ans2], 0)
+            sm.warp(maps[ans1][ans2][0], 1)
 
     else:
         sm.sendSayOkay("This option currently is uncoded.")

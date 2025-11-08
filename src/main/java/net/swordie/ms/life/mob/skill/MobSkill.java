@@ -13,6 +13,7 @@ import net.swordie.ms.enums.BaseStat;
 import net.swordie.ms.enums.ObtacleAtomCreateType;
 import net.swordie.ms.enums.ObtacleAtomEnum;
 import net.swordie.ms.enums.TSIndex;
+import net.swordie.ms.handlers.EventManager;
 import net.swordie.ms.life.AffectedArea;
 import net.swordie.ms.life.DeathType;
 import net.swordie.ms.life.mob.Mob;
@@ -33,6 +34,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
 
 import static net.swordie.ms.life.mob.skill.MobSkillStat.*;
@@ -328,10 +330,15 @@ public class MobSkill {
                 break;
             case Damage:
                 boolean fixDamR = msi.getSkillStatIntValue(MobSkillStat.fixDamR) > 0;
-                int damage = 5000;
+                int damage = 5000;// 没道理
 
                 if (damage != 0)
-                    chars.stream().filter(chra -> !chra.getTemporaryStatManager().hasStat(CharacterTemporaryStat.NotDamaged)).forEach(chra -> chra.damage((fixDamR ? chra.getHPPerc(damage) : damage), true));
+                    for (Char chra : chars) {
+                        if (!chra.getTemporaryStatManager().hasStat(CharacterTemporaryStat.NotDamaged)) {
+                            chra.damage((fixDamR ? chra.getHPPerc(damage) : damage), true);
+                        }
+                    }
+//                    chars.stream().filter(chra -> !chra.getTemporaryStatManager().hasStat(CharacterTemporaryStat.NotDamaged)).forEach(chra -> chra.damage((fixDamR ? chra.getHPPerc(damage) : damage), true));
                 break;
             case PGuardUp:
             case PGuardUpM:
@@ -457,8 +464,24 @@ public class MobSkill {
                     if (spawnedSize < maxSpawned) {
                         Mob m = mob.getField().spawnMob(mobId, spawnPos.getX(), spawnPos.getY(), false, 0);
                         m.setMobSpawnerId(mob.getObjectId());
+                        // 召唤地火延时关闭
+                        if (m.getTemplateId() == 8800117) {
+                            ScheduledFuture sf = EventManager.addEvent(() -> m.die(false), 5000);
+                            field.addLifeSchedule(m, sf);
+//                            try {
+//                                Thread.sleep(5000);
+//                            } catch (InterruptedException e) {
+//                                throw new RuntimeException(e);
+//                            }
+//                            m.die(false);
+
+                        } else {
+                            m.die(false);
+                        }
                     }
                 }
+
+
                 if (afterDead) {
                     // maybe grab animation from wz, so far it's just -2 (no ani)
                     field.broadcastPacket(MobPool.leaveField(mob.getObjectId(), DeathType.NO_ANIMATION_DEATH));

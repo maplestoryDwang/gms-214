@@ -2,7 +2,8 @@
 
 sm.setSpeakerType(4)
 sm.setSpeakerID(2030008)
-res = sm.sendNext("Well... Okay. It seems you fulfill the requirements. What would you like to do?\r\n#b#L2# Receive an offering for Zakum.#l\r\n#b#L3# Go to El Nath.#l")
+# res = sm.sendNext("Well... Okay. It seems you fulfill the requirements. What would you like to do?\r\n#b#L2# Receive an offering for Zakum.#l\r\n#b#L3# Go to El Nath.#l")
+res = sm.sendNext("去吧，现在不需要火焰之眼就能挑战了")
 #b#L0# Investigate dead mine caves. #l
 #b#L1# Explore Zakum Dungeon.#l
 

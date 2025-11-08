@@ -38,7 +38,7 @@ public class MobData {
     }
 
     public static void addMob(Mob mob) {
-        getMobs().put(mob.getTemplateId(), mob);
+        mobs.put(mob.getTemplateId(), mob);
     }
 
     public static void generateDatFiles() {
