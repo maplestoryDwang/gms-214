@@ -60,10 +60,37 @@ if sm.getFieldID() == 211042400:
             sm.warpInstanceIn(destinations[response][2], True)
             sm.setInstanceTime(20*60)
             sleep(1)
-#             sm.spawnMob(destinations[response][5], -54, 86, False,destinations[response][6])
-#             sm.spawnMob(8800003, -54, 86, False)
-            sm.spawnMob(8800002, -54, 86, False)
+            sm.spawnMob(destinations[response][5], -54, 86, False)
+#             sm.spawnMob(8800002, -54, 86, False)
             for i in range(8):
                 sm.spawnMob(destinations[response][5] + 1 + i, -54, 86, False)
+            sm.changeFootHold("zdc7", True, -512, -7)
+            sm.changeFootHold("zdc8", True, -436, -5)
+            sm.changeFootHold("zdc9", True, -358, -8)
+
+            sm.changeFootHold("zdc16", True, 363, -7)
+            sm.changeFootHold("zdc17", True, 439, -5)
+            sm.changeFootHold("zdc18", True, 517, -8)
+
+
+            sm.changeFootHold("zdc5", True, -439, -101)
+            sm.changeFootHold("zdc4", True, -514, -102)
+
+            sm.changeFootHold("zdc6", True, -362, -99)
+            sm.changeFootHold("zdc13", True, 384, -99)
+
+            sm.changeFootHold("zdc14", True, 464, -102)
+
+            sm.changeFootHold("zdc15", True, 546, -101)
+            sm.changeFootHold("zdc10", True, 350, -189)
+
+
+
+            sm.changeFootHold("zdc11", True, 426, -190)
+
+            sm.changeFootHold("zdc12", True, 504, -187)
+            sm.changeFootHold("zdc1", True, -464, -186)
+            sm.changeFootHold("zdc2", True, -388, -187)
+            sm.changeFootHold("zdc3", True, -310, -184)
         else:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])

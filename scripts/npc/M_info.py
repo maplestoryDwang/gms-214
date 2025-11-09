@@ -107,7 +107,7 @@ else:
         ans2 = sm.sendNext(list)
         if ans1 == 2: # boss maps
             sm.warp(maps[ans1][ans2][0], 1)
-        if ans1 == 4: # boss maps
+        elif ans1 == 4: # boss maps
             sm.warp(maps[ans1][ans2][0], 1)
         else:
             sm.warp(maps[ans1][ans2], 0)

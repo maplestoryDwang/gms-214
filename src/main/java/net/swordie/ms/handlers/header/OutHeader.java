@@ -561,8 +561,16 @@ public enum OutHeader {
     //581
     //582
     DESTROY_CLOCK(583),
-    STALK_RESULT(584), // v214
-    FOOT_HOLD_APPEAR(585), //v206
+
+    STALK_RESULT(585), // v214！！  跟踪小地图 old is error !
+
+
+//    FOOT_HOLD_APPEAR(584), //
+//    FOOT_HOLD_APPEAR(586), //
+
+
+
+
     // CField_Massacre::OnPacket
     //MASSACRE_INC_GAUGE(585), // v214
     //MASSACRE_RESULT(586), // v214
@@ -570,12 +578,20 @@ public enum OutHeader {
     QUICKSLOT_INIT(588), // v214
     FOOT_HOLD_MOVE(589), // v214
     CORRECT_FOOT_HOLD_MOVE(590), // v214
+
     DYNAMIC_OBJ_MOVE(591), // v214
     DYNAMIC_OBJ_SHOW_HIDE(592), // v214
-    DYNAMIC_OBJ_SYNC(593), // v214
+//    DYNAMIC_OBJ_SYNC(593), // v214   error!
+
+    FOOT_HOLD_APPEAR(593), // v214!!!
+
     //594
+//    FOOT_HOLD_APPEAR(594), //不是
+
     // CField_KillCount::OnPacket
     FIELD_KILL_COUNT(595), // v214
+
+
     //
     SMART_MOB_NOTICE(596), // v214
     CHANGE_PHASE(597), // v214

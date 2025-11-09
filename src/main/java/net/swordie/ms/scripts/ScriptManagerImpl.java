@@ -1226,6 +1226,12 @@ public class ScriptManagerImpl implements ScriptManager {
         }
     }
 
+    public void toggleZakumPlatforms(boolean visible) {
+        Field field1 = getChr().getField();
+        field1.toggleZakumPlatforms(visible);
+    }
+
+
     public void setInstanceTime(int seconds) {
         setInstanceTime(seconds, 0);
     }
@@ -1489,6 +1495,10 @@ public class ScriptManagerImpl implements ScriptManager {
 
     public void changeFoothold(String footholdName, boolean show) {
         getChr().getField().broadcastPacket(FieldPacket.footholdAppear(footholdName, show));
+    }
+
+    public void changeFootHold(String footholdName, boolean show, int x, int y) {
+        chr.getField().broadcastPacket(FieldPacket.footholdAppear(footholdName, show, new Position(x, y)));
     }
 
     public void createFallingCatcher(String templateStr, int hpR, int amount, int chance) {

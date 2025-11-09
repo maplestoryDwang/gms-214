@@ -1316,6 +1316,22 @@ public class FieldPacket {
         return outPacket;
     }
 
+    public static OutPacket footholdAppear(String footholdName, boolean show, Position pos) {
+        OutPacket outPacket = new OutPacket(OutHeader.FOOT_HOLD_APPEAR);
+
+        int loopSize = 1;
+
+        outPacket.encodeInt(loopSize);
+        for (int i = 0; i < loopSize; i++) {
+            outPacket.encodeString(footholdName);
+            outPacket.encodeByte(0);
+            outPacket.encodeInt(show ? 1 : 0);
+            outPacket.encodePositionInt(pos);
+        }
+
+        return outPacket;
+    }
+
     public static OutPacket golluxMiniMap(Map<String, GolluxMiniMapFieldClearType> gFieldMap) {
         OutPacket outPacket = new OutPacket(OutHeader.GOLLUX_MINI_MAP);
 
