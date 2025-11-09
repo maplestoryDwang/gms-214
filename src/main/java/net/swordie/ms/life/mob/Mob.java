@@ -2193,8 +2193,16 @@ public class Mob extends Life {
         int reqHp = msi.getSkillStatIntValue(MobSkillStat.hp);
         int useLimit = ms.getUseLimit() > 0 ? ms.getUseLimit() : msi.getUseLimit();
         // skill exists, is off cooldown, and mob is below required hp percentage to cast skill
-        return msi != null && hasSkillOffCooldown(ms.getSkillID(), ms.getLevel()) && (reqHp == 0 || getHpPerc() < reqHp) && (useLimit == 0 || getSkillUseCount(ms) < useLimit)
-                && (getSkills().size() == 0 || getSkills().stream().noneMatch(s -> s.getSkillSN() == ms.getPreSkillIndex()) || getSkillUseCount(getSkills().stream().filter(s -> s.getSkillSN() == ms.getPreSkillIndex()).findFirst().orElse(null)) >= ms.getPreSkillCount())
+        boolean msiNotNull = msi != null;
+        boolean skillOffCooldown = hasSkillOffCooldown(ms.getSkillID(), ms.getLevel());
+        boolean useCount = useLimit == 0 || getSkillUseCount(ms) < useLimit;
+        boolean reqHP = reqHp == 0 || getHpPerc() < reqHp;
+        boolean skillNoneMatch = getSkills().stream().noneMatch(s -> s.getSkillSN() == ms.getPreSkillIndex());
+        MobSkill matchSkill = getSkills().stream().filter(s -> s.getSkillSN() == ms.getPreSkillIndex()).findFirst().orElse(null);
+
+
+        return msiNotNull && skillOffCooldown && (reqHP) && (useCount)
+                && (getSkills().size() == 0 || skillNoneMatch || getSkillUseCount(matchSkill) >= ms.getPreSkillCount())
                 && !CustomConstants.isDojoMap(getField().getId())
                 && canUseSkillLogic(ms);
     }
@@ -2241,8 +2249,10 @@ public class Mob extends Life {
             }
         }
 
+        // 为什么不给放？
         if (getTemplateId() >= 8800000 && getTemplateId() <= 8800148) {
-            return canUseSkillLogicZakum(ms);
+//            return canUseSkillLogicZakum(ms);
+            return true;
         }
 
         if (getTemplateId() >= 8950000 && getTemplateId() <= 8950003 || getTemplateId() >= 8950100 && getTemplateId() <= 8950103) {
@@ -2283,6 +2293,7 @@ public class Mob extends Life {
         if (ms.getSkillID() == MobSkillID.Teleport.getVal()) {
             return false;
         }
+        // 主体
         if (getTemplateId() == 8800002 || getTemplateId() == 8800022 || getTemplateId() == 8800102) {
             // don't use skills if any arms are alive
             if (!(getTemplateId() == 8800102 && ms.getSkillID() == 201 && ms.getLevel() == 162) && getField().getMobs().stream().anyMatch(mob ->
@@ -2293,6 +2304,7 @@ public class Mob extends Life {
             }
             if (ms.getSkillID() == 201 && ms.getLevel() == 172)
                 return false;
+        // 手臂
         } else if (Util.arrayContains(BossConstants.ZAKUM_ARMS, getTemplateId())) {
             if (ms.getSkillID() == MobSkillID.Stun.getVal() && (getTemplateId() < 8800103 || getField().getAliveCharsCount() < 2)) {
                 return false;

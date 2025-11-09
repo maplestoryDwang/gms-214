@@ -16,6 +16,8 @@ import net.swordie.ms.constants.JobConstants;
 import net.swordie.ms.enums.ChatType;
 import net.swordie.ms.enums.MessageType;
 import net.swordie.ms.enums.QuestStatus;
+import net.swordie.ms.enums.SoulType;
+import net.swordie.ms.handlers.EventManager;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.handlers.header.OutHeader;
@@ -32,6 +34,7 @@ import net.swordie.ms.life.movement.MovementInfo;
 import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.loaders.containerclasses.MobSkillInfo;
 import net.swordie.ms.util.Position;
+import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
 import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.field.Field;
@@ -128,6 +131,8 @@ public class MobHandler {
 //                msai.targetInfo, msai.targetInfo, msai.skillID, msai.slv, msai.option));
         boolean didSkill = false;
 
+        log.info("当前的mob action: {}", msai.action);
+        // 找到定义过的mob技能
         if (msai.skillID >= MobSkillID.PowerUp.getVal() && msai.skillID <= MobSkillID.No.getVal() && slv > 0
                 && mob.hasSkillDelayExpired() && !mob.isInAttack()) {
             // Apply effect from the prepared skill.
@@ -149,39 +154,70 @@ public class MobHandler {
                 MobSkillInfo msi = SkillData.getMobSkillInfoByIdAndLevel(skillID, slv);
                 long curTime = System.currentTimeMillis();
                 long interval = msi.getSkillStatIntValue(MobSkillStat.interval) * 1000;
-                String format = String.format("Mob " + mob + " did skill with ID %d (%s), level = %d",
+                String format = String.format("Mob [" + mob + "] did skill with ID %d (%s), level = %d",
                         mobSkill.getSkillID(), MobSkillID.getMobSkillIDByVal(mobSkill.getSkillID()), mobSkill.getLevel());
                 long nextUseableTime = curTime + interval;
                 chr.chatMessage(ChatType.Mob, format);
                 log.info(format);
                 mob.putSkillCooldown(skillID, slv, nextUseableTime);
-                mob.setSkillDelay(5000);
-                if (mobSkill.getSkillAfter() > 0) {
-                    mob.getSkillDelays().add(mobSkill);
-                    mob.setSkillDelay(mobSkill.getSkillAfter());
-                    chr.write(MobPool.setSkillDelay(mob.getObjectId(), mobSkill.getSkillAfter(), skillID, slv, 0, null));
-                    log.info("释放延迟技能：mob {}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), skillID, mobSkill.getSkillAfter(), slv);
+//                mob.setSkillDelay(interval);
+                mob.setSkillDelay(5000);  // 测试
 
+
+
+                // 暂时有问题
+                int skillAfter = mobSkill.getSkillAfter();
+                if (skillAfter > 0) {
+                    mob.getSkillDelays().add(mobSkill);
+                    mob.setSkillDelay(skillAfter);
+                    // 手动定时器执行
+                    EventManager.addEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                            mobSkill.applyEffect(mob);
+                        }
+                    }, skillAfter + 500);
+
+
+
+//                      // 这个接口有问题。
+//                        chr.write(MobPool.setSkillDelay(mob.getObjectId(), mobSkill.getSkillAfter(), skillID, slv, 0, relativeRect));
+
+//                    } else {
+//                        chr.write(MobPool.setSkillDelay(mob.getObjectId(), mobSkill.getSkillAfter(), skillID, slv, 0, null));
+//                    }
+//                    log.info("释放延迟技能：mob {}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), skillID, mobSkill.getSkillAfter(), slv);
+
+//                    mobSkill.applyEffect(mob);
+//                    log.info("延迟技能-》 及时释放：mob {}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), mobSkill.getSkillID(), mobSkill.getSkillAfter(), slv);
                 } else {
                     mobSkill.applyEffect(mob);
-                    log.info("释放及时技能：mob {}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), mobSkill.getSkillID(), mobSkill.getSkillAfter(), slv);
+                    log.info("释放及时技能：mob {}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), mobSkill.getSkillID(), skillAfter, slv);
 
                 }
+//                // 强制执行
+//                if (mob.getTemplateId() == 8800003) {
+//                    field.broadcastPacket(MobPool.forcedSkillAction(mob, mobSkill.getSkillSN()));
+//                }
+
                 skillID = 0;
                 slv = 0;
             }
+
+        // 技能CD到了，可以进行下一次技能释放
         } else if (slv == 0 && mob.hasSkillDelayExpired() && !mob.isInAttack()) {
             // prepare next skill
             MobSkill mobSkill = mob.getRandomAvailableSkill();
             if (mobSkill != null) {
                 skillID = mobSkill.getSkillID();
                 slv = mobSkill.getLevel();
+                log.info("随机找个技能：mob:{}, skillid:{}, slv:{}", mob.getObjectId(), skillID, slv); // 下次会先放这个技能
             }
         }
         mob.setInAttack(false);
 
 
-        // 怪物攻击
+        // 怪物攻击的CD 如果有afterAttack
         if (!didSkill) {
             // didn't do a skill, so ensure that the attack gets properly formed
             int attackIdx = msai.action - 30 + 17;
@@ -207,22 +243,6 @@ public class MobHandler {
 
         // START OF BOSS FEATURES
 
-
-        // 扎昆手臂技能176
-//        MobSkill mobSkill = mob.getSkills().stream().filter(msill -> msill.getSkillID() == 176).findFirst().orElse(null);
-//        if (mobSkill != null) {
-//            if (mobSkill.getSkillAfter() > 0) {
-//                mob.getSkillDelays().add(mobSkill);
-//                mob.setSkillDelay(mobSkill.getSkillAfter());
-//                field.broadcastPacket(MobPool.forcedSkillAction(mob, mobSkill.getSkillSN()));
-//                chr.write(MobPool.setSkillDelay(mob.getObjectId(), mobSkill.getSkillAfter(), mobSkill.getSkillID(), slv, 0, null));
-//                log.info("释放延迟技能：mob {}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), mobSkill.getSkillID(), mobSkill.getSkillAfter(), slv);
-//            } else {
-//                mobSkill.applyEffect(mob);
-//                log.info("释放及时技能：mob{}， skill {}, skillAfterTime {}, slv:{}", mob.getObjectId(), skillID, mobSkill.getSkillAfter(), slv);
-//
-//            }
-//        }
 
         // ZAKUM RELATED FEATURES // TODO MOB_SKILL_DELAY ERROR 38
 /*
@@ -294,10 +314,19 @@ public class MobHandler {
         if (mob.getAttackCooldown() > 0) {
             mob.setAttackCooldown(mob.getAttackCooldown() - 1);
         }
-        boolean nextAttackPossible = mob.getAttackCooldown() == 0 && Util.succeedProp(GameConstants.MOB_ATTACK_CHANCE);
-        chr.write(MobPool.ctrlAck(mob, mob.getAttackCooldown() == 0, moveID, skillID, (short) slv, -1));
-        mob.setInAttack(afterAttackCount > 0);
+
+        // 是否可以释放攻击
+        boolean attackCoolDown = mob.getAttackCooldown() == 0;
+        boolean nextAttackPossible = attackCoolDown && Util.succeedProp(GameConstants.MOB_ATTACK_CHANCE);
+        if (attackCoolDown) {
+            log.info("MobPool.ctrlAck: attack success mob:{}, attackCoolDown:{} moveId:{} skillId {} slv {}", mob.getObjectId(), mob.getAttackCooldown(), moveID, skillID, slv);
+        } else {
+            log.info("MobPool.ctrlAck: attack errror mob:{}, attackCoolDown:{} moveId:{} skillId {} slv {}", mob.getObjectId(), mob.getAttackCooldown(), moveID, skillID, slv);
+        }
+        chr.write(MobPool.ctrlAck(mob, attackCoolDown, moveID, skillID, (short) slv, -1));
+         mob.setInAttack(afterAttackCount > 0);
         if (afterAttackCount > 0) {
+            log.info("mob setAfterAttack! mob:{}, ",  mob.getObjectId());
             chr.write(MobPool.setAfterAttack(mob.getObjectId(), (short) afterAttack, msai.action, afterAttackCount, !mob.isFlip()));
         }
         field.checkMobInAffectedAreas(mob);

@@ -984,6 +984,22 @@ public class Field {
         return chars;
     }
 
+    public List<Char> getCharsInRelativeRect(Rect rect) {
+        List<Char> chars = new ArrayList<>();
+        for (Char chr : getChars()) {
+            Position position = chr.getPosition();
+            int x = position.getX();
+            int y = position.getY();
+            if (x >= rect.getLeft() && y >= rect.getTop()
+                    && x <= rect.getRight() && y <= rect.getBottom()) {
+                chars.add(chr);
+            }
+        }
+        return chars;
+    }
+
+
+
     private void removeBlowWeatherUpdate() {
             long curTime = System.currentTimeMillis();
             if (weatherItemID / 10000 == 512 && weatherEndTime < curTime) {

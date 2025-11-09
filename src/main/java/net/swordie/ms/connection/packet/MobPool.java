@@ -427,18 +427,27 @@ public class MobPool {
 
     public static OutPacket setSkillDelay(int mobID, int skillAfter, int skillID, int slv, int sequenceDelay, Rect rect) {
         OutPacket outPacket = new OutPacket(OutHeader.MOB_SKILL_DELAY);
-
         outPacket.encodeInt(mobID);
+
         outPacket.encodeInt(skillAfter);
         outPacket.encodeInt(skillID);
         outPacket.encodeInt(slv);
+        outPacket.encodeInt(1);
+
+        // add
+        outPacket.encodeInt(0);
 
 
-        outPacket.encodeInt(sequenceDelay);
         if (rect != null) {
+            outPacket.encodeInt(1);  // size
             outPacket.encodeRectInt(rect);
+
+//            outPacket.encodeInt(0);  // unknow
+//            outPacket.encodeInt(0);  // unknow
+
         } else {
-            outPacket.encodeArr(new byte[69]);
+//            outPacket.encodeArr(new byte[69]);
+            outPacket.encodeInt(0);
         }
 
         return outPacket;

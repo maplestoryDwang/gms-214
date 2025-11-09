@@ -21,7 +21,7 @@ else:
     ], # Free Market
 
     [
-        [120040000, "Black Bean"], [211042300,"扎昆"], [105100100, "蝙蝠魔"],
+        [120040000, "Black Bean"], [211042300,"扎昆"], [240050400, "暗黑龙王"], [105100100, "蝙蝠魔"],
         [105200000, "鲁塔比斯"], [211070000, "狮子王"], [272020110, "阿卡"], [401000001, "简单麦格纳斯"],
         [401060000, "普通/困难麦格纳斯"], [270050000, "品克缤"], [271040000, "女皇"],
         [211041700, "Ranmaru"], [105300303, "戴米安"], [992000000, "Dorothy"], [450007240, "威尔"]
@@ -89,7 +89,7 @@ else:
         ans1 = sm.sendNext(list)
 
 
-        list = "这些是你的选项: "
+        list = "这些是你的选项: ans1 = " + unicode(ans1)
         if ans1 == 2: # boss maps
             while i < len(maps[ans1]):
                 list += "\r\n#L" + unicode(i) + "##b" + unicode(maps[ans1][i][1])
@@ -110,7 +110,7 @@ else:
         if ans1 == 4: # boss maps
             sm.warp(maps[ans1][ans2][0], 1)
         else:
-            sm.warp(maps[ans1][ans2][0], 1)
+            sm.warp(maps[ans1][ans2], 0)
 
     else:
         sm.sendSayOkay("This option currently is uncoded.")

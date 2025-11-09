@@ -63,7 +63,7 @@ if sm.getFieldID() == 211042400:
 #             sm.spawnMob(destinations[response][5], -54, 86, False,destinations[response][6])
 #             sm.spawnMob(8800003, -54, 86, False)
             sm.spawnMob(8800002, -54, 86, False)
-#             for i in range(8):
-#                 sm.spawnMob(destinations[response][5] + 1 + i, -54, 86, False)
+            for i in range(8):
+                sm.spawnMob(destinations[response][5] + 1 + i, -54, 86, False)
         else:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])

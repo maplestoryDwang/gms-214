@@ -21,7 +21,6 @@ import net.swordie.ms.life.mob.MobStat;
 import net.swordie.ms.life.mob.MobTemporaryStat;
 import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.loaders.containerclasses.MobSkillInfo;
-import net.swordie.ms.util.MetaProgramming;
 import net.swordie.ms.util.Position;
 import net.swordie.ms.util.Rect;
 import net.swordie.ms.util.Util;
@@ -302,7 +301,9 @@ public class MobSkill {
                 rect.horizontalFlipAround(mob.getPosition().getX());
             }
             mobs.addAll(mob.getField().getMobsInRect(rect));
-            chars.addAll(mob.getField().getCharsInRect(rect));
+
+            Rect relativeRect =  getMobRelativeRect(mob, msi);
+            chars.addAll(mob.getField().getCharsInRect(relativeRect));
         }
         if (msi.getSkillStatIntValue(fieldScript) != 0) {
             // mabye?
@@ -329,15 +330,31 @@ public class MobSkill {
                 }
                 break;
             case Damage:
-                boolean fixDamR = msi.getSkillStatIntValue(MobSkillStat.fixDamR) > 0;
-                int damage = 5000;// 没道理
 
-                if (damage != 0)
+//                Set<Mob> mobs1 = mob.getField().getMobs();
+//                if (mobs1.size() > 0) {
+//                    Mob mob1 = (Mob) mobs1.toArray()[0];
+                    int damage = 100;// 没道理
+                    int fixDamRValue = msi.getSkillStatIntValue(MobSkillStat.fixDamR);
+                    boolean fixDamR = fixDamRValue > 0;
+                    // 范围内有效
                     for (Char chra : chars) {
                         if (!chra.getTemporaryStatManager().hasStat(CharacterTemporaryStat.NotDamaged)) {
-                            chra.damage((fixDamR ? chra.getHPPerc(damage) : damage), true);
+                            int hpPerc = (int) Math.floor((fixDamRValue/100D) * chra.getMaxHP());
+                            chra.damage((fixDamR ? hpPerc : damage), true);
                         }
                     }
+//                }
+
+//
+//                int damage = 5000;// 没道理
+//                boolean fixDamR = msi.getSkillStatIntValue(MobSkillStat.fixDamR) > 0;
+//                if (damage != 0)
+//                    for (Char chra : chars) {
+//                        if (!chra.getTemporaryStatManager().hasStat(CharacterTemporaryStat.NotDamaged)) {
+//                            chra.damage((fixDamR ? chra.getHPPerc(damage) : damage), true);
+//                        }
+//                    }
 //                    chars.stream().filter(chra -> !chra.getTemporaryStatManager().hasStat(CharacterTemporaryStat.NotDamaged)).forEach(chra -> chra.damage((fixDamR ? chra.getHPPerc(damage) : damage), true));
                 break;
             case PGuardUp:
@@ -462,21 +479,25 @@ public class MobSkill {
                         maxSpawned = 100;
                     }
                     if (spawnedSize < maxSpawned) {
-                        Mob m = mob.getField().spawnMob(mobId, spawnPos.getX(), spawnPos.getY(), false, 0);
-                        m.setMobSpawnerId(mob.getObjectId());
-                        // 召唤地火延时关闭
-                        if (m.getTemplateId() == 8800117) {
-                            ScheduledFuture sf = EventManager.addEvent(() -> m.die(false), 5000);
-                            field.addLifeSchedule(m, sf);
-//                            try {
-//                                Thread.sleep(5000);
-//                            } catch (InterruptedException e) {
-//                                throw new RuntimeException(e);
-//                            }
-//                            m.die(false);
+                        try {
+                            Mob m = mob.getField().spawnMob(mobId, spawnPos.getX(), spawnPos.getY(), false, 0);
+                            m.setMobSpawnerId(mob.getObjectId());
+                            // 召唤地火延时关闭
+                            if (m.getTemplateId() == 8800117) {
+                                ScheduledFuture sf = EventManager.addEvent(() -> m.die(false), 5000);
+                                field.addLifeSchedule(m, sf);
+    //                            try {
+    //                                Thread.sleep(5000);
+    //                            } catch (InterruptedException e) {
+    //                                throw new RuntimeException(e);
+    //                            }
+    //                            m.die(false);
 
-                        } else {
-                            m.die(false);
+                            } else {
+                                m.die(false);
+                            }
+                        } catch (Exception e) {
+                            log.error("mob skill summon error: mobId:{}", mobId, e);
                         }
                     }
                 }
@@ -614,6 +635,20 @@ public class MobSkill {
                 log.warn(String.format("[MobSkill::applyEffect] Unhandled mob skillID %s, slv = %d", msID, getLevel()));
                 break;
         }
+    }
+
+    private Rect getMobRelativeRect(Mob mob, MobSkillInfo msi) {
+        Position bossPosition = mob.getPosition(); //1021 -266
+        Position lt = msi.getLt();
+        Position rb = msi.getRb();
+        // 参考系改为以boss为中心进行判定
+        // 获取怪物位置，和自己位子比较。我觉得真正的左上右下以怪物实际位置控制
+        Rect relativeRect = new Rect();
+        relativeRect.setLeft(lt.getX() + bossPosition.getX());
+        relativeRect.setTop(lt.getY() + bossPosition.getY());
+        relativeRect.setRight(rb.getX() + bossPosition.getX());
+        relativeRect.setBottom(rb.getY() + bossPosition.getY());
+        return relativeRect;
     }
 
     public void applyEffect(Char chr) {
