@@ -159,7 +159,7 @@ public class CashShopHandler {
                 break;
             default:
 //                c.write(CCashShop.error());
-                log.error("Unhandled cash shop cash item request " + cit);
+                log.error("Unhandled cash shop cash item request {}, {}" , cit.getVal(), cit);
                 chr.dispose();
                 break;
         }
