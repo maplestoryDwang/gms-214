@@ -374,6 +374,8 @@ create table equips
   superioreqp      tinyint,
   android          int,
   androidgrade     int,
+  incMMPr     int,
+  incMHPr     int,
   primary key (itemid),
   foreign key (itemid) references items (id) on delete cascade
 );

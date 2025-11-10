@@ -8,6 +8,7 @@ import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.constants.GameConstants;
 import net.swordie.ms.constants.ItemConstants;
 import net.swordie.ms.enums.*;
+import net.swordie.ms.handlers.threadpool.LoaderExecutor;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
 import net.swordie.ms.loaders.containerclasses.ItemRewardInfo;
 import net.swordie.ms.loaders.containerclasses.PetInfo;
@@ -20,6 +21,8 @@ import org.w3c.dom.Node;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 import static net.swordie.ms.client.character.items.Item.Type.ITEM;
@@ -46,9 +49,9 @@ public class ItemData {
     /**
      * Creates a new Equip given an itemId.
      *
-     * @param itemId            The itemId of the wanted equip.
-     * @param randomizeStats    Whether or not to randomize the stats of the created object
-     * @param job               The job of the Char receiving the item (only relevant for arcane symbols)
+     * @param itemId         The itemId of the wanted equip.
+     * @param randomizeStats Whether or not to randomize the stats of the created object
+     * @param job            The job of the Char receiving the item (only relevant for arcane symbols)
      * @return A deep copy of the default values of the corresponding Equip, or null if there is no equip with itemId
      * <code>itemId</code>.
      */
@@ -173,6 +176,8 @@ public class ItemData {
             equip.setSpecialGrade(dataInputStream.readInt());
             equip.setAndroid(dataInputStream.readInt());
             equip.setAndroidGrade(dataInputStream.readInt());
+            equip.setIncMHPr(dataInputStream.readInt());
+            equip.setIncMMPr(dataInputStream.readInt());
             equips.put(equip.getItemId(), equip);
         } catch (IOException e) {
             e.printStackTrace();
@@ -183,7 +188,9 @@ public class ItemData {
     @Saver(varName = "equips")
     public static void saveEquips(String dir) {
         Util.makeDirIfAbsent(dir);
-        for (Equip equip : getEquips().values()) {
+        Collection<Equip> values = getEquips().values();
+//        values.parallelStream().forEach( equip -> {
+        values.forEach( equip -> {
             try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(dir + "/" + equip.getItemId() + ".dat"))) {
                 dataOutputStream.writeInt(equip.getItemId());
                 dataOutputStream.writeUTF(equip.getiSlot());
@@ -250,10 +257,12 @@ public class ItemData {
                 dataOutputStream.writeInt(equip.getSpecialGrade());
                 dataOutputStream.writeInt(equip.getAndroid());
                 dataOutputStream.writeInt(equip.getAndroidGrade());
+                dataOutputStream.writeInt(equip.getIncMHPr());
+                dataOutputStream.writeInt(equip.getIncMMPr());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
 
     public static void loadEquipsFromWz() {
@@ -261,11 +270,12 @@ public class ItemData {
         String[] subMaps = new String[]{"Accessory", "Android", "Cap", "Cape", "Coat", "Dragon", "Face", "Glove",
                 "Longcoat", "Mechanic", "Pants", "PetEquip", "Ring", "Shield", "Shoes", "Totem", "Weapon", "MonsterBook",
                 "ArcaneForce"};
-        for (String subMap : subMaps) {
+
+        Arrays.stream(subMaps).parallel().forEach(subMap -> {
             File subDir = new File(String.format("%s/%s", wzDir, subMap));
             File[] files = subDir.listFiles();
             for (File file : files) {
-                if (file.getName().contains("LinkCashWeaponData"))  { //TODO [HEX]: Figure out what this meme is
+                if (file.getName().contains("LinkCashWeaponData")) { //TODO [HEX]: Figure out what this meme is
                     continue;
                 }
                 Node node = XMLApi.getRoot(file);
@@ -463,6 +473,12 @@ public class ItemData {
                                 case "grade":
                                     equip.setAndroidGrade(Integer.parseInt(value));
                                     break;
+                                case "incMHPr":
+                                    equip.setIncMHPr(Integer.parseInt(value));
+                                    break;
+                                case "incMMPr":
+                                    equip.setIncMMPr(Integer.parseInt(value));
+                                    break;
                             }
                             for (int i = 0; i < 7 - options.size(); i++) {
                                 options.add(0);
@@ -473,7 +489,7 @@ public class ItemData {
                     }
                 }
             }
-        }
+        });
     }
 
     public static ItemInfo loadItemByFile(File file) {
@@ -1366,7 +1382,7 @@ public class ItemData {
                                     SpecStat ss = SpecStat.getSpecStatByName(name);
                                     if (ss != null && value != null) {
                                         item.putSpecStat(ss, Integer.parseInt(value));
-                                    } else if (LOG_UNKS){
+                                    } else if (LOG_UNKS) {
                                         log.warn(String.format("Unhandled spec for id %d, name %s, value %s", id, name, value));
                                     }
                             }
@@ -1612,7 +1628,7 @@ public class ItemData {
     public static void loadMountItemsFromFile() {
         File file = new File(String.format("%s/mountsFromItem.txt", ServerConstants.RESOURCES_DIR));
         try (Scanner scanner = new Scanner(new FileInputStream(file))) {
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] lineSplit = line.split(" ");
                 int itemId = Integer.parseInt(lineSplit[0]);
@@ -2061,37 +2077,39 @@ public class ItemData {
         long start = System.currentTimeMillis();
         loadEquipsFromWz();
         log.info(String.format("Loaded equips in %dms.", System.currentTimeMillis() - start));
+
         start = System.currentTimeMillis();
-        loadMountItemsFromFile();
-        log.info(String.format("Loaded mount items in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        loadItemsFromWZ();
-        log.info(String.format("Loaded items in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        loadPetsFromWZ();
-        log.info(String.format("Loaded pets in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        loadItemOptionsFromWZ();
-        log.info(String.format("Loaded item options in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        loadItemSetsFromWZ();
-        log.info(String.format("Loaded set items in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        QuestData.linkItemData();
-        log.info(String.format("Linked quest to items in %dms.", System.currentTimeMillis() - start));
+//        loadMountItemsFromFile();
+//        log.info(String.format("Loaded mount items in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        loadItemsFromWZ();
+//        log.info(String.format("Loaded items in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        loadPetsFromWZ();
+//        log.info(String.format("Loaded pets in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        loadItemOptionsFromWZ();
+//        log.info(String.format("Loaded item options in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        loadItemSetsFromWZ();
+//        log.info(String.format("Loaded set items in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        QuestData.linkItemData();
+//        log.info(String.format("Linked quest to items in %dms.", System.currentTimeMillis() - start));
         start = System.currentTimeMillis();
         saveEquips(ServerConstants.DAT_DIR + "/equips");
         log.info(String.format("Saved equips in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        saveItems(ServerConstants.DAT_DIR + "/items");
-        log.info(String.format("Saved items in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        savePets(ServerConstants.DAT_DIR + "/pets");
-        log.info(String.format("Saved pets in %dms.", System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
-        saveItemOptions(ServerConstants.DAT_DIR);
-        log.info(String.format("Saved item options in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        saveItems(ServerConstants.DAT_DIR + "/items");
+//        log.info(String.format("Saved items in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        savePets(ServerConstants.DAT_DIR + "/pets");
+//        log.info(String.format("Saved pets in %dms.", System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        saveItemOptions(ServerConstants.DAT_DIR);
+//        log.info(String.format("Saved item options in %dms.", System.currentTimeMillis() - start));
         log.info(String.format("Completed generating item data in %dms.", System.currentTimeMillis() - totalStart));
+
     }
 
     public static void main(String[] args) {
