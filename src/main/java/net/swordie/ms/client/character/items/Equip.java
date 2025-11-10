@@ -132,6 +132,11 @@ public class Equip extends Item {
     private byte fLevel;
     private int android;
     private int androidGrade;
+    // 装备加的最大HP
+    private int incMHPr;
+    private int incMMPr;
+
+
     @Transient
     private FriendshipRingRecord ring = null;
 
@@ -252,7 +257,25 @@ public class Equip extends Item {
         ret.hasIUCMax = hasIUCMax;
         ret.android = android;
         ret.androidGrade = androidGrade;
+        ret.incMHPr = incMHPr;
+        ret.incMMPr = incMMPr;
         return ret;
+    }
+
+    public int getIncMHPr() {
+        return incMHPr;
+    }
+
+    public void setIncMHPr(int incMHPr) {
+        this.incMHPr = incMHPr;
+    }
+
+    public int getIncMMPr() {
+        return incMMPr;
+    }
+
+    public void setIncMMPr(int incMMPr) {
+        this.incMMPr = incMMPr;
     }
 
     public long getSerialNumber() {
@@ -1770,8 +1793,14 @@ public class Equip extends Item {
             case mhp:
                 res += getTotalStat(EquipBaseStat.iMaxHP);
                 break;
+            case mhpR:
+                res += getIncMHPr();
+                break;
             case mmp:
                 res += getTotalStat(EquipBaseStat.iMaxMP);
+                break;
+            case mmpR:
+                res += getIncMMPr();
                 break;
             case damR:
                 res += getTotalStat(EquipBaseStat.damR);

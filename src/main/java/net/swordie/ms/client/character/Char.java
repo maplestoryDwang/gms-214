@@ -4132,7 +4132,9 @@ public class Char {
      * @return The max hp of this Char
      */
     public int getMaxHP() {
-        return Math.min(GameConstants.MAX_HP_MP, getTotalStat(BaseStat.mhp));
+        int totalStat = getTotalStat(BaseStat.mhp);
+        int mhpR = getTotalStat(BaseStat.mhpR) / 100;
+        return Math.min(GameConstants.MAX_HP_MP, totalStat*(1 + mhpR) );
     }
 
     /**
@@ -4141,7 +4143,9 @@ public class Char {
      * @return The max mp of this Char
      */
     public int getMaxMP() {
-        return Math.min(GameConstants.MAX_HP_MP, getTotalStat(BaseStat.mmp));
+        int totalStat = getTotalStat(BaseStat.mmp);
+        int mmpR = getTotalStat(BaseStat.mmpR) / 100;
+        return Math.min(GameConstants.MAX_HP_MP, totalStat*(1+mmpR));
     }
 
     /**
