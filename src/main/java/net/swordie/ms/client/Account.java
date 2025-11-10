@@ -47,16 +47,16 @@ public class Account {
     @JoinColumn(name = "monsterCollectionID")
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private MonsterCollection monsterCollection;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "accID")
     private Set<DamageSkinSaveData> damageSkins = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "accID")
     private Set<Char> characters = new HashSet<>();
     // nxCredit is from mobs, so is account (world) specific.
     private int nxCredit;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "accID")
     private Set<LinkSkill> linkSkills = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -181,7 +181,7 @@ public class Account {
     }
 
     public int getNxCredit() {
-        nxCredit=getFromDBById(id).nxCredit;
+//        nxCredit=getFromDBById(id).nxCredit;
         return nxCredit;
     }
 
