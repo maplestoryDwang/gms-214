@@ -226,4 +226,9 @@ public class BossConstants {
     public static final int ALLURING_MIRROR = 8920105;
     public static final int CHAOS_ALLURING_MIRROR = 8920005;
 
+
+
+    public static final int HORNTAIL_TIME = 75 * 60; // 1 hr, 15 min timer
+
+
 }

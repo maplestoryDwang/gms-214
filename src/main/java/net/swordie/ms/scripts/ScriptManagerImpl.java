@@ -2347,6 +2347,12 @@ public class ScriptManagerImpl implements ScriptManager {
         updateQRValue(questId, ex);
     }
 
+    public void setPartyQRValue(int qId, String value) {
+        for (Char c : chr.getParty().getOnlineChars()) {
+            createQuestWithQRValue(c, qId, value, true);
+        }
+    }
+
     public void deleteQuest(int questId) {
         deleteQuest(chr, questId);
     }
