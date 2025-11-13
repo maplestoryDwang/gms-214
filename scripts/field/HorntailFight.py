@@ -1,6 +1,9 @@
 from net.swordie.ms.scripts import ScriptType
-from net.swordie.ms.constants import AchievementConstant
-from net.swordie.ms.client import Achievements
+# from net.swordie.ms.constants import AchievementConstant
+# from net.swordie.ms.client import Achievements
+
+# 死亡mob
+DeadIDs = [8810010, 8810011, 8810012, 8810013, 8810206, 8810014, 8810016, 8810017]
 
 EhorntailIDs = [8810202, 8810203, 8810204, 8810205, 8810206, 8810207, 8810208, 8810209]
 NhorntailIDs = [8810002, 8810003, 8810004, 8810005, 8810006, 8810007, 8810008, 8810009]
@@ -33,7 +36,7 @@ while count < 8:
 sm.killMobs(True)
 sm.spawnMob(dropMob)
 sm.killMobs(True)
-if not chr.getAccount().isExistAchievement(AchievementConstant.MOB_HORNTAIL) and sm.getFieldID() == NhorntailMap:
-    Achievements.getInstance().getById(AchievementConstant.MOB_HORNTAIL).finishAchievement(chr);
-elif not chr.getAccount().isExistAchievement(AchievementConstant.MOB_CHAOS_HORNTAIL) and sm.getFieldID() == ChorntailMap:
-    Achievements.getInstance().getById(AchievementConstant.MOB_CHAOS_HORNTAIL).finishAchievement(chr);
+# if not chr.getAccount().isExistAchievement(AchievementConstant.MOB_HORNTAIL) and sm.getFieldID() == NhorntailMap:
+#     Achievements.getInstance().getById(AchievementConstant.MOB_HORNTAIL).finishAchievement(chr)
+# elif not chr.getAccount().isExistAchievement(AchievementConstant.MOB_CHAOS_HORNTAIL) and sm.getFieldID() == ChorntailMap:
+#     Achievements.getInstance().getById(AchievementConstant.MOB_CHAOS_HORNTAIL).finishAchievement(chr)
