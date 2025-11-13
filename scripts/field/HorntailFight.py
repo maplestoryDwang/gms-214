@@ -23,19 +23,30 @@ if sm.getFieldID() == NhorntailMap:
 if sm.getFieldID() == ChorntailMap:
     mobs = ChorntailIDs
 
-for id in mobs:
-    sm.spawnMob(id, 95, 260, False)
-    dropMob = 8810118
+# --- 构建 mob -> deadMob 的映射 ---
+mobToDead = {mobId: DeadIDs[i] for i, mobId in enumerate(mobs)}
+
+# --- 一次性召唤所有 Horntail 部位 ---
+for mobId in mobs:
+    sm.spawnMob(mobId, 95, 260, False)
+
 
 count = 0
+while count < len(mobs):
+    mob = sm.waitForMobDeath(mobs)  # 等待任意一个死亡
+    mobId = mob.getTemplateId()     # 获取死亡的 mob 的模板ID
 
-while count < 8:
-    sm.waitForMobDeath(mobs)
-    count = count + 1
+    if mobId in mobToDead:
+        deadId = mobToDead[mobId]
+        sm.spawnMob(deadId, 95, 260, False)
+        count += 1
+    else:
+        count += 1
 
-sm.killMobs(True)
-sm.spawnMob(dropMob)
-sm.killMobs(True)
+
+sm.killMobs()
+# sm.spawnMob(dropMob)
+# sm.killMobs(True)
 # if not chr.getAccount().isExistAchievement(AchievementConstant.MOB_HORNTAIL) and sm.getFieldID() == NhorntailMap:
 #     Achievements.getInstance().getById(AchievementConstant.MOB_HORNTAIL).finishAchievement(chr)
 # elif not chr.getAccount().isExistAchievement(AchievementConstant.MOB_CHAOS_HORNTAIL) and sm.getFieldID() == ChorntailMap:
