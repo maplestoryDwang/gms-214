@@ -43,11 +43,16 @@ if sm.getFieldID() == 240050400:
 
     elif sm.checkParty() and response != 99:
         if is_party_eligible(destinations[response][1], sm.getParty()):
-            sm.setPartyDeathCount(destinations[response][3])
+#             sm.setPartyDeathCount(destinations[response][3])
+#             sm.warpInstanceIn(destinations[response][2], True)
+#             sm.setInstanceTime(BossConstants.HORNTAIL_TIME)
+#             sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])
+#             sm.createQuestWithQRValue(GameConstants.EASY_HORNTAIL_QUEST, "1")
+#             sm.setPartyQRValue(GameConstants.EASY_HORNTAIL_QUEST, "1")
+            sm.setDeathCount(destinations[response][3])
             sm.warpInstanceIn(destinations[response][2], True)
-            sm.setInstanceTime(BossConstants.HORNTAIL_TIME)
-            sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])
-            sm.createQuestWithQRValue(GameConstants.EASY_HORNTAIL_QUEST, "1")
-            sm.setPartyQRValue(GameConstants.EASY_HORNTAIL_QUEST, "1")
+            sm.setInstanceTime(75 * 60)
+            sm.createQuestWithQRValue(99996, "1")
+            sm.setPartyQRValue(99996, "1")
         else:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])

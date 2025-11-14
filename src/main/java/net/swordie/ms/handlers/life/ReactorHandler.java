@@ -19,7 +19,8 @@ public class ReactorHandler {
 
 
 
-    @Handler(op = InHeader.REACTOR_CLICK)
+//    @Handler(op = InHeader.REACTOR_CLICK)
+    @Handler(ops = {InHeader.REACTOR_HIT,InHeader.REACTOR_CLICK})
     public static void handleReactorClick(Client c, InPacket inPacket) {
         Char chr = c.getChr();
         int objID = inPacket.decodeInt();

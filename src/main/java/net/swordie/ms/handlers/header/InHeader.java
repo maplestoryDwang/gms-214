@@ -918,6 +918,8 @@ public enum InHeader {
     DROP_PICK_UP_REQUEST(1092), // v214
     E_N_D__D_R_O_P_P_O_O_L(1093),// v214
 
+
+
     B_E_G_I_N__R_E_A_C_T_O_R_P_O_O_L(-1),// v214
     REACTOR_HIT(1095),// v214
     REACTOR_CLICK(1096),// v214
@@ -925,6 +927,9 @@ public enum InHeader {
     REACTOR_UNK203_1047(1098),// v214
     REACTOR_KEY(1099),// v214
     E_N_D__R_E_A_C_T_O_R_P_O_O_L(-1),// v214
+
+
+
 
     B_E_G_I_N__F_I_S_H_I_N_G_Z_O_N_E_P_O_O_L(-1),
     FISHING_INFO(-1),

@@ -9,7 +9,10 @@ import net.swordie.ms.client.character.BroadcastMsg;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.HyperTPRock;
 import net.swordie.ms.client.character.damage.DamageSkinType;
+import net.swordie.ms.client.character.items.Equip;
 import net.swordie.ms.client.character.items.HotTimeReward;
+import net.swordie.ms.client.character.items.Inventory;
+import net.swordie.ms.client.character.items.Item;
 import net.swordie.ms.client.character.skills.TownPortal;
 import net.swordie.ms.client.character.skills.temp.TemporaryStatManager;
 import net.swordie.ms.client.friend.result.FriendResult;
@@ -150,6 +153,17 @@ public class MigrationHandler {
         chr.getOffenseManager().setChr(chr);
         chr.getJobHandler().giveHyperAfBuff();
         acc.initAuctions();
+
+        // 计算套装属性值
+        List<Item> items = chr.getEquippedInventory().getItems();
+        for (Item item : items) {
+            Equip equip = (Equip) item;
+            if (equip.getSetItemID() != 0) {
+                chr.addSetEffect(equip.getSetItemID());
+            }
+
+        }
+
         chr.recalcStats(EnumSet.of(BaseStat.mhp, BaseStat.mmp));
         chr.checkHotTimeRewards();
     }
