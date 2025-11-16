@@ -892,7 +892,7 @@ public class ItemData {
     public static void loadItemsFromWZ() {
         String wzDir = ServerConstants.WZ_DIR + "/Item.wz";
         String[] subMaps = new String[]{"Cash", "Consume", "Etc", "Install", "Special"}; // not pet
-        for (String subMap : subMaps) {
+        Arrays.stream(subMaps).parallel().forEach(subMap ->{
             File subDir = new File(String.format("%s/%s", wzDir, subMap));
             File[] files = subDir.listFiles();
             for (File file : files) {
@@ -1426,7 +1426,8 @@ public class ItemData {
                     getItems().put(item.getItemId(), item);
                 }
             }
-        }
+        });
+
     }
 
     public static void loadItemSetsFromWZ() {
@@ -2078,36 +2079,45 @@ public class ItemData {
         loadEquipsFromWz();
         log.info(String.format("Loaded equips in %dms.", System.currentTimeMillis() - start));
 
+
+        // 有先后顺序先加载
         start = System.currentTimeMillis();
-//        loadMountItemsFromFile();
-//        log.info(String.format("Loaded mount items in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        loadItemsFromWZ();
-//        log.info(String.format("Loaded items in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        loadPetsFromWZ();
-//        log.info(String.format("Loaded pets in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        loadItemOptionsFromWZ();
-//        log.info(String.format("Loaded item options in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        loadItemSetsFromWZ();
-//        log.info(String.format("Loaded set items in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        QuestData.linkItemData();
-//        log.info(String.format("Linked quest to items in %dms.", System.currentTimeMillis() - start));
+        loadMountItemsFromFile();
+        log.info(String.format("Loaded mount items in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        loadItemsFromWZ();
+        log.info(String.format("Loaded items in %dms.", System.currentTimeMillis() - start));
+
+
+        start = System.currentTimeMillis();
+        loadPetsFromWZ();
+        log.info(String.format("Loaded pets in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        loadItemOptionsFromWZ();
+        log.info(String.format("Loaded item options in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        loadItemSetsFromWZ();
+        log.info(String.format("Loaded set items in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        QuestData.linkItemData();
+        log.info(String.format("Linked quest to items in %dms.", System.currentTimeMillis() - start));
+
+
+
+        // 写入还是应该顺序写
+
         start = System.currentTimeMillis();
         saveEquips(ServerConstants.DAT_DIR + "/equips");
         log.info(String.format("Saved equips in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        saveItems(ServerConstants.DAT_DIR + "/items");
-//        log.info(String.format("Saved items in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        savePets(ServerConstants.DAT_DIR + "/pets");
-//        log.info(String.format("Saved pets in %dms.", System.currentTimeMillis() - start));
-//        start = System.currentTimeMillis();
-//        saveItemOptions(ServerConstants.DAT_DIR);
-//        log.info(String.format("Saved item options in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        saveItems(ServerConstants.DAT_DIR + "/items");
+        log.info(String.format("Saved items in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        savePets(ServerConstants.DAT_DIR + "/pets");
+        log.info(String.format("Saved pets in %dms.", System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        saveItemOptions(ServerConstants.DAT_DIR);
+        log.info(String.format("Saved item options in %dms.", System.currentTimeMillis() - start));
         log.info(String.format("Completed generating item data in %dms.", System.currentTimeMillis() - totalStart));
 
     }
