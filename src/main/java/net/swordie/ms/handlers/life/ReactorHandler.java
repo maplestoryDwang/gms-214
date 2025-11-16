@@ -20,8 +20,8 @@ public class ReactorHandler {
 
 
 //    @Handler(op = InHeader.REACTOR_CLICK)
-    @Handler(ops = {InHeader.REACTOR_HIT,InHeader.REACTOR_CLICK})
-    public static void handleReactorClick(Client c, InPacket inPacket) {
+    @Handler(ops = {InHeader.REACTOR_HIT})
+    public static void handleReactorHit(Client c, InPacket inPacket) {
         Char chr = c.getChr();
         int objID = inPacket.decodeInt();
         int idk = inPacket.decodeInt();
@@ -46,6 +46,42 @@ public class ReactorHandler {
             chr.getScriptManager().startScript(templateID, objID, action, ScriptType.Reactor);
         }
     }
+
+    @Handler(op = InHeader.REACTOR_CLICK)
+    public static void handleReactorClick(Client c, InPacket inPacket) {
+        int objID = inPacket.decodeInt();
+        Char chr = c.getChr();
+
+        boolean touched = inPacket.available() == 0 || inPacket.decodeByte() > 0; //the byte is probably the state to set it to
+
+        Life life = chr.getField().getLifeByObjectID(objID);
+        if (!(life instanceof Reactor)) {
+            log.error("Could not find reactor with objID " + objID);
+            return;
+        }
+        Reactor reactor = (Reactor) life;
+        if (!touched || reactor == null ) {
+            System.out.println("點擊反應堆出現錯誤 - !touched: " + !touched);
+            return;
+        }
+        int templateID = reactor.getTemplateId();
+        ReactorInfo ri = ReactorData.getReactorInfoByID(templateID);
+        String action = ri.getAction();
+        if (chr.getScriptManager().isActive(ScriptType.Reactor)
+                && chr.getScriptManager().getParentIDByScriptType(ScriptType.Reactor) == templateID) {
+            try {
+                int idk = inPacket.decodeInt();
+                byte type = inPacket.decodeByte();
+                chr.getScriptManager().getInvocableByType(ScriptType.Reactor).invokeFunction("action", reactor, type);
+            } catch (ScriptException | NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        } else {
+            chr.getScriptManager().startScript(templateID, objID, action, ScriptType.Reactor);
+        }
+    }
+
+
 
     @Handler(op = InHeader.REACTOR_RECT_IN_MOB)
     public static void handleReactorRectInMob(Client c, InPacket inPacket) {

@@ -304,6 +304,13 @@ public class InPacket extends Packet {
 
     }
 
+
+    /**
+     */
+    public long available() {
+        return byteBuf.array().length - byteBuf.readerIndex();
+    }
+
     /**
      * Reads a position (short x, short y) and returns this.
      * @return The position that has been read.
