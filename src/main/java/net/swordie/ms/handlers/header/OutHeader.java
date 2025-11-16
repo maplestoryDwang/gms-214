@@ -404,8 +404,9 @@ public enum OutHeader {
     UNK_364(412), // v214
 
 
-
+    // 负责打开商店
     TRADE_KING_SHOP_ITEM(413), // v214
+    // 负责售卖商品
     TRADE_KING_SHOP_RES(414), // v214
 
 

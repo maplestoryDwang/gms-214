@@ -35,11 +35,13 @@ import net.swordie.ms.client.guild.result.GuildType;
 import net.swordie.ms.client.party.Party;
 import net.swordie.ms.client.party.PartyMember;
 import net.swordie.ms.client.trunk.TrunkOpen;
+import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.connection.packet.*;
 import net.swordie.ms.constants.*;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.handlers.EventManager;
+import net.swordie.ms.handlers.header.OutHeader;
 import net.swordie.ms.life.DeathType;
 import net.swordie.ms.life.Life;
 import net.swordie.ms.life.Reactor;
@@ -2898,6 +2900,34 @@ public class ScriptManagerImpl implements ScriptManager {
     public void openUI(int id) {
         chr.write(FieldPacket.openUI(id));
     }
+
+
+    // success
+    public void openTradeKing(int npcId) {
+        OutPacket outpacket = new OutPacket(OutHeader.TRADE_KING_SHOP_ITEM);
+        outpacket.encodeInt(npcId);
+        outpacket.encodeInt(1);  // quest_id
+        outpacket.encodeString("aaaaa");
+        outpacket.encodeInt(2); // size
+
+        //id
+        outpacket.encodeInt(4034819);
+        // buy
+        outpacket.encodeInt(10);
+        // sell
+        outpacket.encodeInt(5);
+
+
+        //id
+        outpacket.encodeInt(4034815);
+        // buy
+        outpacket.encodeInt(5);
+        // sell
+        outpacket.encodeInt(10);
+
+        chr.write(outpacket);
+    }
+
 
     @Override
     public void openDimensionalMirror() {

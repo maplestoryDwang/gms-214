@@ -28,12 +28,13 @@ hook和登陆器获取：https://github.com/Toxocious/Moonlight
 
 
 
-## GM特权
+## 管理员指令
 1. 刷道具：!item item_id item_num
 999个核心宝石
 eg:!item 2435719 999
 2. 开核心：@nodes
 3. 技能5sCD
+4. !map map_id
 
 
 ---
@@ -54,3 +55,12 @@ eg:!item 2435719 999
 1. 修复黑龙BOSS可以正常挑战、显示残骸
    ![](asset/hontail.png)
 2. 修复套装和装备血量导致人物血量异常无法加满的问题
+
+
+## 下一步计划
+修复跑商，有感兴趣朋友可以交流 discord:dwang2379
+
+当前最严重问题:
+1. 没找到获取角色有多少钱，有什么东西的接口
+   ![](asset/tradeking.png)
+
