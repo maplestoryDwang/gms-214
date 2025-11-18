@@ -493,8 +493,13 @@ public enum InHeader {
     END_OVER_HEAT(-1), // v210
     //599 summon?
     UNION_REQUEST(-1), // v210
-    TRADE_KING_SHOP_REQ(-1), // v210
-    TRADE_KING_SHOP_INFO_REQ(-1), // v210
+
+
+    TRADE_KING_SHOP_REQ(-1), // v214
+    TRADE_KING_SHOP_INFO_REQ(-1), // v214
+
+
+
     //603 3000
     //604 search?
     //605 int, int (UI 1178?)
