@@ -1,2 +1,2 @@
 # trade king 石铁
-sm.openTradeKing(9001072)
+sm.clickTradeKingNPC(9001072)

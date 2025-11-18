@@ -41,6 +41,7 @@ import net.swordie.ms.connection.packet.*;
 import net.swordie.ms.constants.*;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.handlers.EventManager;
+import net.swordie.ms.handlers.TraceKillHandler;
 import net.swordie.ms.handlers.header.OutHeader;
 import net.swordie.ms.life.DeathType;
 import net.swordie.ms.life.Life;
@@ -54,6 +55,8 @@ import net.swordie.ms.loaders.*;
 import net.swordie.ms.loaders.containerclasses.Cosmetic;
 import net.swordie.ms.loaders.containerclasses.VCoreInfo;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
+import net.swordie.ms.tracekill.TraceKillItemInfo;
+import net.swordie.ms.tracekill.TraceKillUserInfo;
 import net.swordie.ms.util.*;
 import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.World;
@@ -79,10 +82,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
@@ -93,7 +94,6 @@ import java.util.stream.Collectors;
 
 import static net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat.RideVehicle;
 import static net.swordie.ms.enums.ChatType.*;
-import static net.swordie.ms.enums.MessageType.QUEST_RECORD_EX_MESSAGE;
 import static net.swordie.ms.life.npc.NpcMessageType.*;
 
 /**
@@ -3512,53 +3512,82 @@ public class ScriptManagerImpl implements ScriptManager {
      */
 
 
-
     /**
-     * 打开跑商商店
+     * 点击了tradeKingNpc
+     *
      * @param npcId
      */
-    public void openTradeKing(int npcId) {
+    public void clickTradeKingNPC(int npcId) {
+
+        // 发两个message
+        // 再发返回
+        TraceKillHandler.clickTradeKingNPC(chr, npcId);
+
+
+
+        // 再发响应
+/*
         OutPacket outpacket = new OutPacket(OutHeader.TRADE_KING_SHOP_ITEM);
         outpacket.encodeInt(npcId);
         outpacket.encodeInt(1);  // quest_id
         outpacket.encodeString("aaaaa");
-        outpacket.encodeInt(2); // size
 
-        //id
-        outpacket.encodeInt(4034819);
-        // buy
-        outpacket.encodeInt(10);
-        // sell
-        outpacket.encodeInt(5);
-
-
-        //id
-        outpacket.encodeInt(4034815);
-        // buy
-        outpacket.encodeInt(5);
-        // sell
-        outpacket.encodeInt(10);
-
+        // 写个map控制每个npc的商品
+        List<TraceKillItemInfo> traceKillItemInfos = TraceKillHandler.getTradeKillItems(npcId);
+        outpacket.encodeInt(traceKillItemInfos.size());
+        for (TraceKillItemInfo traceKillItemInfo : traceKillItemInfos) {
+            //id
+            outpacket.encodeInt(traceKillItemInfo.getId());
+            // buy
+            outpacket.encodeInt(traceKillItemInfo.getBuyPrices());
+            // sell
+            outpacket.encodeInt(traceKillItemInfo.getSellPrices());
+        }
         chr.write(outpacket);
+*/
+
+
+//        outpacket.encodeInt(2); // size
+//
+//        //id
+//        outpacket.encodeInt(4034819);
+//        // buy
+//        outpacket.encodeInt(10);
+//        // sell
+//        outpacket.encodeInt(5);
+//
+//
+//        //id
+//        outpacket.encodeInt(4034815);
+//        // buy
+//        outpacket.encodeInt(5);
+//        // sell
+//        outpacket.encodeInt(10);
+
     }
 
 
+    /**
+     * 初始化测试
+     */
+    public void getTradeKingInit() {
+        TraceKillHandler.getTradeKingInit(chr);
+    }
 
 
-
-    public void getTradeKing() {
+/*    public void getTradeKing() {
         OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
         outpacket.encodeByte(MessageType.QUEST_RECORD_EX_MESSAGE.getVal());   // 0D
         outpacket.encodeInt(15324); //  DC 3B 00 00
-        byte[] bytes = new byte[] {
-                (byte)0x33, (byte)0x00,
-                (byte)0x73, (byte)0x68, (byte)0x6F, (byte)0x70, (byte)0x3D, (byte)0x2D,
-                (byte)0x31, (byte)0x3B, (byte)0x63, (byte)0x57, (byte)0x65, (byte)0x69, (byte)0x67, (byte)0x68,
-                (byte)0x74, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x63, (byte)0x6F, (byte)0x75, (byte)0x6E,
-                (byte)0x74, (byte)0x3D, (byte)0x35, (byte)0x30, (byte)0x3B, (byte)0x6D, (byte)0x57, (byte)0x65,
-                (byte)0x69, (byte)0x67, (byte)0x68, (byte)0x74, (byte)0x3D, (byte)0x31, (byte)0x32, (byte)0x35,
-                (byte)0x3B, (byte)0x73, (byte)0x63, (byte)0x6F, (byte)0x75, (byte)0x6E, (byte)0x74, (byte)0x3D,
-                (byte)0x34, (byte)0x30, (byte)0x38, (byte)0x33, (byte)0x33
+        byte[] bytes = new byte[]{
+                (byte) 0x33, (byte) 0x00,
+                (byte) 0x73, (byte) 0x68, (byte) 0x6F, (byte) 0x70, (byte) 0x3D, (byte) 0x2D,
+                (byte) 0x31, (byte) 0x3B, (byte) 0x63, (byte) 0x57, (byte) 0x65, (byte) 0x69, (byte) 0x67, (byte) 0x68,
+                (byte) 0x74, (byte) 0x3D, (byte) 0x30, (byte) 0x3B, (byte) 0x63, (byte) 0x6F, (byte) 0x75, (byte) 0x6E,
+                (byte) 0x74, (byte) 0x3D, (byte) 0x35, (byte) 0x30, (byte) 0x3B, (byte) 0x6D, (byte) 0x57, (byte) 0x65,
+                (byte) 0x69, (byte) 0x67, (byte) 0x68, (byte) 0x74, (byte) 0x3D, (byte) 0x31, (byte) 0x32, (byte) 0x35,
+                (byte) 0x3B, (byte) 0x73, (byte) 0x63, (byte) 0x6F, (byte) 0x75, (byte) 0x6E, (byte) 0x74, (byte) 0x3D,
+                (byte) 0x34, (byte) 0x30, (byte) 0x38, (byte) 0x33, (byte) 0x33
         };
 
 //        outpacket.encodeShort(bytes.length);
@@ -3572,24 +3601,19 @@ public class ScriptManagerImpl implements ScriptManager {
         OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
         outpacket.encodeByte(MessageType.QUEST_RECORD_EX_MESSAGE.getVal());   // 0D
         outpacket.encodeInt(15324); //  DC 3B 00 00
-        byte[] data = new byte[] {
-                (byte)0x1F, (byte)0x00, (byte)0x31, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x30, (byte)0x3D,
-                (byte)0x30, (byte)0x3B, (byte)0x33, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x32, (byte)0x3D,
-                (byte)0x30, (byte)0x3B, (byte)0x35, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x34, (byte)0x3D,
-                (byte)0x30, (byte)0x3B, (byte)0x37, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x36, (byte)0x3D,
-                (byte)0x30
+        byte[] data = new byte[]{
+                (byte) 0x1F, (byte) 0x00, (byte) 0x31, (byte) 0x3D, (byte) 0x30, (byte) 0x3B, (byte) 0x30, (byte) 0x3D,
+                (byte) 0x30, (byte) 0x3B, (byte) 0x33, (byte) 0x3D, (byte) 0x30, (byte) 0x3B, (byte) 0x32, (byte) 0x3D,
+                (byte) 0x30, (byte) 0x3B, (byte) 0x35, (byte) 0x3D, (byte) 0x30, (byte) 0x3B, (byte) 0x34, (byte) 0x3D,
+                (byte) 0x30, (byte) 0x3B, (byte) 0x37, (byte) 0x3D, (byte) 0x30, (byte) 0x3B, (byte) 0x36, (byte) 0x3D,
+                (byte) 0x30
         };
 
 //        outpacket.encodeShort(bytes.length);
         outpacket.encodeArr(data);
 
         chr.write(outpacket);
-    }
-
-
-
-
-
+    }*/
 
 
 }
