@@ -15,6 +15,8 @@ import net.swordie.ms.handlers.header.OutHeader;
 import net.swordie.ms.tracekill.TraceKillItemInfo;
 import net.swordie.ms.tracekill.TraceKillUserInfo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +63,11 @@ public class TraceKillHandler {
         // 石铁
         int npcId = 9001072;
         List<TraceKillItemInfo> traceKillItemInfos = new ArrayList<>();
-        traceKillItemInfos.add(new TraceKillItemInfo(4034819, 1,10, 15323)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034804, 10,0, 15322)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034819, 30,0, 15322)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034814, 0,60, 15322)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034815, 0,60, 15322)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034829, 0,60, 15322)); // 不卖写0
         npcItemInfo.put(npcId, traceKillItemInfos);
 
     }
@@ -108,43 +114,65 @@ public class TraceKillHandler {
 
         // 处理自己的逻辑
         if (buy) {
-            // 增加重量
-            userInfo.setcWeight(userInfo.getcWeight() + count);
-
             // 扣掉金币
             int buyPrices = traceKillItemInfo.getBuyPrices() * count;
             userInfo.setCount(userInfo.getCount() - buyPrices);
 
+            // 171  传扣钱
+            sendUserQR(c.getChr(), userInfo);
+
+            // 171  刷新对应qrvalue
+//            TraceKillHandler.sendQRValue(c.getChr(), qr, qrValue);
+            c.getChr().write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+                    qr, qrValue, (byte) 0));
+
+
+            // 增加重量
+            userInfo.setcWeight(userInfo.getcWeight() + count);
+            // 171  传正确的
+            sendUserQR(c.getChr(), userInfo);
+
+
 
         } else {
-            // 减少重量
-            userInfo.setcWeight(userInfo.getcWeight() - count);
 
             // 增加金币
             int buyPrices = traceKillItemInfo.getSellPrices() * count;
             userInfo.setCount(userInfo.getCount() + buyPrices);
 
+            // 171  传扣钱
+            sendUserQR(c.getChr(), userInfo);
+
+
+            // 171  刷新对应qrvalue
+//            TraceKillHandler.sendQRValue(c.getChr(), qr, qrValue);
+            c.getChr().write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+                    qr, qrValue, (byte) 0));
+
+            // 减少重量
+            userInfo.setcWeight(userInfo.getcWeight() - count);
+            // 171  传正确的
+            sendUserQR(c.getChr(), userInfo);
+
+
         }
 
 
-        // 171  刷新自身信息
-        sendUserQR(c.getChr(), userInfo);
+        // 171  传结果
+        // sendUserQR(c.getChr(), userInfo);
 
-
-        // 171  刷新对应qrvalue
-        TraceKillHandler.sendQRValue(c.getChr(), qr, qrValue);
 
 
         //00 00 00 00    // 固定？
         //01             // 买入 卖出
         //F4 90 3D 00   // 购买物品 0348004
-        //0B 00 00 00   //购买价格
+        //0B 00 00 00   // 上次购买价格
         OutPacket outpacket = new OutPacket(OutHeader.TRADE_KING_SHOP_RES);
         outpacket.encodeInt(0);
         outpacket.encodeByte(buySellTag);
         outpacket.encodeInt(itemId);
         outpacket.encodeInt(traceKillItemInfo.getBuyPrices());
-
+        c.getChr().write(outpacket);
     }
 
     /**
@@ -169,7 +197,7 @@ public class TraceKillHandler {
         TraceKillUserInfo userInfo = new TraceKillUserInfo();
         userInfo.setShopNpc(-1);
         userInfo.setcWeight(0);
-        userInfo.setCount(50);
+        userInfo.setCount(999);
         userInfo.setmWeight(125);
         userInfo.setScount(0);
 
@@ -204,7 +232,7 @@ public class TraceKillHandler {
 
 
 
-
+    // NPC点击
     public static void clickTradeKingNPC(Char chr, int npcId) {
         Integer chrId = chr.getId();
         TraceKillUserInfo userInfo = userInfoMap.get(chrId);
@@ -215,10 +243,12 @@ public class TraceKillHandler {
             userInfo.setShopNpc(npcId);
         }
 
+
         // 发送一次自己的
-//        sendUserQR(chr, userInfo);
+        sendUserQR(chr, userInfo);
 
-
+        //发过期时间
+        sendExpiredTime(chr);
 
         // 找到shop卖的东西
         List<TraceKillItemInfo> traceKillItemInfos = npcItemInfo.get(npcId);
@@ -226,10 +256,20 @@ public class TraceKillHandler {
 
         OutPacket outpacket = new OutPacket(OutHeader.TRADE_KING_SHOP_ITEM);
         outpacket.encodeInt(npcId);
-        // 应该是发自己的状态
-        outpacket.encodeInt(15324);  // quest_id
-        String format = String.format("shop=%d;cWeight=%d;count=%d;mWeight=%d", userInfo.getShopNpc(), userInfo.getcWeight(), userInfo.getCount(), userInfo.getmWeight());
-        outpacket.encodeString(format);
+
+        // 发的下次更新时间
+//        LocalDateTime now = LocalDateTime.now().plusMinutes(2);
+//        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        String time = "0";
+        outpacket.encodeInt(15317);  // quest_id ？？？
+        outpacket.encodeString(time);
+
+
+
+
+//        outpacket.encodeInt(15324);  // quest_id
+//        String format = String.format("shop=%d;cWeight=%d;count=%d;mWeight=%d", userInfo.getShopNpc(), userInfo.getcWeight(), userInfo.getCount(), userInfo.getmWeight());
+//        outpacket.encodeString(time);
 
 
         // 写个map控制每个npc的商品
@@ -249,24 +289,68 @@ public class TraceKillHandler {
     public static void getTradeKingInit(Char chr) {
         Integer id = chr.getId();
         TraceKillUserInfo userInfo = TraceKillHandler.initTradeKingUser(id);
-        sendUserQR(chr, userInfo);
+//        sendUserQR(chr, userInfo);
+        sendUserQRInit(chr, userInfo);
 
         // UI显示满 4和尚+ 1狐狸  DD 3B 1=4;4=1
-        TraceKillHandler.sendQRValue(chr, 15325, "1=4;4=1");
+//        TraceKillHandler.sendQRValue(chr, 15325, "1=4;4=1");
+        TraceKillHandler.sendQRValue(chr, 15325, "0");
 
         // todo 发送45次shop的message？
+//        shopMessageQr.forEach((key, value) -> {
+//            String[] split = value.split(";");
+//            int length = split.length;
+//            for (int i = 0; i < length; i++) {
+////                TraceKillHandler.sendQRValue(chr, key, value);
+//                chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+//                        key, value, (byte) 0));
+//            }
+//        });
 
-
-
-
-
-
+        int qr = 15322;
+        String qrValue = shopMessageQr.get(qr);
+        String[] split = qrValue.split(";");
+        int length = split.length;
+        StringBuilder sb = new StringBuilder(split[0]);
+        for (int i = 1; i <= length; i++) {
+            String value = sb.toString();
+            chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+                    qr, value, (byte) 0));
+            if (i != length) {
+                sb.append(";");
+                sb.append(split[i]);
+            }
+        }
 
     }
+
 
     private static void sendUserQR(Char chr, TraceKillUserInfo userInfo) {
         String format = String.format("shop=%d;cWeight=%d;count=%d;mWeight=%d", userInfo.getShopNpc(), userInfo.getcWeight(), userInfo.getCount(), userInfo.getmWeight());
         // 满背包125    15324 shop=-1;cWeight=0;count=50;mWeight=125
+//        TraceKillHandler.sendQRValue(chr, 15324, format);
+
+        chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+                15324,format, (byte) 0));
+        chr.chatMessage(String.format("Sent QRValue with  QuestId %d, QrValue %s", 15324, format));
+    }
+
+
+
+    private static void sendUserQRInit(Char chr, TraceKillUserInfo userInfo) {
+        String format = String.format("shop=%d;cWeight=%d;count=%d;mWeight=%d", userInfo.getShopNpc(), userInfo.getcWeight(), userInfo.getCount(), userInfo.getmWeight());
+        // 满背包125    15324 shop=-1;cWeight=0;count=50;mWeight=125
         TraceKillHandler.sendQRValue(chr, 15324, format);
+    }
+
+    // UTCshijian?
+    private static void sendExpiredTime(Char chr) {
+        // 比实际慢一个小时
+        LocalDateTime now = LocalDateTime.now().plusMinutes(2).minusHours(1);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        String s = "0=" + now.format(fmt);
+        chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+                15317, s, (byte) 0));
+
     }
 }

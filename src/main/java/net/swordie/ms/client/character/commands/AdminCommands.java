@@ -186,11 +186,22 @@ public class AdminCommands {
                 return;
             }
             OutPacket outPacket = new OutPacket(Short.parseShort(args[1]));
-            outPacket.encodeByte(Integer.parseInt(args[2]));
-            outPacket.encodeInt(Integer.parseInt(args[3]));
-            outPacket.encodeByte(Integer.parseInt(args[4]));
+            outPacket.encodeInt(Integer.parseInt(args[2]));
+            outPacket.encodeByte(Integer.parseInt(args[3]));
+            outPacket.encodeInt(Integer.parseInt(args[4]));
+            outPacket.encodeInt(Integer.parseInt(args[5]));
+
+//            outPacket.encodeByte(Integer.parseInt(args[2]));
+//            outPacket.encodeInt(Integer.parseInt(args[3]));
+//            outPacket.encodeByte(Integer.parseInt(args[4]));
+
+
+
 
             chr.write(outPacket);
+
+
+
 
             /*
             if (args.length < 3) {

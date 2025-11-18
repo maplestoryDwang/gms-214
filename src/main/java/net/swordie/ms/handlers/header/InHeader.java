@@ -495,8 +495,8 @@ public enum InHeader {
     UNION_REQUEST(-1), // v210
 
 
-    TRADE_KING_SHOP_REQ(-1), // v214
-    TRADE_KING_SHOP_INFO_REQ(-1), // v214
+    TRADE_KING_SHOP_REQ(607), // v214
+    TRADE_KING_SHOP_INFO_REQ(608), // v214
 
 
 
