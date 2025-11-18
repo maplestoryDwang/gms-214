@@ -24,6 +24,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by Tim on 2/18/2017.
  */
 public class Client extends NettyClient {
+
+    public static final String DES_KEY = "M@PleStoryMaPLe!";
+
     private Char chr;
     private final Lock lock;
     private Account account;
@@ -144,7 +147,7 @@ public class Client extends NettyClient {
 
     public void sendOpcodeEncryption(int charID) {
         byte[] key = new byte[24];
-        System.arraycopy("M@PleStoryMaPLe!".getBytes(), 0, key, 0, 16);
+        System.arraycopy(DES_KEY.getBytes(), 0, key, 0, 16);
         System.arraycopy(key, 0, key, 16, 8);
         TripleDESCipher cipher = new TripleDESCipher(key);
         StringBuilder content = new StringBuilder();

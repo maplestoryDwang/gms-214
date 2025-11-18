@@ -2903,75 +2903,6 @@ public class ScriptManagerImpl implements ScriptManager {
     }
 
 
-    public void getTradeKing() {
-        OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
-        outpacket.encodeByte(MessageType.QUEST_RECORD_EX_MESSAGE.getVal());   // 0D
-        outpacket.encodeInt(15324); //  DC 3B 00 00
-        byte[] bytes = new byte[] {
-                (byte)0x33, (byte)0x00,
-                (byte)0x73, (byte)0x68, (byte)0x6F, (byte)0x70, (byte)0x3D, (byte)0x2D,
-                (byte)0x31, (byte)0x3B, (byte)0x63, (byte)0x57, (byte)0x65, (byte)0x69, (byte)0x67, (byte)0x68,
-                (byte)0x74, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x63, (byte)0x6F, (byte)0x75, (byte)0x6E,
-                (byte)0x74, (byte)0x3D, (byte)0x35, (byte)0x30, (byte)0x3B, (byte)0x6D, (byte)0x57, (byte)0x65,
-                (byte)0x69, (byte)0x67, (byte)0x68, (byte)0x74, (byte)0x3D, (byte)0x31, (byte)0x32, (byte)0x35,
-                (byte)0x3B, (byte)0x73, (byte)0x63, (byte)0x6F, (byte)0x75, (byte)0x6E, (byte)0x74, (byte)0x3D,
-                (byte)0x34, (byte)0x30, (byte)0x38, (byte)0x33, (byte)0x33
-        };
-
-//        outpacket.encodeShort(bytes.length);
-        outpacket.encodeArr(bytes);
-
-        chr.write(outpacket);
-    }
-
-
-    public void getTradeKing2() {
-        OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
-        outpacket.encodeByte(MessageType.QUEST_RECORD_EX_MESSAGE.getVal());   // 0D
-        outpacket.encodeInt(15324); //  DC 3B 00 00
-        byte[] data = new byte[] {
-                (byte)0x1F, (byte)0x00, (byte)0x31, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x30, (byte)0x3D,
-                (byte)0x30, (byte)0x3B, (byte)0x33, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x32, (byte)0x3D,
-                (byte)0x30, (byte)0x3B, (byte)0x35, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x34, (byte)0x3D,
-                (byte)0x30, (byte)0x3B, (byte)0x37, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x36, (byte)0x3D,
-                (byte)0x30
-        };
-
-//        outpacket.encodeShort(bytes.length);
-        outpacket.encodeArr(data);
-
-        chr.write(outpacket);
-    }
-
-
-
-    // success
-    public void openTradeKing(int npcId) {
-        OutPacket outpacket = new OutPacket(OutHeader.TRADE_KING_SHOP_ITEM);
-        outpacket.encodeInt(npcId);
-        outpacket.encodeInt(1);  // quest_id
-        outpacket.encodeString("aaaaa");
-        outpacket.encodeInt(2); // size
-
-        //id
-        outpacket.encodeInt(4034819);
-        // buy
-        outpacket.encodeInt(10);
-        // sell
-        outpacket.encodeInt(5);
-
-
-        //id
-        outpacket.encodeInt(4034815);
-        // buy
-        outpacket.encodeInt(5);
-        // sell
-        outpacket.encodeInt(10);
-
-        chr.write(outpacket);
-    }
-
-
     @Override
     public void openDimensionalMirror() {
         chr.write(FieldPacket.openDimensionalMirror());
@@ -3569,4 +3500,96 @@ public class ScriptManagerImpl implements ScriptManager {
     public void printStyle(Cosmetic cosmetic) {
         System.out.printf("id: %d, name: %s", cosmetic.getId(), cosmetic.getName());
     }
+
+
+    /**
+     *
+     *
+     * 跑商相关调用
+     *
+     *
+     *
+     */
+
+
+
+    /**
+     * 打开跑商商店
+     * @param npcId
+     */
+    public void openTradeKing(int npcId) {
+        OutPacket outpacket = new OutPacket(OutHeader.TRADE_KING_SHOP_ITEM);
+        outpacket.encodeInt(npcId);
+        outpacket.encodeInt(1);  // quest_id
+        outpacket.encodeString("aaaaa");
+        outpacket.encodeInt(2); // size
+
+        //id
+        outpacket.encodeInt(4034819);
+        // buy
+        outpacket.encodeInt(10);
+        // sell
+        outpacket.encodeInt(5);
+
+
+        //id
+        outpacket.encodeInt(4034815);
+        // buy
+        outpacket.encodeInt(5);
+        // sell
+        outpacket.encodeInt(10);
+
+        chr.write(outpacket);
+    }
+
+
+
+
+
+    public void getTradeKing() {
+        OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
+        outpacket.encodeByte(MessageType.QUEST_RECORD_EX_MESSAGE.getVal());   // 0D
+        outpacket.encodeInt(15324); //  DC 3B 00 00
+        byte[] bytes = new byte[] {
+                (byte)0x33, (byte)0x00,
+                (byte)0x73, (byte)0x68, (byte)0x6F, (byte)0x70, (byte)0x3D, (byte)0x2D,
+                (byte)0x31, (byte)0x3B, (byte)0x63, (byte)0x57, (byte)0x65, (byte)0x69, (byte)0x67, (byte)0x68,
+                (byte)0x74, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x63, (byte)0x6F, (byte)0x75, (byte)0x6E,
+                (byte)0x74, (byte)0x3D, (byte)0x35, (byte)0x30, (byte)0x3B, (byte)0x6D, (byte)0x57, (byte)0x65,
+                (byte)0x69, (byte)0x67, (byte)0x68, (byte)0x74, (byte)0x3D, (byte)0x31, (byte)0x32, (byte)0x35,
+                (byte)0x3B, (byte)0x73, (byte)0x63, (byte)0x6F, (byte)0x75, (byte)0x6E, (byte)0x74, (byte)0x3D,
+                (byte)0x34, (byte)0x30, (byte)0x38, (byte)0x33, (byte)0x33
+        };
+
+//        outpacket.encodeShort(bytes.length);
+        outpacket.encodeArr(bytes);
+
+        chr.write(outpacket);
+    }
+
+
+    public void getTradeKing2() {
+        OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
+        outpacket.encodeByte(MessageType.QUEST_RECORD_EX_MESSAGE.getVal());   // 0D
+        outpacket.encodeInt(15324); //  DC 3B 00 00
+        byte[] data = new byte[] {
+                (byte)0x1F, (byte)0x00, (byte)0x31, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x30, (byte)0x3D,
+                (byte)0x30, (byte)0x3B, (byte)0x33, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x32, (byte)0x3D,
+                (byte)0x30, (byte)0x3B, (byte)0x35, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x34, (byte)0x3D,
+                (byte)0x30, (byte)0x3B, (byte)0x37, (byte)0x3D, (byte)0x30, (byte)0x3B, (byte)0x36, (byte)0x3D,
+                (byte)0x30
+        };
+
+//        outpacket.encodeShort(bytes.length);
+        outpacket.encodeArr(data);
+
+        chr.write(outpacket);
+    }
+
+
+
+
+
+
+
 }
