@@ -15,15 +15,14 @@ public class TraceKillItemInfo {
     private int buyPrices;
     private int sellPrices;
     private int qr;
+    private int qrEx;
 
-
-
-
-    public TraceKillItemInfo(int id, int buyPrices, int sellPrices, int qr) {
+    public TraceKillItemInfo(int id, int buyPrices, int sellPrices, int qr, int qrEx) {
         this.id = id;
         this.buyPrices = buyPrices;
         this.sellPrices = sellPrices;
         this.qr = qr;
+        this.qrEx = qrEx;
     }
 
     public int getId() {
@@ -50,14 +49,19 @@ public class TraceKillItemInfo {
         this.sellPrices = sellPrices;
     }
 
-
-
-
     public int getQr() {
         return qr;
     }
 
     public void setQr(int qr) {
         this.qr = qr;
+    }
+
+    public int getQrEx() {
+        return qrEx;
+    }
+
+    public void setQrEx(int qrEx) {
+        this.qrEx = qrEx;
     }
 }

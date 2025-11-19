@@ -1,5 +1,8 @@
 package net.swordie.ms.tracekill;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author dwang
  * @version 1.0.0
@@ -14,13 +17,13 @@ public class TraceKillUserInfo {
 
     // 当前正在和哪个shop交易
     private int shopNpc;
-
-
-
     private int cWeight;
     private int count;
     private int mWeight;
     private int scount;
+
+    // 记录购买商品的数量key QR_QRex.  value, 数量
+    private Map<String, Integer> itemNum = new HashMap<>();
 
 
     public TraceKillUserInfo() {
@@ -64,5 +67,13 @@ public class TraceKillUserInfo {
 
     public void setScount(int scount) {
         this.scount = scount;
+    }
+
+    public Map<String, Integer> getItemNum() {
+        return itemNum;
+    }
+
+    public void setItemNum(Map<String, Integer> itemNum) {
+        this.itemNum = itemNum;
     }
 }

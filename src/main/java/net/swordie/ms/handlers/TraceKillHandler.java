@@ -38,7 +38,7 @@ public class TraceKillHandler {
     // 对应 qrkey value
     private static Map<Integer, String> shopMessageQr = new HashMap<>();
 
-    // 每个商店卖的东西
+    // 每个商店卖的东西 npcID，
     private static HashMap<Integer, List<TraceKillItemInfo>> npcItemInfo = new HashMap<>();
 
     private static HashMap<Integer, TraceKillUserInfo> userInfoMap = new HashMap<>();
@@ -63,11 +63,11 @@ public class TraceKillHandler {
         // 石铁
         int npcId = 9001072;
         List<TraceKillItemInfo> traceKillItemInfos = new ArrayList<>();
-        traceKillItemInfos.add(new TraceKillItemInfo(4034804, 10,0, 15322)); // 不卖写0
-        traceKillItemInfos.add(new TraceKillItemInfo(4034819, 30,0, 15322)); // 不卖写0
-        traceKillItemInfos.add(new TraceKillItemInfo(4034814, 0,60, 15322)); // 不卖写0
-        traceKillItemInfos.add(new TraceKillItemInfo(4034815, 0,60, 15322)); // 不卖写0
-        traceKillItemInfos.add(new TraceKillItemInfo(4034829, 0,60, 15322)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034804, 10,0, 15322, 0)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034819, 30,0, 15323, 7)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034814, 0,60, 15323,2)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034815, 0,60, 15323,3)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034829, 0,60, 15345,1)); // 不卖写0
         npcItemInfo.put(npcId, traceKillItemInfos);
 
     }
@@ -76,7 +76,6 @@ public class TraceKillHandler {
 
     public static List<TraceKillItemInfo> getTradeKillItems(int npcId) {
         return npcItemInfo.get(npcId);
-
     }
 
 
@@ -98,7 +97,7 @@ public class TraceKillHandler {
         Integer chrId = c.getChr().getId();
         TraceKillUserInfo userInfo = userInfoMap.get(chrId);
 
-
+        // 当前绑定的NPC
         int shopNpcId = userInfo.getShopNpc();
 
         // 找到shop卖的东西
@@ -109,7 +108,6 @@ public class TraceKillHandler {
 
         // 找到对应的qr
         int qr = traceKillItemInfo.getQr();
-        String qrValue = shopMessageQr.get(qr);
 
 
         // 处理自己的逻辑
@@ -121,10 +119,23 @@ public class TraceKillHandler {
             // 171  传扣钱
             sendUserQR(c.getChr(), userInfo);
 
+
+            // 用户增加商品
+            Map<String, Integer> itemNum = userInfo.getItemNum();
+            String key = traceKillItemInfo.getQr() + "_" + traceKillItemInfo.getQrEx();
+            Integer i = itemNum.get(key);
+            //  itemNum.merge(key, count, Integer::sum);
+            if (i == null) {
+                itemNum.put(key, count);
+            } else {
+                itemNum.put(key, i + count);
+            }
+
+
             // 171  刷新对应qrvalue
-//            TraceKillHandler.sendQRValue(c.getChr(), qr, qrValue);
+            String flushQRValue = flushQRValue(userInfo, traceKillItemInfo);
             c.getChr().write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
-                    qr, qrValue, (byte) 0));
+                    qr, flushQRValue, (byte) 0));
 
 
             // 增加重量
@@ -144,10 +155,24 @@ public class TraceKillHandler {
             sendUserQR(c.getChr(), userInfo);
 
 
+            // 用户增加商品
+            Map<String, Integer> itemNum = userInfo.getItemNum();
+            String key = traceKillItemInfo.getQr() + "_" + traceKillItemInfo.getQrEx();
+            Integer i = itemNum.get(key);
+            //  itemNum.merge(key, count, Integer::sum);
+            if (i == null) {
+                itemNum.put(key, count);
+            } else {
+                itemNum.put(key, Math.max(i - count,0));
+            }
+
+
             // 171  刷新对应qrvalue
-//            TraceKillHandler.sendQRValue(c.getChr(), qr, qrValue);
+            String flushQRValue = flushQRValue(userInfo, traceKillItemInfo);
             c.getChr().write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
-                    qr, qrValue, (byte) 0));
+                    qr, flushQRValue, (byte) 0));
+
+
 
             // 减少重量
             userInfo.setcWeight(userInfo.getcWeight() - count);
@@ -173,6 +198,32 @@ public class TraceKillHandler {
         outpacket.encodeInt(itemId);
         outpacket.encodeInt(traceKillItemInfo.getBuyPrices());
         c.getChr().write(outpacket);
+    }
+
+    private static String flushQRValue(TraceKillUserInfo userInfo, TraceKillItemInfo traceKillItemInfo) {
+        int qr = traceKillItemInfo.getQr(); // 15322
+        // 标准串 "5=0;4=0;7=0;6=0;1=0;0=0;3=0;2=0"
+        String standardQrValue = shopMessageQr.get(qr);
+        int qrEx = traceKillItemInfo.getQrEx();
+        String userInfoKey = qr + "_" + qrEx;
+        Integer traceKillItemCount = userInfo.getItemNum().get(userInfoKey);
+
+
+        // 切分 key=value 项
+        String[] parts = standardQrValue.split(";");
+
+        // 替换对应 key 的 value
+        for (int i = 0; i < parts.length; i++) {
+            String[] kv = parts[i].split("=");
+            if (kv.length == 2 && kv[0].equals(String.valueOf(qrEx))) {
+                parts[i] = qrEx + "=" + traceKillItemCount;
+            }
+        }
+
+        // 拼回字符串
+        String updated = String.join(";", parts);
+        return updated;
+
     }
 
     /**
@@ -289,14 +340,21 @@ public class TraceKillHandler {
     public static void getTradeKingInit(Char chr) {
         Integer id = chr.getId();
         TraceKillUserInfo userInfo = TraceKillHandler.initTradeKingUser(id);
-//        sendUserQR(chr, userInfo);
-        sendUserQRInit(chr, userInfo);
+        sendUserQR(chr, userInfo);
+//        sendUserQRInit(chr, userInfo);
 
         // UI显示满 4和尚+ 1狐狸  DD 3B 1=4;4=1
-//        TraceKillHandler.sendQRValue(chr, 15325, "1=4;4=1");
-        TraceKillHandler.sendQRValue(chr, 15325, "0");
+        TraceKillHandler.sendQRValue(chr, 15325, "1=4;4=1");
+//        TraceKillHandler.sendQRValue(chr, 15325, "0");
 
         // todo 发送45次shop的message？
+        shopMessageQr.forEach((key, value) -> {
+            // 每个发一次就够了 客户端会拿到的
+            chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE, key, value, (byte) 0));
+        });
+
+
+
 //        shopMessageQr.forEach((key, value) -> {
 //            String[] split = value.split(";");
 //            int length = split.length;
@@ -307,20 +365,20 @@ public class TraceKillHandler {
 //            }
 //        });
 
-        int qr = 15322;
-        String qrValue = shopMessageQr.get(qr);
-        String[] split = qrValue.split(";");
-        int length = split.length;
-        StringBuilder sb = new StringBuilder(split[0]);
-        for (int i = 1; i <= length; i++) {
-            String value = sb.toString();
-            chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
-                    qr, value, (byte) 0));
-            if (i != length) {
-                sb.append(";");
-                sb.append(split[i]);
-            }
-        }
+//        int qr = 15322;
+//        String qrValue = shopMessageQr.get(qr);
+//        String[] split = qrValue.split(";");
+//        int length = split.length;
+//        StringBuilder sb = new StringBuilder(split[0]);
+//        for (int i = 1; i <= length; i++) {
+//            String value = sb.toString();
+//            chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
+//                    qr, value, (byte) 0));
+//            if (i != length) {
+//                sb.append(";");
+//                sb.append(split[i]);
+//            }
+//        }
 
     }
 
