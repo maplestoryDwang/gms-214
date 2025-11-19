@@ -63,7 +63,7 @@ public class TraceKillHandler {
         // 石铁
         int npcId = 9001072;
         List<TraceKillItemInfo> traceKillItemInfos = new ArrayList<>();
-        traceKillItemInfos.add(new TraceKillItemInfo(4034804, 10,0, 15322, 0)); // 不卖写0
+        traceKillItemInfos.add(new TraceKillItemInfo(4034804, 10,50, 15322, 0)); // 不卖写0
         traceKillItemInfos.add(new TraceKillItemInfo(4034819, 30,0, 15323, 7)); // 不卖写0
         traceKillItemInfos.add(new TraceKillItemInfo(4034814, 0,60, 15323,2)); // 不卖写0
         traceKillItemInfos.add(new TraceKillItemInfo(4034815, 0,60, 15323,3)); // 不卖写0
@@ -235,6 +235,9 @@ public class TraceKillHandler {
     public static void handleTradeKingSHopINfoReq(Client c, InPacket inPacket) {
         // 客户端发送的0内容
 
+        sendExpiredTime(c.getChr());
+
+
         clickTradeKingNPC(c.getChr(), 0);
     }
 
@@ -299,7 +302,7 @@ public class TraceKillHandler {
         sendUserQR(chr, userInfo);
 
         //发过期时间
-        sendExpiredTime(chr);
+//        String sendExpiredTimeStr = sendExpiredTime(chr);
 
         // 找到shop卖的东西
         List<TraceKillItemInfo> traceKillItemInfos = npcItemInfo.get(npcId);
@@ -309,8 +312,6 @@ public class TraceKillHandler {
         outpacket.encodeInt(npcId);
 
         // 发的下次更新时间
-//        LocalDateTime now = LocalDateTime.now().plusMinutes(2);
-//        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String time = "0";
         outpacket.encodeInt(15317);  // quest_id ？？？
         outpacket.encodeString(time);
@@ -352,7 +353,7 @@ public class TraceKillHandler {
             // 每个发一次就够了 客户端会拿到的
             chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE, key, value, (byte) 0));
         });
-
+        sendExpiredTime(chr);
 
 
 //        shopMessageQr.forEach((key, value) -> {
@@ -402,13 +403,13 @@ public class TraceKillHandler {
     }
 
     // UTCshijian?
-    private static void sendExpiredTime(Char chr) {
+    private static String sendExpiredTime(Char chr) {
         // 比实际慢一个小时
-        LocalDateTime now = LocalDateTime.now().plusMinutes(2).minusHours(1);
+        LocalDateTime now = LocalDateTime.now().plusMinutes(1).minusHours(6);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String s = "0=" + now.format(fmt);
         chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE,
                 15317, s, (byte) 0));
-
+        return s;
     }
 }

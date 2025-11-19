@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.loaders.containerclasses.AndroidInfo;
 import net.swordie.ms.tracekill.TraceKillQuestRxCode;
+import net.swordie.ms.tracekill.TraceKillRiding;
 import net.swordie.ms.tracekill.TraceKillWorker;
 import net.swordie.ms.util.Loader;
 import net.swordie.ms.util.Saver;
@@ -180,7 +181,8 @@ public class EtcData {
      *  加载跑商数据
      */
     public static void loadNiTradeKillCollectionFromWz() {
-        String wzDir = "E:\\javaguide\\214\\wz\\xml\\wz\\Etc.wz/NihalTrade.img.xml";
+//        String wzDir = "E:\\javaguide\\214\\wz\\xml\\wz\\Etc.wz/NihalTrade.img.xml";
+        String wzDir = ServerConstants.WZ_DIR + "/Etc.wz/NihalTrade.img.xml";
         File dir = new File(wzDir);
         Node node = XMLApi.getFirstChildByNameBF(XMLApi.getRoot(dir), "NihalTrade.img");
         Node worker = XMLApi.getFirstChildByNameBF(node, "worker");
@@ -214,14 +216,28 @@ public class EtcData {
         }
         traceKillMap.put(TraceKillQuestRxCode.WORKER.getVal(), workers);
 
+
         Node riding = XMLApi.getFirstChildByNameBF(node, "riding");
+        ArrayList<TraceKillRiding> ridingList = new ArrayList<>();
+
+        Node riding0 = XMLApi.getFirstChildByNameBF(riding, "0");
+        int riding0Value = Integer.valueOf(XMLApi.getNamedAttribute(riding0, "value"));
+        ridingList.add(new TraceKillRiding(0, riding0Value));
+
+        Node riding1 = XMLApi.getFirstChildByNameBF(riding, "1");
+        int riding1Value = Integer.valueOf(XMLApi.getNamedAttribute(riding1, "value"));
+        ridingList.add(new TraceKillRiding(1, riding1Value));
 
 
-
-
+        Node riding2 = XMLApi.getFirstChildByNameBF(riding, "2");
+        int riding2Value = Integer.valueOf(XMLApi.getNamedAttribute(riding2, "value"));
+        ridingList.add(new TraceKillRiding(2, riding2Value));
+        traceKillMap.put(TraceKillQuestRxCode.RIDING.getVal(), ridingList);
 
 
         Node item = XMLApi.getFirstChildByNameBF(node, "item");
+
+
         Node gold = XMLApi.getFirstChildByNameBF(node, "gold");
 
 

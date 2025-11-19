@@ -5,6 +5,8 @@ package net.swordie.ms.tracekill;
  */
 public enum TraceKillQuestRxCode {
     WORKER(15325),
+    RIDING(0),
+
 
     ;
 
