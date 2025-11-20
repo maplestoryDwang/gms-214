@@ -6,6 +6,13 @@ package net.swordie.ms.tracekill;
 public enum TraceKillQuestRxCode {
     WORKER(15325),
     RIDING(0),
+    ITEM_15322(15322),
+    ITEM_15323(15323),
+    ITEM_15347(15347),
+    ITEM_15346(15346),
+    ITEM_15345(15345),
+    ITEM_15344(15344),
+    GOLD(15324),
 
 
     ;

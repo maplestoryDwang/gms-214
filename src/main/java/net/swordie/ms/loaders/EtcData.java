@@ -3,9 +3,7 @@ package net.swordie.ms.loaders;
 import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.ServerConstants;
 import net.swordie.ms.loaders.containerclasses.AndroidInfo;
-import net.swordie.ms.tracekill.TraceKillQuestRxCode;
-import net.swordie.ms.tracekill.TraceKillRiding;
-import net.swordie.ms.tracekill.TraceKillWorker;
+import net.swordie.ms.tracekill.*;
 import net.swordie.ms.util.Loader;
 import net.swordie.ms.util.Saver;
 import net.swordie.ms.client.character.items.BossSoul;
@@ -101,7 +99,8 @@ public class EtcData {
             Pattern p = Pattern.compile(forbiddenName);
             Matcher m = p.matcher(name);
             if (m.find()) {
-                LABEL: for (int i = 0, n = m.groupCount(); i <= n; i++) {
+                LABEL:
+                for (int i = 0, n = m.groupCount(); i <= n; i++) {
                     String matched = m.group(i);
                     for (String whiteListed : curseWordWhiteList) {
                         if (whiteListed.contains(matched) && name.contains(whiteListed)) {
@@ -176,9 +175,19 @@ public class EtcData {
         }
     }
 
+    public static void loadNiTradeKillNPCFromString() {
+//        String wzDir = "E:\\javaguide\\214\\wz\\xml\\wz\\Etc.wz/NihalTrade.img.xml";
+        String wzDir = ServerConstants.WZ_DIR + "/String.wz/Etc.img.xml";
+        File dir = new File(wzDir);
+        Node node = XMLApi.getFirstChildByNameBF(XMLApi.getRoot(dir), "Etc.img");
 
+
+
+
+
+    }
     /**
-     *  加载跑商数据
+     * 加载跑商数据
      */
     public static void loadNiTradeKillCollectionFromWz() {
 //        String wzDir = "E:\\javaguide\\214\\wz\\xml\\wz\\Etc.wz/NihalTrade.img.xml";
@@ -236,11 +245,65 @@ public class EtcData {
 
 
         Node item = XMLApi.getFirstChildByNameBF(node, "item");
+        List<Node> itemList = XMLApi.getAllChildren(item);
+        ArrayList<TraceKillItem> items = new ArrayList<>();
+        for (Node itemNode : itemList) {
+            int itemId = Integer.valueOf(XMLApi.getNamedAttribute(itemNode, "name"));
+//            NodeList children = itemNode.getChildNodes();
+//            Node firstChild = null;
+//            for (int i = 0; i < children.getLength(); i++) {
+//                Node c = children.item(i);
+//                if (c.getNodeType() == Node.ELEMENT_NODE) {
+//                    firstChild = c;
+//                    break;
+//                }
+//            }
+            Node qrNode = XMLApi.getFirstChildByNameBF(itemNode, "QR");
+            int qr = Integer.valueOf(XMLApi.getNamedAttribute(qrNode, "value"));
+
+
+            Node qrExNode = XMLApi.getFirstChildByNameBF(itemNode, "QREx");
+            int qrEx = Integer.valueOf(XMLApi.getNamedAttribute(qrExNode, "value"));
+
+            TraceKillItem traceKillItem = new TraceKillItem(itemId, qr, qrEx);
+            items.add(traceKillItem);
+        }
+
+        List<TraceKillItem> list15323 = items.stream().filter(traceKillItem -> traceKillItem.getQr() == TraceKillQuestRxCode.ITEM_15323.getVal()).toList();
+        List<TraceKillItem> list15322 = items.stream().filter(traceKillItem -> traceKillItem.getQr() == TraceKillQuestRxCode.ITEM_15322.getVal()).toList();
+        List<TraceKillItem> list15347 = items.stream().filter(traceKillItem -> traceKillItem.getQr() == TraceKillQuestRxCode.ITEM_15347.getVal()).toList();
+        List<TraceKillItem> list15346 = items.stream().filter(traceKillItem -> traceKillItem.getQr() == TraceKillQuestRxCode.ITEM_15346.getVal()).toList();
+        List<TraceKillItem> list15345 = items.stream().filter(traceKillItem -> traceKillItem.getQr() == TraceKillQuestRxCode.ITEM_15345.getVal()).toList();
+        List<TraceKillItem> list15344 = items.stream().filter(traceKillItem -> traceKillItem.getQr() == TraceKillQuestRxCode.ITEM_15344.getVal()).toList();
+
+
+        traceKillMap.put(TraceKillQuestRxCode.ITEM_15323.getVal(), list15323);
+        traceKillMap.put(TraceKillQuestRxCode.ITEM_15322.getVal(), list15322);
+        traceKillMap.put(TraceKillQuestRxCode.ITEM_15347.getVal(), list15347);
+        traceKillMap.put(TraceKillQuestRxCode.ITEM_15346.getVal(), list15346);
+        traceKillMap.put(TraceKillQuestRxCode.ITEM_15345.getVal(), list15345);
+        traceKillMap.put(TraceKillQuestRxCode.ITEM_15344.getVal(), list15344);
 
 
         Node gold = XMLApi.getFirstChildByNameBF(node, "gold");
+        Node qrNode = XMLApi.getFirstChildByNameBF(gold, "QR");
+        int qr = Integer.valueOf(XMLApi.getNamedAttribute(qrNode, "value"));
+        Node qrExNode = XMLApi.getFirstChildByNameBF(gold, "QREx");
+        String qrEx = String.valueOf(XMLApi.getNamedAttribute(qrExNode, "value"));
+
+        List<TraceKillGold> goldList = new ArrayList<>();
+        goldList.add(new TraceKillGold(-1, qr, qrEx));
+        traceKillMap.put(TraceKillQuestRxCode.GOLD.getVal(), goldList);
 
 
+
+
+
+
+
+
+
+    }
 
 
 //        List<Node> nodes = XMLApi.getAllChildren(node);
@@ -287,161 +350,160 @@ public class EtcData {
 //                }
 //            }
 //        }
-    }
 
 
+public static void loadSoulCollectionFromWz() {
+    String wzDir = ServerConstants.WZ_DIR + "/Etc.wz/SoulCollection.img.xml";
+    File dir = new File(wzDir);
+    Node node = XMLApi.getFirstChildByNameBF(XMLApi.getRoot(dir), "SoulCollection.img");
+    List<Node> nodes = XMLApi.getAllChildren(node);
+    for (Node mainNode : nodes) {
+        int skillId = 0;
+        int skillIdH = 0;
+        Node soulSkill = XMLApi.getFirstChildByNameBF(mainNode, "soulSkill");
+        Node soulSkillH = XMLApi.getFirstChildByNameBF(mainNode, "soulSkillH");
+        if (soulSkill != null) {
+            skillId = Integer.parseInt(XMLApi.getNamedAttribute(soulSkill, "value"));
+        }
+        if (soulSkillH != null) {
+            skillIdH = Integer.parseInt(XMLApi.getNamedAttribute(soulSkillH, "value"));
+        }
 
-    public static void loadSoulCollectionFromWz() {
-        String wzDir = ServerConstants.WZ_DIR + "/Etc.wz/SoulCollection.img.xml";
-        File dir = new File(wzDir);
-        Node node = XMLApi.getFirstChildByNameBF(XMLApi.getRoot(dir), "SoulCollection.img");
-        List<Node> nodes = XMLApi.getAllChildren(node);
-        for (Node mainNode : nodes) {
-            int skillId = 0;
-            int skillIdH = 0;
-            Node soulSkill = XMLApi.getFirstChildByNameBF(mainNode, "soulSkill");
-            Node soulSkillH = XMLApi.getFirstChildByNameBF(mainNode, "soulSkillH");
-            if (soulSkill != null) {
-                skillId = Integer.parseInt(XMLApi.getNamedAttribute(soulSkill, "value"));
+        Node soulList = XMLApi.getFirstChildByNameBF(mainNode, "soulList");
+        List<Node> soulNodes = XMLApi.getAllChildren(soulList);
+        for (int i = 0; i < soulNodes.size(); i++) {
+            Node soulNode = soulNodes.get(i);
+            int soul1 = -1;
+            int soul2 = -1;
+            Node soul1Node = XMLApi.getFirstChildByNameBF(soulNode, "0");
+            Node soul2Node = XMLApi.getFirstChildByNameBF(soulNode, "1");
+            if (soul1Node != null) {
+                soul1 = Integer.valueOf(XMLApi.getNamedAttribute(soul1Node, "value"));
             }
-            if (soulSkillH != null) {
-                skillIdH = Integer.parseInt(XMLApi.getNamedAttribute(soulSkillH, "value"));
+            if (soul2Node != null) {
+                soul2 = Integer.valueOf(XMLApi.getNamedAttribute(soul2Node, "value"));
             }
-
-            Node soulList = XMLApi.getFirstChildByNameBF(mainNode, "soulList");
-            List<Node> soulNodes = XMLApi.getAllChildren(soulList);
-            for (int i = 0; i < soulNodes.size(); i++) {
-                Node soulNode = soulNodes.get(i);
-                int soul1 = -1;
-                int soul2 = -1;
-                Node soul1Node = XMLApi.getFirstChildByNameBF(soulNode, "0");
-                Node soul2Node = XMLApi.getFirstChildByNameBF(soulNode, "1");
-                if (soul1Node != null) {
-                    soul1 = Integer.valueOf(XMLApi.getNamedAttribute(soul1Node, "value"));
+            int finalSkillId = -1;
+            if (i <= SoulType.Radiant.getVal()) { //normal soul
+                finalSkillId = skillId;
+            } else { //hard soul
+                finalSkillId = skillIdH;
+            }
+            BossSoul bs = new BossSoul(finalSkillId, SoulType.getSoulTypeByVal(i));
+            if (finalSkillId != -1) {
+                if (soul1 != -1) {
+                    soulCollection.put(soul1, bs);
                 }
-                if (soul2Node != null) {
-                    soul2 = Integer.valueOf(XMLApi.getNamedAttribute(soul2Node, "value"));
-                }
-                int finalSkillId = -1;
-                if (i <= SoulType.Radiant.getVal()) { //normal soul
-                    finalSkillId = skillId;
-                } else { //hard soul
-                    finalSkillId = skillIdH;
-                }
-                BossSoul bs = new BossSoul(finalSkillId, SoulType.getSoulTypeByVal(i));
-                if (finalSkillId != -1) {
-                    if (soul1 != -1) {
-                        soulCollection.put(soul1, bs);
-                    }
-                    if (soul2 != -1) {
-                        soulCollection.put(soul2, bs);
-                    }
+                if (soul2 != -1) {
+                    soulCollection.put(soul2, bs);
                 }
             }
         }
     }
+}
 
-    public static void saveSoulCollection(String dir) {
-        Util.makeDirIfAbsent(dir);
-        try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(new File(dir + "/" + "soulCollection" + ".dat")))) {
-            dataOutputStream.writeInt(soulCollection.size());
-            for (Map.Entry<Integer, BossSoul> soulEntry : soulCollection.entrySet()) {
-                dataOutputStream.writeInt(soulEntry.getKey());
-                dataOutputStream.writeInt(soulEntry.getValue().getSkillId());
-                dataOutputStream.writeByte(soulEntry.getValue().getSoulType().getVal());
+public static void saveSoulCollection(String dir) {
+    Util.makeDirIfAbsent(dir);
+    try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(new File(dir + "/" + "soulCollection" + ".dat")))) {
+        dataOutputStream.writeInt(soulCollection.size());
+        for (Map.Entry<Integer, BossSoul> soulEntry : soulCollection.entrySet()) {
+            dataOutputStream.writeInt(soulEntry.getKey());
+            dataOutputStream.writeInt(soulEntry.getValue().getSkillId());
+            dataOutputStream.writeByte(soulEntry.getValue().getSoulType().getVal());
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+private static void loadSoulCollectionFromFile(String dir) {
+    Util.makeDirIfAbsent(dir);
+    try (DataInputStream dataInputStream = new DataInputStream(new FileInputStream(new File(dir + "/" + "soulCollection" + ".dat")))) {
+        int size = dataInputStream.readInt();
+        for (int i = 0; i < size; i++) {
+            int itemId = dataInputStream.readInt();
+            int skillId = dataInputStream.readInt();
+            byte soulType = dataInputStream.readByte();
+            soulCollection.put(itemId, new BossSoul(skillId, soulType));
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+public static void saveAndroidInfo(String dir) {
+    Util.makeDirIfAbsent(dir);
+    for (AndroidInfo ai : androidInfo.values()) {
+        File file = new File(String.format("%s/%d.dat", dir, ai.getId()));
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(file))) {
+            dos.writeInt(ai.getId());
+            dos.writeInt(ai.getHairs().size());
+            for (int hair : ai.getHairs()) {
+                dos.writeInt(hair);
+            }
+            dos.writeInt(ai.getFaces().size());
+            for (int face : ai.getFaces()) {
+                dos.writeInt(face);
+            }
+            dos.writeInt(ai.getSkins().size());
+            for (int skin : ai.getSkins()) {
+                dos.writeInt(skin);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+}
 
-    private static void loadSoulCollectionFromFile(String dir) {
-        Util.makeDirIfAbsent(dir);
-        try (DataInputStream dataInputStream = new DataInputStream(new FileInputStream(new File(dir + "/" + "soulCollection" + ".dat")))) {
-            int size = dataInputStream.readInt();
-            for (int i = 0; i < size; i++) {
-                int itemId = dataInputStream.readInt();
-                int skillId = dataInputStream.readInt();
-                byte soulType = dataInputStream.readByte();
-                soulCollection.put(itemId, new BossSoul(skillId, soulType));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+public static AndroidInfo getAndroidInfoById(int androidId) {
+    if (androidInfo.containsKey(androidId)) {
+        return androidInfo.get(androidId);
+    }
+    return loadAndroidInfoFromFile(String.format("%s/etc/android/%d.dat", ServerConstants.DAT_DIR, androidId));
+}
+
+private static AndroidInfo loadAndroidInfoFromFile(String file) {
+    AndroidInfo ai = null;
+    try (DataInputStream dis = new DataInputStream(new FileInputStream(file))) {
+        ai = new AndroidInfo(dis.readInt());
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            ai.addHair(dis.readInt());
         }
-    }
-
-    public static void saveAndroidInfo(String dir) {
-        Util.makeDirIfAbsent(dir);
-        for (AndroidInfo ai : androidInfo.values()) {
-            File file = new File(String.format("%s/%d.dat", dir, ai.getId()));
-            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(file))) {
-                dos.writeInt(ai.getId());
-                dos.writeInt(ai.getHairs().size());
-                for (int hair : ai.getHairs()) {
-                    dos.writeInt(hair);
-                }
-                dos.writeInt(ai.getFaces().size());
-                for (int face : ai.getFaces()) {
-                    dos.writeInt(face);
-                }
-                dos.writeInt(ai.getSkins().size());
-                for (int skin : ai.getSkins()) {
-                    dos.writeInt(skin);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            ai.addFace(dis.readInt());
         }
-    }
-
-    public static AndroidInfo getAndroidInfoById(int androidId) {
-        if (androidInfo.containsKey(androidId)) {
-            return androidInfo.get(androidId);
+        size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            ai.addSkin(dis.readInt());
         }
-        return loadAndroidInfoFromFile(String.format("%s/etc/android/%d.dat", ServerConstants.DAT_DIR, androidId));
+        androidInfo.put(ai.getId(), ai);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-
-    private static AndroidInfo loadAndroidInfoFromFile(String file) {
-        AndroidInfo ai = null;
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(file))) {
-            ai = new AndroidInfo(dis.readInt());
-            int size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                ai.addHair(dis.readInt());
-            }
-            size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                ai.addFace(dis.readInt());
-            }
-            size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                ai.addSkin(dis.readInt());
-            }
-            androidInfo.put(ai.getId(), ai);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ai;
-    }
+    return ai;
+}
 
 
-    public static void generateDatFiles() {
-        log.info("Started generating etc data.");
-        Util.makeDirIfAbsent(ServerConstants.DAT_DIR + "/etc");
-        long start = System.currentTimeMillis();
-        loadAndroidsFromWz();
-        loadSoulCollectionFromWz();
-        saveSoulCollection(ServerConstants.DAT_DIR);
-        saveAndroidInfo(ServerConstants.DAT_DIR + "/etc/android");
-        log.info(String.format("Completed generating etc data in %dms.", System.currentTimeMillis() - start));
-    }
+public static void generateDatFiles() {
+    log.info("Started generating etc data.");
+    Util.makeDirIfAbsent(ServerConstants.DAT_DIR + "/etc");
+    long start = System.currentTimeMillis();
+    loadAndroidsFromWz();
+    loadSoulCollectionFromWz();
+    saveSoulCollection(ServerConstants.DAT_DIR);
+    saveAndroidInfo(ServerConstants.DAT_DIR + "/etc/android");
+    log.info(String.format("Completed generating etc data in %dms.", System.currentTimeMillis() - start));
+}
 
-    public static void clear() {
-        androidInfo.clear();
-    }
+public static void clear() {
+    androidInfo.clear();
+}
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
 //        generateDatFiles();
-        loadNiTradeKillCollectionFromWz();
-    }
+//    loadNiTradeKillCollectionFromWz();
+    loadNiTradeKillNPCFromString();
+}
 }

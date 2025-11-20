@@ -12,6 +12,7 @@ package net.swordie.ms.tracekill;
 public class TraceKillItemInfo {
 
     private int id;
+    private String itemName;
     private int buyPrices;
     private int sellPrices;
     private int qr;
@@ -19,6 +20,16 @@ public class TraceKillItemInfo {
 
     public TraceKillItemInfo(int id, int buyPrices, int sellPrices, int qr, int qrEx) {
         this.id = id;
+        this.buyPrices = buyPrices;
+        this.sellPrices = sellPrices;
+        this.qr = qr;
+        this.qrEx = qrEx;
+    }
+
+
+    public TraceKillItemInfo(int id, String itemName, int buyPrices, int sellPrices, int qr, int qrEx) {
+        this.id = id;
+        this.itemName = itemName;
         this.buyPrices = buyPrices;
         this.sellPrices = sellPrices;
         this.qr = qr;
@@ -63,5 +74,13 @@ public class TraceKillItemInfo {
 
     public void setQrEx(int qrEx) {
         this.qrEx = qrEx;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }
