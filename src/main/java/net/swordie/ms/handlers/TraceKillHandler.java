@@ -5,17 +5,25 @@ import net.swordie.ms.client.Client;
 import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.quest.Quest;
 import net.swordie.ms.client.character.quest.QuestManager;
+import net.swordie.ms.client.character.skills.info.SkillInfo;
+import net.swordie.ms.client.character.skills.info.SkillUseInfo;
+import net.swordie.ms.client.jobs.Job;
+import net.swordie.ms.client.party.PartyMember;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.connection.packet.Effect;
+import net.swordie.ms.connection.packet.UserPacket;
 import net.swordie.ms.connection.packet.UserRemote;
 import net.swordie.ms.connection.packet.WvsContext;
+import net.swordie.ms.constants.SkillConstants;
 import net.swordie.ms.enums.MessageType;
 import net.swordie.ms.enums.QuestStatus;
 import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.handlers.header.OutHeader;
+import net.swordie.ms.loaders.SkillData;
 import net.swordie.ms.tracekill.TraceKillItemInfo;
 import net.swordie.ms.tracekill.TraceKillUserInfo;
+import net.swordie.ms.util.Rect;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +50,7 @@ public class TraceKillHandler {
     private static HashMap<Integer, List<TraceKillItemInfo>> merchantItemsSell = new HashMap<>();
 
     private static HashMap<Integer, TraceKillUserInfo> userInfoMap = new HashMap<>();
+    private static Integer skillID = 80001950;
 
 
     static {
@@ -555,11 +564,11 @@ public class TraceKillHandler {
 
         sendExpiredTime(c.getChr());
 
-
-        clickTradeKingNPC(c.getChr(), 0);
-
         updatePriceBuy(merchantItemsBuy);
         updatePriceSell(merchantItemsSell);
+        clickTradeKingNPC(c.getChr(), 0);
+
+
     }
 
 
@@ -653,6 +662,10 @@ public class TraceKillHandler {
     }
 
 
+    public static void getTradeKingEnd(Char chr) {
+        chr.getTemporaryStatManager().removeStatsBySkill(skillID);
+
+    }
     public static void getTradeKingInit(Char chr) {
         Integer id = chr.getId();
         TraceKillUserInfo userInfo = TraceKillHandler.initTradeKingUser(id);
@@ -672,6 +685,14 @@ public class TraceKillHandler {
 
 
         // 上坐骑
+        // 骆驼
+        int slv = 1;
+        InPacket inPacket = null;
+        SkillUseInfo skillUseInfo = null;
+        Job sourceJobHandler = chr.getJobHandler();
+        sourceJobHandler.handleSkill(chr, chr.getTemporaryStatManager(), skillID, slv, inPacket, skillUseInfo);
+
+//        chr.getTemporaryStatManager().sendResetStatPacket(true);
 
 
 

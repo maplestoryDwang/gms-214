@@ -4,7 +4,7 @@ else:
     sm.setReturnField(chr.getFieldID())
     options = ["你需要我的帮助!"]
 
-    options2 = ["城镇地图","自由市场","Boss入口","跳跳地图", "练级地图"]
+    options2 = ["城镇地图","自由市场","Boss入口","跳跳地图", "练级地图","活动地图"]
 
     maps = [
     [
@@ -68,6 +68,9 @@ else:
         [450006130, 235],
         [450007040, 240],
     ],  # Leveling Maps
+    [
+        [993000801, "阿里安特自贸区"]
+    ]
 
     ]
 
@@ -90,7 +93,7 @@ else:
 
 
         list = "这些是你的选项: ans1 = " + unicode(ans1)
-        if ans1 == 2: # boss maps
+        if ans1 == 2 or ans1 == 5: # boss maps
             while i < len(maps[ans1]):
                 list += "\r\n#L" + unicode(i) + "##b" + unicode(maps[ans1][i][1])
                 i += 1
@@ -107,7 +110,7 @@ else:
         ans2 = sm.sendNext(list)
         if ans1 == 2: # boss maps
             sm.warp(maps[ans1][ans2][0], 1)
-        elif ans1 == 4: # boss maps
+        elif ans1 == 4 | ans1 == 5: #
             sm.warp(maps[ans1][ans2][0], 1)
         else:
             sm.warp(maps[ans1][ans2], 0)

@@ -3574,6 +3574,10 @@ public class ScriptManagerImpl implements ScriptManager {
         TraceKillHandler.getTradeKingInit(chr);
     }
 
+    public void getTradeKingEnd() {
+        TraceKillHandler.getTradeKingEnd(chr);
+    }
+
 
 /*    public void getTradeKing() {
         OutPacket outpacket = new OutPacket(OutHeader.MESSAGE);
