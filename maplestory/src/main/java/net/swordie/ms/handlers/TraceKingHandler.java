@@ -46,6 +46,7 @@ public class TraceKingHandler {
 
     private static HashMap<Integer, TraceKingUserInfo> userInfoMap = new HashMap<>();
     private static Integer initRidSkill = 80001950;
+    private static Integer initCount = 50;
     private static String initWorker = "0";
 
     /**
@@ -688,7 +689,6 @@ public class TraceKingHandler {
         // 查询数据库是否存在
 
         TraceKingUserInfo userInfo = userInfoMapper.selectByCharId(chrId);
-        int initCount = 999;
         // 初始化一个
         if (userInfo == null) {
             userInfo = new TraceKingUserInfo();
@@ -764,7 +764,7 @@ public class TraceKingHandler {
         int mWeight = 0;
         if (ride == 80001950) {
             mWeight += 10;
-        } else if(ride == 80001951) {
+        } else if (ride == 80001951) {
             mWeight += 20;
         } else {
             mWeight += 30;
@@ -779,30 +779,30 @@ public class TraceKingHandler {
         // 4 25
         for (String s : split) {
             String[] kv = s.split("=");
-            switch (kv[0]){
-                case "0":{
+            switch (kv[0]) {
+                case "0": {
                     int i = Integer.parseInt(kv[1]) * 10;
-                    mWeight +=i;
+                    mWeight += i;
                     break;
                 }
-                case "1":{
+                case "1": {
                     int i = Integer.parseInt(kv[1]) * 20;
-                    mWeight +=i;
+                    mWeight += i;
                     break;
                 }
-                case "2":{
+                case "2": {
                     int i = Integer.parseInt(kv[1]) * 10;
-                    mWeight +=i;
+                    mWeight += i;
                     break;
                 }
-                case "3":{
+                case "3": {
                     int i = Integer.parseInt(kv[1]) * 15;
-                    mWeight +=i;
+                    mWeight += i;
                     break;
                 }
-                case "4":{
+                case "4": {
                     int i = Integer.parseInt(kv[1]) * 25;
-                    mWeight +=i;
+                    mWeight += i;
                     break;
                 }
             }
@@ -899,7 +899,7 @@ public class TraceKingHandler {
 
                             // 如果是新的
                             if (!update) {
-                                work = updated + ";" + workIndex +"=1";
+                                work = updated + ";" + workIndex + "=1";
                             } else {
                                 // 旧的有新增
                                 work = updated;
