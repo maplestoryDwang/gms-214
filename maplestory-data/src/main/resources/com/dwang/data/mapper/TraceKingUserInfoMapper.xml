@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dwang.data.mapper.TraceKingUserInfoMapper">
+
+    <!-- 通用字段映射 -->
+    <resultMap id="TraceKingUserInfoMap" type="com.dwang.dao.TraceKingUserInfo">
+        <id column="id" property="id"/>
+        <result column="chrid" property="chrid"/>
+        <result column="shopNpc" property="shopNpc"/>
+        <result column="cWeight" property="cWeight"/>
+        <result column="count" property="count"/>
+        <result column="mWeight" property="mWeight"/>
+        <result column="scount" property="scount"/>
+        <result column="worker" property="worker"/>
+        <result column="ride" property="ride"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <!-- 根据 ID 查询 -->
+    <select id="selectById" resultMap="TraceKingUserInfoMap">
+        SELECT *
+        FROM trace_king_user_info
+        WHERE id = #{id}
+    </select>
+
+
+    <!-- 根据 ID 查询 -->
+    <select id="selectByCharId" resultMap="TraceKingUserInfoMap">
+        SELECT *
+        FROM trace_king_user_info
+        WHERE chrid = #{chrid}
+    </select>
+
+
+
+    <!-- 插入并返回完整对象 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO trace_king_user_info
+            (chrid, shopNpc, cWeight, count, mWeight, scount, worker, ride)
+        VALUES
+            (#{chrid}, #{shopNpc}, #{cWeight}, #{count}, #{mWeight}, #{scount}, #{worker}, #{ride})
+    </insert>
+
+
+    <!-- 更新 -->
+    <update id="update">
+        UPDATE trace_king_user_info
+        SET
+            chrid=#{chrid},
+            shopNpc=#{shopNpc},
+            cWeight=#{cWeight},
+            count=#{count},
+            mWeight=#{mWeight},
+            scount=#{scount},
+            worker=#{worker},
+            ride=#{ride}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 更新 -->
+    <update id="updateByCharId">
+        UPDATE trace_king_user_info
+        SET
+            chrid=#{chrid},
+            shopNpc=#{shopNpc},
+            cWeight=#{cWeight},
+            count=#{count},
+            mWeight=#{mWeight},
+            scount=#{scount},
+            worker=#{worker},
+            ride=#{ride}
+        WHERE chrid = #{chrid}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 日志输出到 SLF4J -->
+    <settings>
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+    <!-- mapper xml 扫描路径 -->
+    <mappers>
+        <package name="com.dwang.data.mapper"/>
+    </mappers>
+</configuration>

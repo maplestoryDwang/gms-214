@@ -23,3 +23,6 @@ resourcesSkill.txt
 *.iml
 Exclude/
 hibernate.cfg.xml
+logs/
+target/
+root.log

@@ -43,17 +43,17 @@ eg:!item 2435719 999
 2. 更新汉化
 3. 更新V矩阵
 
-## 更新日志
+## 
 ### 2025-11-10
 1. 修正商场的包头，解决商城商品无法拿出的问题
 2. 修复Zakum现在可以挑战！
-![](asset/zakum.png)
+![](maplestory/asset/zakum.png)
 3. 修复遇到的脚本问题
 4. quick move 新增V技能大师NPC
 
 ### 2025-11-14
 1. 修复黑龙BOSS可以正常挑战、显示残骸
-   ![](asset/hontail.png)
+   ![](maplestory/asset/hontail.png)
 2. 修复套装和装备血量导致人物血量异常无法加满的问题
 
 
@@ -62,9 +62,10 @@ eg:!item 2435719 999
 
 入口：万能NPC -》 活动地图进入
 
-![](asset/tradeking.png)
+![](maplestory/asset/tradeking.png)
 
 ## 下一步计划
 1. 了解技能相关代码
-
+2. 关于装备。本身应该是做任务就能获取装备，然后打BOSS是爆一些强化装备的内容。这种模式比较好。而不是装备要靠打BOSS才能获得，这样打不过的永远都打不过。官服就是这样。
+3. 更新成mybatis
 
