@@ -168,7 +168,7 @@ public class MigrationHandler {
         chr.checkHotTimeRewards();
     }
 
-
+    // 过图
     @Handler(op = InHeader.USER_TRANSFER_FIELD_REQUEST)
     public static void handleUserTransferFieldRequest(Client c, InPacket inPacket) {
         Char chr = c.getChr();

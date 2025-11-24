@@ -9,6 +9,28 @@ options2 = [
                [3801026, "沙漠战士",400],
                [3801027,"坚韧的沙漠狐狸",500],
            ]
+def parse_string(s):
+    # 如果整体就是一个数字，返回单一情况
+    s = s.strip()
+    if "=" not in s:
+        # 只有一个数字表示0次
+        return {int(s): 0}
+
+    result = {}
+    parts = s.split(";")
+    for part in parts:
+        if not part.strip():
+            continue
+        k, v = part.split("=")
+        result[int(k)] = int(v)
+    return result
+
+
+def to_array(mapping):
+    arr = []
+    for k in sorted(mapping.keys()):
+        arr.extend([k] * mapping[k])
+    return arr
 
 # list = "怎么样玩的开心吗"
 # i = 0
@@ -36,6 +58,13 @@ elif sm.getFieldID() == 993000801:
     i = 0
     nowCoin = tradeKingInfo.getCount()
     allCoin = tradeKingInfo.getScount()
+    worker = tradeKingInfo.getWorker()
+
+    # 1. 字符串解析
+    mapping = parse_string(worker)
+    # 2. 转为数组
+    workArr = to_array(mapping)
+
     option = sm.sendNext(list)
     if option == 0:
         list = "帮你存储货币，手续费为：50个#i" + unicode(4034849) + "# : 你想兑换吗？"
@@ -43,18 +72,21 @@ elif sm.getFieldID() == 993000801:
 #         nowCoin = sm.getTradeKingNowCoin()
 #         allCoin = sm.getTradeKingSaveCoin()
 
-
-
-        list = "#r" +"兑换会提前结束当前贸易请注意！#k"+ "\r\n"
+        list = "#r" +"兑换会提前结束当前贸易请注意！还有50块手续费！！！#k"+ "\r\n"
         list += "当前持有货币：" + "#i" + unicode(4034849) + "# : " + str(nowCoin) + "\r\n"
         list += "当前存储货币：" + "#i" + unicode(4034849) + "# : " + str(allCoin) + "\r\n"
         if sm.sendAskYesNo(list):
-            if (nowCoin == 0):
+            if (nowCoin <= 50):
                 sm.sendSay("可兑换货币不足.")
                 sm.dispose()
             else:
                 param = "count=0;scount=" + str(nowCoin + allCoin)
                 sm.saveTradeKing(15324, param)
+                addCoin = nowCoin - 50
+                allCoin = addCoin + allCoin
+                list = "已兑换" + str(addCoin) + "#i" + unicode(4034849) + "#" + "\r\n"
+                list += "当前存储货币：" + "#i" + unicode(4034849) + "# : " + str(allCoin) + "\r\n"
+                sm.sendSay(list)
     #           退出当前
                 sm.warpInstanceOut(993000801, 2)
                 sm.getTradeKingEnd()
@@ -102,6 +134,9 @@ elif sm.getFieldID() == 993000801:
             if allCoin < payCoin:
                 sm.sendSay("可兑换货币不足.")
                 sm.dispose()
+            if len(workArr) > 5:
+                sm.sendSay("搬运工已满，解雇搬运工才能雇佣新的")
+                sm.dispose()
             else:
                 payCoin = options2[select][2]
                 workerIndex = select
@@ -111,6 +146,29 @@ elif sm.getFieldID() == 993000801:
     #           退出当前
                 sm.warpInstanceOut(993000801, 2)
                 sm.getTradeKingEnd()
+    elif option == 3:
+        if len(workArr) == 0:
+            sm.sendSay("先招募搬运工...")
+            sm.dispose()
+        else:
+           # 展示当前拥有的
+            list = "你当前的雇佣："
+            while i < len(workArr):
+                option2index = workArr[i]
+                list += "\r\n#L" + unicode(i) + "##b" + "#i" + unicode(options2[option2index][0]) + "#  " + unicode(options2[option2index][1])
+                i += 1
+            select = sm.sendNext(list)
+            option2index = workArr[select]
+            list = "你想解雇：" + unicode(options2[option2index][1])
+            if sm.sendAskYesNo(list):
+                # 发送
+                param = "scount=0;worker=" + str(option2index)
+                sm.saveTradeKing(15325, param)
+                sm.sendSay("解雇成功！请重新开始")
+    #           退出当前
+                sm.warpInstanceOut(993000801, 2)
+                sm.getTradeKingEnd()
+
 
     elif option == 4:
 #           退出当前

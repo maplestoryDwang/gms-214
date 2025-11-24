@@ -216,7 +216,7 @@ public class ScriptManagerImpl implements ScriptManager {
     }
 
     public void startScript(int parentID, int objID, String scriptName, ScriptType scriptType) {
-        if (scriptType == ScriptType.None || (scriptType == ScriptType.Quest && !isQuestScriptAllowed())) {
+         if (scriptType == ScriptType.None || (scriptType == ScriptType.Quest && !isQuestScriptAllowed())) {
             log.debug(String.format("Did not allow script %s to go through (type %s)  |  Active Script Type: %s", scriptName, scriptType, getLastActiveScriptType()));
             return;
         }
@@ -1545,7 +1545,7 @@ public class ScriptManagerImpl implements ScriptManager {
         npc.setRx0(x + 50);
         npc.setRx1(x - 50);
         npc.setFh(chr.getField().findFootHoldBelow(new Position(x, y - 2)).getId());
-        npc.setNotRespawnable(true);
+         npc.setNotRespawnable(true);
         if (npc.getField() == null) {
             npc.setField(field);
         }
@@ -1587,6 +1587,12 @@ public class ScriptManagerImpl implements ScriptManager {
             script = npc.getScripts().get(0);
         } else {
             script = String.valueOf(npc.getTemplateId());
+        }
+        Set<Npc> npcs = chr.getField().getNpcs();
+        int finalNpcId = npcId;
+        Optional<Npc> first = npcs.stream().filter(npc1 -> npc1.getTemplateId() == finalNpcId).findFirst();
+        if (first.isPresent()) {
+            npcId = first.get().getObjectId();
         }
         chr.getScriptManager().startScript(npc.getTemplateId(), npcId, script, ScriptType.Npc);
     }
@@ -2300,6 +2306,20 @@ public class ScriptManagerImpl implements ScriptManager {
         }
         quest.setCompletedTime(FileTime.currentTime());
         quest.setStatus(QuestStatus.Completed);
+        qm.addQuest(quest);
+        chr.write(WvsContext.questRecordMessage(quest));
+        chr.chatMessage(String.format("Quest %d completed by completeQuestNoRewards", id));
+    }
+
+
+    public void startQuestNoRewards(int id) {
+        QuestManager qm = chr.getQuestManager();
+        Quest quest = qm.getQuests().get(id);
+        if (quest == null) {
+            quest = QuestData.createQuestFromId(id);
+        }
+        quest.setCompletedTime(FileTime.currentTime());
+        quest.setStatus(QuestStatus.Started);
         qm.addQuest(quest);
         chr.write(WvsContext.questRecordMessage(quest));
         chr.chatMessage(String.format("Quest %d completed by completeQuestNoRewards", id));

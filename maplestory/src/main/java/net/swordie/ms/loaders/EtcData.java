@@ -175,16 +175,14 @@ public class EtcData {
         }
     }
 
-    public static void loadNiTradeKillNPCFromString() {
+    /**
+     * 加载mapObject信息，有每个map的特殊信息
+     */
+    public static void loadMapObjectInfo() {
 //        String wzDir = "E:\\javaguide\\214\\wz\\xml\\wz\\Etc.wz/NihalTrade.img.xml";
         String wzDir = ServerConstants.WZ_DIR + "/String.wz/Etc.img.xml";
         File dir = new File(wzDir);
         Node node = XMLApi.getFirstChildByNameBF(XMLApi.getRoot(dir), "Etc.img");
-
-
-
-
-
     }
     /**
      * 加载跑商数据
@@ -504,6 +502,6 @@ public static void clear() {
 public static void main(String[] args) {
 //        generateDatFiles();
 //    loadNiTradeKillCollectionFromWz();
-    loadNiTradeKillNPCFromString();
+//    loadNiTradeKillNPCFromString();
 }
 }

@@ -1317,7 +1317,7 @@ public enum InHeader {
             SPAM_60_SEC,
             USER_TEMPORARY_STAT_UPDATE_REQUEST,
             // USER_CALC_DAMAGE_STAT_SET_REQUEST,
-             MOB_APPLY_CTRL,    // 没解决了
+             MOB_APPLY_CTRL,    // 不用handler了
             //  USER_REQUEST_INSTANCE_TABLE,
             USER_QUEST_REQUEST,
             //  CHECK_LOGIN_AUTH_INFO,

@@ -41,10 +41,10 @@ public class TraceKingHandler {
     private static Map<Integer, String> shopMessageQr = new HashMap<>();
 
     // 每个商店卖的东西 npcID，
-    private static HashMap<Integer, List<TraceKingItemInfo>> merchantItemsBuy = new HashMap<>();
-    private static HashMap<Integer, List<TraceKingItemInfo>> merchantItemsSell = new HashMap<>();
+    private static final HashMap<Integer, List<TraceKingItemInfo>> merchantItemsBuy = new HashMap<>();
+    private static final HashMap<Integer, List<TraceKingItemInfo>> merchantItemsSell = new HashMap<>();
 
-    private static HashMap<Integer, TraceKingUserInfo> userInfoMap = new HashMap<>();
+    private static HashMap<Integer, TraceKingUserInfo> userInfoCache = new HashMap<>();
     private static Integer initRidSkill = 80001950;
     private static Integer initCount = 50;
     private static String initWorker = "0";
@@ -417,7 +417,7 @@ public class TraceKingHandler {
         int count = inPacket.decodeInt();
 
         Integer chrId = c.getChr().getId();
-        TraceKingUserInfo userInfo = userInfoMap.get(chrId);
+        TraceKingUserInfo userInfo = userInfoCache.get(chrId);
 
         // 当前绑定的NPC
         int shopNpcId = userInfo.getShopNpc();
@@ -507,7 +507,7 @@ public class TraceKingHandler {
         // sendUserQR(c.getChr(), userInfo);
 
 
-        //00 00 00 00    // 固定？
+        //00 00 00 00    // success
         //01             // 买入 卖出
         //F4 90 3D 00   // 购买物品 0348004
         //0B 00 00 00   // 上次购买价格
@@ -592,7 +592,7 @@ public class TraceKingHandler {
     }
 
 
-    // 初始化任务信息，否则下线无法查看
+    // 初始化任务信息，否则下线无法查看之前的状态
     private static void sendUserQRInit(Char chr, TraceKingUserInfo userInfo) {
         String format = String.format("shop=%d;cWeight=%d;count=%d;mWeight=%d", userInfo.getShopNpc(), userInfo.getcWeight(), userInfo.getCount(), userInfo.getmWeight());
         // 满背包125    15324 shop=-1;cWeight=0;count=50;mWeight=125
@@ -621,7 +621,7 @@ public class TraceKingHandler {
     // NPC点击
     public static void clickTradeKingNPC(Char chr, int npcId) {
         Integer chrId = chr.getId();
-        TraceKingUserInfo userInfo = userInfoMap.get(chrId);
+        TraceKingUserInfo userInfo = userInfoCache.get(chrId);
         if (npcId == 0) {
             npcId = userInfo.getShopNpc();
         } else {
@@ -677,8 +677,19 @@ public class TraceKingHandler {
 
     public static TraceKingUserInfo getTradeKingInfo(Char chr) {
         Integer chrId = chr.getId();
+//        TraceKingUserInfo userInfo = userInfoMapper.selectByCharId(chrId);
+//        return userInfo;
+        TraceKingUserInfo traceKingUserInfo = userInfoCache.get(chrId);
+        if (traceKingUserInfo != null) {
+            return traceKingUserInfo;
+        }
         TraceKingUserInfo userInfo = userInfoMapper.selectByCharId(chrId);
-
+        if (userInfo != null) {
+            userInfoCache.put(chrId, userInfo);
+            return userInfo;
+        }
+        userInfo = initTradeKingInfo(chrId);
+        userInfoCache.put(chrId, userInfo);
         return userInfo;
     }
 
@@ -691,18 +702,7 @@ public class TraceKingHandler {
         TraceKingUserInfo userInfo = userInfoMapper.selectByCharId(chrId);
         // 初始化一个
         if (userInfo == null) {
-            userInfo = new TraceKingUserInfo();
-            userInfo.setChrid(chrId);
-            userInfo.setShopNpc(-1);
-            userInfo.setcWeight(0);
-            userInfo.setCount(initCount);
-            userInfo.setmWeight(10);
-            userInfo.setScount(0);
-            userInfo.setWorker(initWorker);
-            userInfo.setRide(initRidSkill);
-            int insert = userInfoMapper.insert(userInfo);
-            // 查询完整数据，包括 create_time / update_time
-            userInfo = userInfoMapper.selectById(userInfo.getId());
+            userInfo = initTradeKingInfo(chrId);
 
         } else {
             // 设置一个初始货币
@@ -732,7 +732,6 @@ public class TraceKingHandler {
 
 
         // 上坐骑
-        // 骆驼
         int slv = 1;
         InPacket inPacket = null;
         SkillUseInfo skillUseInfo = null;
@@ -747,15 +746,39 @@ public class TraceKingHandler {
 
 
         // 刚开始可以存一次
-        // 更新数据库
-        userInfoMapper.updateByCharId(userInfo);
-        userInfoMap.put(chrId, userInfo);
+        updateUserInfo(chrId, userInfo);
 
     }
 
+    private static TraceKingUserInfo initTradeKingInfo(int chrId) {
+        TraceKingUserInfo  userInfo = new TraceKingUserInfo();
+        userInfo.setChrid(chrId);
+        userInfo.setShopNpc(-1);
+        userInfo.setcWeight(0);
+        userInfo.setCount(initCount);
+        userInfo.setmWeight(10);
+        userInfo.setScount(0);
+        userInfo.setWorker(initWorker);
+        userInfo.setRide(initRidSkill);
+        int insert = userInfoMapper.insert(userInfo);
+        // 查询完整数据，包括 create_time / update_time
+        userInfo = userInfoMapper.selectById(userInfo.getId());
+        return userInfo;
+    }
+
     /**
-     * todo 需要计算
+     * 同步更新数据库和缓存
      *
+     * @param chrId
+     * @param userInfo
+     */
+    private static void updateUserInfo(Integer chrId, TraceKingUserInfo userInfo) {
+        // 更新数据库
+        userInfoMapper.updateByCharId(userInfo);
+        userInfoCache.put(chrId, userInfo);
+    }
+
+    /**
      * @param userInfo
      * @return
      */
@@ -841,7 +864,7 @@ public class TraceKingHandler {
 
                     }
                     if (kv.length == 2 && kv[0].equals("scount")) {
-                        int scount = Integer.parseInt(kv[1]);
+                        int scount = Integer.parseInt(kv[1]) - initCount;
                         userInfo.setScount(scount);
 
                     }
@@ -874,9 +897,73 @@ public class TraceKingHandler {
             }
             case WORKER:
                 String[] parts = param.split(";");
+                Map<String, String> workerMap = new HashMap<>();
+                for (int i = 0; i < parts.length; i++) {
+                    String[] kv = parts[i].split("=");
+                    workerMap.put(kv[0], kv[1]);
+                }
+                int scount = Integer.parseInt(workerMap.get("scount"));
+                // 招聘
+                if (scount > 0) {
+                    int newScount = userInfo.getScount() - scount;
+                    userInfo.setScount(newScount);
+
+                    int workIndex = Integer.parseInt(workerMap.get("worker"));
+                    String worker = userInfo.getWorker();
+                    String work = null;
+                    // 新增
+                    if (initWorker.equals(worker)) {
+                        work = workIndex + "=" + 1;
+                    } else {
+                        // 更新
+                        boolean update = false;
+                        String[] workerParts = worker.split(";");
+                        for (int i1 = 0; i1 < workerParts.length; i1++) {
+                            String[] workerKV = workerParts[i1].split("=");
+                            if (workerKV.length == 2 && workerKV[0].equals(String.valueOf(workIndex))) {
+                                workerParts[i1] = String.valueOf(workIndex) + "=" + (Integer.parseInt(workerKV[1]) + 1);
+                                update = true;
+                            }
+                        }
+                        // 拼回字符串
+                        String updated = String.join(";", workerParts);
+
+                        // 如果新增的是之前没有的
+                        if (!update) {
+                            work = updated + ";" + workIndex + "=1";
+                        } else {
+                            // 旧的有新增
+                            work = updated;
+                        }
+
+                    }
+                    userInfo.setWorker(work);
+
+
+                } else {
+                    // 解雇
+                    String worker = userInfo.getWorker();
+                    int workIndex = Integer.parseInt(workerMap.get("worker"));
+
+                    String[] workerParts = worker.split(";");
+                    for (int i1 = 0; i1 < workerParts.length; i1++) {
+                        String[] workerKV = workerParts[i1].split("=");
+                        if (workerKV.length == 2 && workerKV[0].equals(String.valueOf(workIndex))) {
+                            workerParts[i1] = String.valueOf(workIndex) + "=" + (Integer.parseInt(workerKV[1]) - 1);
+                        }
+                    }
+                    String updated = String.join(";", workerParts);
+                    userInfo.setWorker(updated);
+                }
+
+                // 发送worker更新
+                TraceKingHandler.sendQRValue(chr, TraceKingQuestRxCode.WORKER.getVal(), userInfo.getWorker());
+                // 计算承重
+                int mWeight = calculatorMaxWeight(userInfo);
+                userInfo.setmWeight(mWeight);
 
                 // 替换对应 key 的 value
-                for (int i = 0; i < parts.length; i++) {
+/*                for (int i = 0; i < parts.length; i++) {
                     String[] kv = parts[i].split("=");
                     if (kv.length == 2 && kv[0].equals("worker")) {
                         int workIndex = Integer.parseInt(kv[1]);
@@ -915,13 +1002,14 @@ public class TraceKingHandler {
                         userInfo.setScount(newScount);
 
                     }
-                }
+                }*/
                 break;
 
         }
 
-        // 更新数据库
-        userInfoMapper.updateByCharId(userInfo);
+        // 更新数据库和缓存
+        updateUserInfo(chrId, userInfo);
+
 
         // 发送
         sendUserQR(chr, userInfo);
