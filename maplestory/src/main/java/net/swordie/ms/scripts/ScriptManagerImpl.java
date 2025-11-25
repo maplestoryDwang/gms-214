@@ -52,6 +52,7 @@ import net.swordie.ms.life.npc.NpcMessageType;
 import net.swordie.ms.life.npc.NpcScriptInfo;
 import net.swordie.ms.loaders.*;
 import net.swordie.ms.loaders.containerclasses.Cosmetic;
+import net.swordie.ms.loaders.containerclasses.MapObjectInfo;
 import net.swordie.ms.loaders.containerclasses.VCoreInfo;
 import net.swordie.ms.loaders.containerclasses.ItemInfo;
 import net.swordie.ms.util.*;
@@ -216,7 +217,7 @@ public class ScriptManagerImpl implements ScriptManager {
     }
 
     public void startScript(int parentID, int objID, String scriptName, ScriptType scriptType) {
-         if (scriptType == ScriptType.None || (scriptType == ScriptType.Quest && !isQuestScriptAllowed())) {
+        if (scriptType == ScriptType.None || (scriptType == ScriptType.Quest && !isQuestScriptAllowed())) {
             log.debug(String.format("Did not allow script %s to go through (type %s)  |  Active Script Type: %s", scriptName, scriptType, getLastActiveScriptType()));
             return;
         }
@@ -258,7 +259,6 @@ public class ScriptManagerImpl implements ScriptManager {
                 bindings.put("tradeKingInfo", tradeKingInfo);
             }
         }
-
 
 
         ScriptInfo scriptInfo = new ScriptInfo(scriptType, bindings, parentID, scriptName);
@@ -1545,7 +1545,7 @@ public class ScriptManagerImpl implements ScriptManager {
         npc.setRx0(x + 50);
         npc.setRx1(x - 50);
         npc.setFh(chr.getField().findFootHoldBelow(new Position(x, y - 2)).getId());
-         npc.setNotRespawnable(true);
+        npc.setNotRespawnable(true);
         if (npc.getField() == null) {
             npc.setField(field);
         }
@@ -3557,6 +3557,11 @@ public class ScriptManagerImpl implements ScriptManager {
      */
     public void getTradeKingInit() {
         TraceKingHandler.getTradeKingInit(chr);
+        startQuestNoRewards(15348);
+        startQuestNoRewards(15349);
+        startQuestNoRewards(15350);
+        startQuestNoRewards(15351);
+
     }
 
     /**
@@ -3566,20 +3571,71 @@ public class ScriptManagerImpl implements ScriptManager {
         TraceKingHandler.getTradeKingEnd(chr);
     }
 
-
-
-//    public int getTradeKingNowCoin() {
-//            return TraceKingHandler.getTradeKingNowCoin(chr);
-//    }
-//
-//
-//    public int getTradeKingSaveCoin() {
-//        return TraceKingHandler.getTradeKingSaveCoin(chr);
-//    }
-
-
     public void saveTradeKing(int questRxCode, String param) {
         TraceKingHandler.saveTradeKing(chr, questRxCode, param);
     }
 
+    /**
+     * 进入地图触发的事件
+     */
+    public void getTradeKingMapObjInfo() {
+        int lastTradeKingMapObjInfo = TraceKingHandler.getLastTradeKingMapObjInfo(chr);
+        if (lastTradeKingMapObjInfo != 0) {
+            // 消失
+            startQuestNoRewards(lastTradeKingMapObjInfo);
+            // 保存
+            TraceKingHandler.saveLastTradeKingMapObjInfo(chr, 0);
+        }
+
+        int randomNum = new Random().nextInt(100);
+        int limit = 100;
+
+        // 10%概率出现
+        if (randomNum <= limit) {
+
+            int mapId = chr.getField().getId();
+            MapObjectInfo mapObjectById = EtcData.getMapObjectById(mapId);
+            List<Integer> npcs = mapObjectById.getNpc();
+            if (!npcs.contains(9001090)) {
+                npcs.add(9001090);
+            }
+
+            int randomNPC = new Random().nextInt(npcs.size() -1);
+            Integer npc = npcs.get(randomNPC);
+
+            // 随机出现一位幸运观众
+            switch (npc) {
+                case 9001087:{
+                    // 马修勒  9001087 全部收购
+                    // 15348
+                    completeQuestNoRewards(15348);
+                    TraceKingHandler.saveLastTradeKingMapObjInfo(chr, 15348);
+                    break;
+                }
+                case 9001088 :{
+                    //巨贾月妙 9001088 全部出售
+                    completeQuestNoRewards(15349);
+                    TraceKingHandler.saveLastTradeKingMapObjInfo(chr, 15349);
+                    break;
+                }
+                case 9001091:{
+                    //绿洲 9001091
+                    completeQuestNoRewards(15350);
+                    TraceKingHandler.saveLastTradeKingMapObjInfo(chr, 15350);
+                    break;
+                }
+                case 9001097:{
+                    //沙漠狐狸 9001097
+                    TraceKingHandler.saveLastTradeKingMapObjInfo(chr, 15351);
+                    completeQuestNoRewards(15351);
+                    break;
+                }
+                case 9001090:{
+                    openNpc(9001090);
+                    break;
+                }
+            }
+        }
+
+    }
 }

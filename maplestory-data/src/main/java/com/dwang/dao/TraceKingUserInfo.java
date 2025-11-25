@@ -49,6 +49,8 @@ public class TraceKingUserInfo {
     // 记录购买商品的数量key QR_QRex.  value, 数量
     private Map<String, Integer> itemNum = new HashMap<>();
 
+    private int lastQuestExCode;
+
 
     public TraceKingUserInfo() {
     }
@@ -147,5 +149,13 @@ public class TraceKingUserInfo {
 
     public void setItemNum(Map<String, Integer> itemNum) {
         this.itemNum = itemNum;
+    }
+
+    public int getLastQuestExCode() {
+        return lastQuestExCode;
+    }
+
+    public void setLastQuestExCode(int lastQuestExCode) {
+        this.lastQuestExCode = lastQuestExCode;
     }
 }

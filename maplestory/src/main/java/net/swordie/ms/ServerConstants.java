@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * Created on 2/18/2017.
  */
 public class ServerConstants {
-	public static final String DIR = System.getProperty("user.dir");
+	public static final String DIR = System.getProperty("user.dir") + "/maplestory";
 	public static final String SYS_WZ_DIR = System.getProperty("user.wz") == null ? DIR : System.getProperty("user.wz");
 	public static final byte LOCALE = 8;
 	public static final String WZ_DIR = SYS_WZ_DIR + "/wz";

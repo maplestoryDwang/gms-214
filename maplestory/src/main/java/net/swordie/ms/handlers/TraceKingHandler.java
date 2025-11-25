@@ -19,6 +19,7 @@ import net.swordie.ms.handlers.header.InHeader;
 import net.swordie.ms.handlers.header.OutHeader;
 import net.swordie.ms.traceking.TraceKingItemInfo;
 import net.swordie.ms.traceking.TraceKingQuestRxCode;
+import org.checkerframework.checker.units.qual.A;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +44,11 @@ public class TraceKingHandler {
     // 每个商店卖的东西 npcID，
     private static final HashMap<Integer, List<TraceKingItemInfo>> merchantItemsBuy = new HashMap<>();
     private static final HashMap<Integer, List<TraceKingItemInfo>> merchantItemsSell = new HashMap<>();
+
+    //
+    private static final List<TraceKingItemInfo> buyAll = addAllItemInfo();
+    private static final List<TraceKingItemInfo> sellAll = addAllItemInfo();
+
 
     private static HashMap<Integer, TraceKingUserInfo> userInfoCache = new HashMap<>();
     private static Integer initRidSkill = 80001950;
@@ -71,52 +77,53 @@ public class TraceKingHandler {
         shopMessageQr.put(15344, "5=0;4=0;7=0;6=0;1=0;0=0;3=0;2=0");
 
 
-// 创建所有物品的TraceKillItemInfo对象（包含QR和QREx信息）
-//        TraceKillItemInfo item4034804 = new TraceKillItemInfo(4034804, "桔梗", 0, 0, 15322, 0);
-//        TraceKillItemInfo item4034805 = new TraceKillItemInfo(4034805, "布片", 0, 0, 15322, 1);
-//        TraceKillItemInfo item4034806 = new TraceKillItemInfo(4034806, "矿石碎片", 0, 0, 15322, 2);
-//        TraceKillItemInfo item4034807 = new TraceKillItemInfo(4034807, "矿泉水", 0, 0, 15322, 3);
-//        TraceKillItemInfo item4034808 = new TraceKillItemInfo(4034808, "棉花团", 0, 0, 15322, 4);
-//        TraceKillItemInfo item4034809 = new TraceKillItemInfo(4034809, "钢铁碎片", 0, 0, 15322, 5);
-//        TraceKillItemInfo item4034810 = new TraceKillItemInfo(4034810, "仙人掌树液", 0, 0, 15322, 6);
-//        TraceKillItemInfo item4034811 = new TraceKillItemInfo(4034811, "狐狸尾巴", 0, 0, 15322, 7);
-//        TraceKillItemInfo item4034812 = new TraceKillItemInfo(4034812, "闪耀的钢铁碎片", 0, 0, 15323, 0);
-//        TraceKillItemInfo item4034813 = new TraceKillItemInfo(4034813, "猪肉", 0, 0, 15323, 1);
-//        TraceKillItemInfo item4034814 = new TraceKillItemInfo(4034814, "柔顺的丝绸", 0, 0, 15323, 2);
-//        TraceKillItemInfo item4034815 = new TraceKillItemInfo(4034815, "银原石", 0, 0, 15323, 3);
-//        TraceKillItemInfo item4034816 = new TraceKillItemInfo(4034816, "动物性油脂", 0, 0, 15323, 4);
-//        TraceKillItemInfo item4034817 = new TraceKillItemInfo(4034817, "沙漠的围巾", 0, 0, 15323, 5);
-//        TraceKillItemInfo item4034818 = new TraceKillItemInfo(4034818, "金原石", 0, 0, 15323, 6);
-//        TraceKillItemInfo item4034819 = new TraceKillItemInfo(4034819, "天然蜂蜜", 0, 0, 15323, 7);
-//        TraceKillItemInfo item4034820 = new TraceKillItemInfo(4034820, "棉花", 0, 0, 15344, 0);
-//        TraceKillItemInfo item4034821 = new TraceKillItemInfo(4034821, "蓝宝石碎片", 0, 0, 15344, 1);
-//        TraceKillItemInfo item4034822 = new TraceKillItemInfo(4034822, "沙漠石榴", 0, 0, 15344, 2);
-//        TraceKillItemInfo item4034823 = new TraceKillItemInfo(4034823, "水獭皮", 0, 0, 15344, 3);
-//        TraceKillItemInfo item4034824 = new TraceKillItemInfo(4034824, "黄晶碎片", 0, 0, 15344, 4);
-//        TraceKillItemInfo item4034825 = new TraceKillItemInfo(4034825, "仙桃", 0, 0, 15344, 5);
-//        TraceKillItemInfo item4034826 = new TraceKillItemInfo(4034826, "合成石油", 0, 0, 15344, 6);
-//        TraceKillItemInfo item4034827 = new TraceKillItemInfo(4034827, "祖母绿碎片", 0, 0, 15344, 7);
-//        TraceKillItemInfo item4034828 = new TraceKillItemInfo(4034828, "白糖", 0, 0, 15345, 0);
-//        TraceKillItemInfo item4034829 = new TraceKillItemInfo(4034829, "毛毡布料", 0, 0, 15345, 1);
-//        TraceKillItemInfo item4034830 = new TraceKillItemInfo(4034830, "黑水晶碎片", 0, 0, 15345, 2);
-//        TraceKillItemInfo item4034831 = new TraceKillItemInfo(4034831, "沙漠番茄", 0, 0, 15345, 3);
-//        TraceKillItemInfo item4034832 = new TraceKillItemInfo(4034832, "华丽的布料碎片", 0, 0, 15345, 4);
-//        TraceKillItemInfo item4034833 = new TraceKillItemInfo(4034833, "钻石碎片", 0, 0, 15345, 5);
-//        TraceKillItemInfo item4034834 = new TraceKillItemInfo(4034834, "传说中的补药", 0, 0, 15345, 6);
-//        TraceKillItemInfo item4034835 = new TraceKillItemInfo(4034835, "精致丝绸", 0, 0, 15345, 7);
-//        TraceKillItemInfo item4034836 = new TraceKillItemInfo(4034836, "顶级紫水晶", 0, 0, 15346, 0);
-//        TraceKillItemInfo item4034837 = new TraceKillItemInfo(4034837, "怪物肉", 0, 0, 15346, 1);
-//        TraceKillItemInfo item4034838 = new TraceKillItemInfo(4034838, "丝绸布料", 0, 0, 15346, 2);
-//        TraceKillItemInfo item4034839 = new TraceKillItemInfo(4034839, "精炼黑水晶", 0, 0, 15346, 3);
-//        TraceKillItemInfo item4034840 = new TraceKillItemInfo(4034840, "顶级维他命", 0, 0, 15346, 4);
-//        TraceKillItemInfo item4034841 = new TraceKillItemInfo(4034841, "虎皮", 0, 0, 15346, 5);
-//        TraceKillItemInfo item4034842 = new TraceKillItemInfo(4034842, "金块", 0, 0, 15346, 6);
-//        TraceKillItemInfo item4034843 = new TraceKillItemInfo(4034843, "黄金桃子", 0, 0, 15346, 7);
-//        TraceKillItemInfo item4034844 = new TraceKillItemInfo(4034844, "贵族的绸缎", 0, 0, 15347, 0);
-//        TraceKillItemInfo item4034845 = new TraceKillItemInfo(4034845, "提炼的锂", 0, 0, 15347, 1);
-//        TraceKillItemInfo item4034846 = new TraceKillItemInfo(4034846, "山参", 0, 0, 15347, 2);
-//        TraceKillItemInfo item4034847 = new TraceKillItemInfo(4034847, "皇帝的绸缎", 0, 0, 15347, 3);
-//        TraceKillItemInfo item4034848 = new TraceKillItemInfo(4034848, "光辉钻石", 0, 0, 15347, 4);
+// 创建所有物品的TraceKingItemInfo对象（包含QR和QREx信息）
+/*        TraceKingItemInfo item4034804 = new TraceKingItemInfo(4034804, "桔梗", 0, 0, 15322, 0);
+        TraceKingItemInfo item4034805 = new TraceKingItemInfo(4034805, "布片", 0, 0, 15322, 1);
+        TraceKingItemInfo item4034806 = new TraceKingItemInfo(4034806, "矿石碎片", 0, 0, 15322, 2);
+        TraceKingItemInfo item4034807 = new TraceKingItemInfo(4034807, "矿泉水", 0, 0, 15322, 3);
+        TraceKingItemInfo item4034808 = new TraceKingItemInfo(4034808, "棉花团", 0, 0, 15322, 4);
+        TraceKingItemInfo item4034809 = new TraceKingItemInfo(4034809, "钢铁碎片", 0, 0, 15322, 5);
+        TraceKingItemInfo item4034810 = new TraceKingItemInfo(4034810, "仙人掌树液", 0, 0, 15322, 6);
+        TraceKingItemInfo item4034811 = new TraceKingItemInfo(4034811, "狐狸尾巴", 0, 0, 15322, 7);
+        TraceKingItemInfo item4034812 = new TraceKingItemInfo(4034812, "闪耀的钢铁碎片", 0, 0, 15323, 0);
+        TraceKingItemInfo item4034813 = new TraceKingItemInfo(4034813, "猪肉", 0, 0, 15323, 1);
+        TraceKingItemInfo item4034814 = new TraceKingItemInfo(4034814, "柔顺的丝绸", 0, 0, 15323, 2);
+        TraceKingItemInfo item4034815 = new TraceKingItemInfo(4034815, "银原石", 0, 0, 15323, 3);
+        TraceKingItemInfo item4034816 = new TraceKingItemInfo(4034816, "动物性油脂", 0, 0, 15323, 4);
+        TraceKingItemInfo item4034817 = new TraceKingItemInfo(4034817, "沙漠的围巾", 0, 0, 15323, 5);
+        TraceKingItemInfo item4034818 = new TraceKingItemInfo(4034818, "金原石", 0, 0, 15323, 6);
+        TraceKingItemInfo item4034819 = new TraceKingItemInfo(4034819, "天然蜂蜜", 0, 0, 15323, 7);
+        TraceKingItemInfo item4034820 = new TraceKingItemInfo(4034820, "棉花", 0, 0, 15344, 0);
+        TraceKingItemInfo item4034821 = new TraceKingItemInfo(4034821, "蓝宝石碎片", 0, 0, 15344, 1);
+        TraceKingItemInfo item4034822 = new TraceKingItemInfo(4034822, "沙漠石榴", 0, 0, 15344, 2);
+        TraceKingItemInfo item4034823 = new TraceKingItemInfo(4034823, "水獭皮", 0, 0, 15344, 3);
+        TraceKingItemInfo item4034824 = new TraceKingItemInfo(4034824, "黄晶碎片", 0, 0, 15344, 4);
+        TraceKingItemInfo item4034825 = new TraceKingItemInfo(4034825, "仙桃", 0, 0, 15344, 5);
+        TraceKingItemInfo item4034826 = new TraceKingItemInfo(4034826, "合成石油", 0, 0, 15344, 6);
+        TraceKingItemInfo item4034827 = new TraceKingItemInfo(4034827, "祖母绿碎片", 0, 0, 15344, 7);
+        TraceKingItemInfo item4034828 = new TraceKingItemInfo(4034828, "白糖", 0, 0, 15345, 0);
+        TraceKingItemInfo item4034829 = new TraceKingItemInfo(4034829, "毛毡布料", 0, 0, 15345, 1);
+        TraceKingItemInfo item4034830 = new TraceKingItemInfo(4034830, "黑水晶碎片", 0, 0, 15345, 2);
+        TraceKingItemInfo item4034831 = new TraceKingItemInfo(4034831, "沙漠番茄", 0, 0, 15345, 3);
+        TraceKingItemInfo item4034832 = new TraceKingItemInfo(4034832, "华丽的布料碎片", 0, 0, 15345, 4);
+        TraceKingItemInfo item4034833 = new TraceKingItemInfo(4034833, "钻石碎片", 0, 0, 15345, 5);
+        TraceKingItemInfo item4034834 = new TraceKingItemInfo(4034834, "传说中的补药", 0, 0, 15345, 6);
+        TraceKingItemInfo item4034835 = new TraceKingItemInfo(4034835, "精致丝绸", 0, 0, 15345, 7);
+        TraceKingItemInfo item4034836 = new TraceKingItemInfo(4034836, "顶级紫水晶", 0, 0, 15346, 0);
+        TraceKingItemInfo item4034837 = new TraceKingItemInfo(4034837, "怪物肉", 0, 0, 15346, 1);
+        TraceKingItemInfo item4034838 = new TraceKingItemInfo(4034838, "丝绸布料", 0, 0, 15346, 2);
+        TraceKingItemInfo item4034839 = new TraceKingItemInfo(4034839, "精炼黑水晶", 0, 0, 15346, 3);
+        TraceKingItemInfo item4034840 = new TraceKingItemInfo(4034840, "顶级维他命", 0, 0, 15346, 4);
+        TraceKingItemInfo item4034841 = new TraceKingItemInfo(4034841, "虎皮", 0, 0, 15346, 5);
+        TraceKingItemInfo item4034842 = new TraceKingItemInfo(4034842, "金块", 0, 0, 15346, 6);
+        TraceKingItemInfo item4034843 = new TraceKingItemInfo(4034843, "黄金桃子", 0, 0, 15346, 7);
+        TraceKingItemInfo item4034844 = new TraceKingItemInfo(4034844, "贵族的绸缎", 0, 0, 15347, 0);
+        TraceKingItemInfo item4034845 = new TraceKingItemInfo(4034845, "提炼的锂", 0, 0, 15347, 1);
+        TraceKingItemInfo item4034846 = new TraceKingItemInfo(4034846, "山参", 0, 0, 15347, 2);
+        TraceKingItemInfo item4034847 = new TraceKingItemInfo(4034847, "皇帝的绸缎", 0, 0, 15347, 3);
+        TraceKingItemInfo item4034848 = new TraceKingItemInfo(4034848, "光辉钻石", 0, 0, 15347, 4);*/
+
 
 // 石铁 (9001072) - 可购买的商品 + 可出售的商品
         List<TraceKingItemInfo> list9001072 = new ArrayList<>();
@@ -358,10 +365,68 @@ public class TraceKingHandler {
         list9001086.add(new TraceKingItemInfo(4034842, "金块", 0, 0, 15346, 6)); // 金块 - 可出售
         merchantItemsSell.put(9001086, list9001086);
 
+        updatePrice();
+
+
+    }
+
+    private static void updatePrice() {
         updatePriceBuy(merchantItemsBuy);
         updatePriceSell(merchantItemsSell);
 
+        updatePriceBuyAll(buyAll);
+        updatePriceSellAll(sellAll);
 
+    }
+
+    private static List<TraceKingItemInfo> addAllItemInfo() {
+        List<TraceKingItemInfo> traceKingItemInfos = new ArrayList<>();
+        traceKingItemInfos.add(new TraceKingItemInfo(4034804, "桔梗", 0, 0, 15322, 0));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034805, "布片", 0, 0, 15322, 1));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034806, "矿石碎片", 0, 0, 15322, 2));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034807, "矿泉水", 0, 0, 15322, 3));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034808, "棉花团", 0, 0, 15322, 4));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034809, "钢铁碎片", 0, 0, 15322, 5));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034810, "仙人掌树液", 0, 0, 15322, 6));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034811, "狐狸尾巴", 0, 0, 15322, 7));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034812, "闪耀的钢铁碎片", 0, 0, 15323, 0));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034813, "猪肉", 0, 0, 15323, 1));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034814, "柔顺的丝绸", 0, 0, 15323, 2));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034815, "银原石", 0, 0, 15323, 3));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034816, "动物性油脂", 0, 0, 15323, 4));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034817, "沙漠的围巾", 0, 0, 15323, 5));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034818, "金原石", 0, 0, 15323, 6));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034819, "天然蜂蜜", 0, 0, 15323, 7));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034820, "棉花", 0, 0, 15344, 0));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034821, "蓝宝石碎片", 0, 0, 15344, 1));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034822, "沙漠石榴", 0, 0, 15344, 2));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034823, "水獭皮", 0, 0, 15344, 3));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034824, "黄晶碎片", 0, 0, 15344, 4));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034825, "仙桃", 0, 0, 15344, 5));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034826, "合成石油", 0, 0, 15344, 6));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034827, "祖母绿碎片", 0, 0, 15344, 7));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034828, "白糖", 0, 0, 15345, 0));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034829, "毛毡布料", 0, 0, 15345, 1));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034830, "黑水晶碎片", 0, 0, 15345, 2));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034831, "沙漠番茄", 0, 0, 15345, 3));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034832, "华丽的布料碎片", 0, 0, 15345, 4));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034833, "钻石碎片", 0, 0, 15345, 5));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034834, "传说中的补药", 0, 0, 15345, 6));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034835, "精致丝绸", 0, 0, 15345, 7));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034836, "顶级紫水晶", 0, 0, 15346, 0));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034837, "怪物肉", 0, 0, 15346, 1));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034838, "丝绸布料", 0, 0, 15346, 2));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034839, "精炼黑水晶", 0, 0, 15346, 3));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034840, "顶级维他命", 0, 0, 15346, 4));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034841, "虎皮", 0, 0, 15346, 5));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034842, "金块", 0, 0, 15346, 6));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034843, "黄金桃子", 0, 0, 15346, 7));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034844, "贵族的绸缎", 0, 0, 15347, 0));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034845, "提炼的锂", 0, 0, 15347, 1));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034846, "山参", 0, 0, 15347, 2));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034847, "皇帝的绸缎", 0, 0, 15347, 3));
+        traceKingItemInfos.add(new TraceKingItemInfo(4034848, "光辉钻石", 0, 0, 15347, 4));
+        return traceKingItemInfos;
     }
 
     /**
@@ -370,8 +435,8 @@ public class TraceKingHandler {
      * @param merchantItems
      */
     private static void updatePriceBuy(HashMap<Integer, List<TraceKingItemInfo>> merchantItems) {
-        merchantItems.forEach((k, traceKillItemInfos) -> {
-            for (TraceKingItemInfo traceKingItemInfo : traceKillItemInfos) {
+        merchantItems.forEach((k, TraceKingItemInfos) -> {
+            for (TraceKingItemInfo traceKingItemInfo : TraceKingItemInfos) {
                 int buy = new Random().nextInt(10, 20);
                 traceKingItemInfo.setBuyPrices(buy);
             }
@@ -379,10 +444,16 @@ public class TraceKingHandler {
         });
     }
 
+    private static void updatePriceBuyAll(List<TraceKingItemInfo> merchantItems) {
+        for (TraceKingItemInfo traceKingItemInfo : merchantItems) {
+            int buy = new Random().nextInt(1, 10);
+            traceKingItemInfo.setBuyPrices(buy);
+        }
+    }
 
     private static void updatePriceSell(HashMap<Integer, List<TraceKingItemInfo>> merchantItems) {
-        merchantItems.forEach((k, traceKillItemInfos) -> {
-            for (TraceKingItemInfo traceKingItemInfo : traceKillItemInfos) {
+        merchantItems.forEach((k, TraceKingItemInfos) -> {
+            for (TraceKingItemInfo traceKingItemInfo : TraceKingItemInfos) {
                 int sell = new Random().nextInt(10, 50);
                 traceKingItemInfo.setSellPrices(sell);
             }
@@ -390,7 +461,20 @@ public class TraceKingHandler {
         });
     }
 
+    private static void updatePriceSellAll(List<TraceKingItemInfo> merchantItems) {
+        for (TraceKingItemInfo traceKingItemInfo : merchantItems) {
+            int buy = new Random().nextInt(50, 100);
+            traceKingItemInfo.setSellPrices(buy);
+        }
+    }
+
     public static List<TraceKingItemInfo> getTradeKillItems(int npcId) {
+        if (npcId == 9001088) {
+            return buyAll;
+        } else if (npcId == 9001087) {
+            return sellAll;
+        }
+
         List<TraceKingItemInfo> traceKingItemInfos = merchantItemsBuy.get(npcId);
         List<TraceKingItemInfo> traceKingItemInfos1 = merchantItemsSell.get(npcId);
         ArrayList<TraceKingItemInfo> objects = new ArrayList<>();
@@ -564,8 +648,7 @@ public class TraceKingHandler {
 
         sendExpiredTime(c.getChr());
 
-        updatePriceBuy(merchantItemsBuy);
-        updatePriceSell(merchantItemsSell);
+        updatePrice();
         clickTradeKingNPC(c.getChr(), 0);
 
 
@@ -751,7 +834,7 @@ public class TraceKingHandler {
     }
 
     private static TraceKingUserInfo initTradeKingInfo(int chrId) {
-        TraceKingUserInfo  userInfo = new TraceKingUserInfo();
+        TraceKingUserInfo userInfo = new TraceKingUserInfo();
         userInfo.setChrid(chrId);
         userInfo.setShopNpc(-1);
         userInfo.setcWeight(0);
@@ -1016,4 +1099,13 @@ public class TraceKingHandler {
     }
 
 
+    public static int getLastTradeKingMapObjInfo(Char chr) {
+        TraceKingUserInfo userInfo = getTradeKingInfo(chr);
+        return userInfo.getLastQuestExCode();
+    }
+
+    public static void saveLastTradeKingMapObjInfo(Char chr, int questRxCode) {
+        TraceKingUserInfo userInfo = getTradeKingInfo(chr);
+        userInfo.setLastQuestExCode(questRxCode);
+    }
 }
