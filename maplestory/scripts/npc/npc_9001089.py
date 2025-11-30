@@ -134,7 +134,7 @@ elif sm.getFieldID() == 993000801:
             if allCoin < payCoin:
                 sm.sendSay("可兑换货币不足.")
                 sm.dispose()
-            if len(workArr) > 5:
+            if len(workArr) >= 5:
                 sm.sendSay("搬运工已满，解雇搬运工才能雇佣新的")
                 sm.dispose()
             else:

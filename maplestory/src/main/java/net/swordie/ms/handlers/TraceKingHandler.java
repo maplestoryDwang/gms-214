@@ -605,6 +605,7 @@ public class TraceKingHandler {
 
     /**
      * 用户购买的个数
+     * bugfix: 刷新要带上当前exValue所有的值，而不是只有当前物品
      *
      * @param userInfo
      * @param traceKingItemInfo
@@ -612,11 +613,16 @@ public class TraceKingHandler {
      */
     private static String flushUserItemQRValue(TraceKingUserInfo userInfo, TraceKingItemInfo traceKingItemInfo) {
         int qr = traceKingItemInfo.getQr(); // 15322
+
+        Map<String, Integer> itemNum = userInfo.getItemNum();
+
+
+
         // 标准串 "5=0;4=0;7=0;6=0;1=0;0=0;3=0;2=0"
         String standardQrValue = shopMessageQr.get(qr);
-        int qrEx = traceKingItemInfo.getQrEx();
-        String userInfoKey = qr + "_" + qrEx;
-        Integer traceKillItemCount = userInfo.getItemNum().get(userInfoKey);
+//        int qrEx = traceKingItemInfo.getQrEx();
+//        String userInfoKey = qr + "_" + qrEx;
+//        Integer traceKillItemCount = userInfo.getItemNum().get(userInfoKey);
 
 
         // 切分 key=value 项
@@ -625,9 +631,18 @@ public class TraceKingHandler {
         // 替换对应 key 的 value
         for (int i = 0; i < parts.length; i++) {
             String[] kv = parts[i].split("=");
-            if (kv.length == 2 && kv[0].equals(String.valueOf(qrEx))) {
-                parts[i] = qrEx + "=" + traceKillItemCount;
+
+            String userInfoKey = qr + "_" + kv[0];
+            Integer userHaveNum = itemNum.get(userInfoKey);
+            if (userHaveNum == null) {
+                continue;
+            } else {
+                parts[i] = kv[0] + "=" + userHaveNum;
+
             }
+//            if (kv.length == 2 && kv[0].equals(String.valueOf(qrEx))) {
+//                parts[i] = qrEx + "=" + traceKillItemCount;
+//            }
         }
 
         // 拼回字符串
@@ -794,6 +809,7 @@ public class TraceKingHandler {
             // 计算承重
             int mWeight = calculatorMaxWeight(userInfo);
             userInfo.setmWeight(mWeight);
+            userInfo.setcWeight(0);
 
         }
 

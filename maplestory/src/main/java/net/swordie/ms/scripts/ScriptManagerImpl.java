@@ -3600,7 +3600,7 @@ public class ScriptManagerImpl implements ScriptManager {
                 npcs.add(9001090);
             }
 
-            int randomNPC = new Random().nextInt(npcs.size() -1);
+            int randomNPC = new Random().nextInt(npcs.size());
             Integer npc = npcs.get(randomNPC);
 
             // 随机出现一位幸运观众
