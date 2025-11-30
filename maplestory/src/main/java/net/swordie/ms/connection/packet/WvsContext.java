@@ -931,10 +931,13 @@ public class WvsContext {
         return outPacket;
     }
 
-    public static OutPacket blackCubeResult(Equip equip, MemorialCubeInfo mci, int cubeCount) {
+    public static OutPacket blackCubeResult(MemorialCubeInfo mci, int cubeCount) {
+        Equip equip = mci.getEquip();
+        int cubeItemID = mci.getCubeItemID();
         OutPacket outPacket = new OutPacket(OutHeader.BLACK_CUBE_RESULT);
 
         outPacket.encodeLong(equip.getId());
+        // 写入原来的bean的看看
         mci.encode(outPacket);
         outPacket.encodeInt(cubeCount);
         outPacket.encodeInt(equip.getBagIndex());

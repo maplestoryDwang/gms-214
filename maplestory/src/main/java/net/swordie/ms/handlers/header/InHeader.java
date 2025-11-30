@@ -868,7 +868,8 @@ public enum InHeader {
 
     SURPRISE_BOX(977), // v214
 
-    VIOLET_CUBE_REQUEST(982), // v210 (+9)
+//    VIOLET_CUBE_REQUEST(982), // v210 (+9)
+    VIOLET_CUBE_REQUEST(989), // v210 (+9)
 
     SALON_QUERY(998), // v210 (+9)
 

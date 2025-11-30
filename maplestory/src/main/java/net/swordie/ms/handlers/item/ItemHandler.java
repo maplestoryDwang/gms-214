@@ -427,13 +427,17 @@ public class ItemHandler {
                         equip.updateToChar(chr);
                     } else {
                         if (chr.getMemorialCubeInfo() == null) {
-                            chr.setMemorialCubeInfo(new MemorialCubeInfo(equip.deepCopy(), itemID));
+                            Equip oldEquip = equip.deepCopy();
+                            // 深拷贝的作为旧的
+                            MemorialCubeInfo memorialCubeInfo = new MemorialCubeInfo(equip, oldEquip, itemID, ePos, pos);
+                            chr.setMemorialCubeInfo(memorialCubeInfo);
                         }
-                        Equip newEquip = chr.getMemorialCubeInfo().getEquip();
-                        newEquip.setHiddenOptionBase(hiddenValue, 0);
-                        newEquip.releaseOptions(false);
+
+//                        Equip newEquip = chr.getMemorialCubeInfo().getEquip();
+                        equip.setHiddenOptionBase(hiddenValue, 0);
+                        equip.releaseOptions(false);
                         chr.getField().broadcastPacket(UserPacket.showItemMemorialEffect(chr.getId(), true, itemID, ePos, pos));
-                        c.write(WvsContext.blackCubeResult(equip, chr.getMemorialCubeInfo(), cubeCount));
+                        c.write(WvsContext.blackCubeResult(chr.getMemorialCubeInfo(), cubeCount));
                     }
                     break;
                 case ItemConstants.VIOLET_CUBE: // Violet cube
@@ -1219,10 +1223,10 @@ public class ItemHandler {
             Option o = new Option();
             o.xOption = tsm.getOption(CharacterTemporaryStat.SoulMP).xOption;
             o.yOption = tsm.getOption(CharacterTemporaryStat.SoulMP).yOption;
-           // o.zOption = ItemConstants.getSoulSkillFromSoulID(
-              //      ((Equip) chr.getEquippedItemByBodyPart(BodyPart.Weapon)).getSoulOptionId()
+            // o.zOption = ItemConstants.getSoulSkillFromSoulID(
+            //      ((Equip) chr.getEquippedItemByBodyPart(BodyPart.Weapon)).getSoulOptionId()
 
-          //  );
+            //  );
             tsm.putCharacterStatValue(CharacterTemporaryStat.FullSoulMP, o);
             tsm.sendSetStatPacket();
             chr.dispose();

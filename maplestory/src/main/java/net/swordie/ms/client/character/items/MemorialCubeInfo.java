@@ -10,6 +10,12 @@ public class MemorialCubeInfo {
     private Equip oldEquip;
     private int cubeItemID;
 
+    // equip pos
+    private short ePos;
+    private short pos;
+
+
+
     public MemorialCubeInfo() {
     }
 
@@ -22,6 +28,14 @@ public class MemorialCubeInfo {
     public MemorialCubeInfo(Equip equip, int cubeItemID) {
         this.equip = equip;
         this.cubeItemID = cubeItemID;
+    }
+
+    public MemorialCubeInfo(Equip equip, Equip oldEquip, int cubeItemID, short ePos, short pos) {
+        this.equip = equip;
+        this.oldEquip = oldEquip;
+        this.cubeItemID = cubeItemID;
+        this.ePos = ePos;
+        this.pos = pos;
     }
 
     public void encode(OutPacket outPacket) {
@@ -52,5 +66,25 @@ public class MemorialCubeInfo {
 
     public void setCubeItemID(int cubeItemID) {
         this.cubeItemID = cubeItemID;
+    }
+
+    public void setOldEquip(Equip oldEquip) {
+        this.oldEquip = oldEquip;
+    }
+
+    public short getePos() {
+        return ePos;
+    }
+
+    public void setePos(short ePos) {
+        this.ePos = ePos;
+    }
+
+    public short getPos() {
+        return pos;
+    }
+
+    public void setPos(short pos) {
+        this.pos = pos;
     }
 }

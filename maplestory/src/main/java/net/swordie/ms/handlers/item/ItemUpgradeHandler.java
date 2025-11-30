@@ -83,15 +83,26 @@ public class ItemUpgradeHandler {
         inPacket.decodeInt(); // tick
         MemorialCubeInfo mci = chr.getMemorialCubeInfo();
         boolean chooseBefore = inPacket.decodeByte() == 7;
-        if (mci != null && chooseBefore) {
+        byte b = inPacket.decodeByte();  // 0
+        short i = inPacket.decodeShort(); //
+
+         if (mci != null) {
             Inventory equipInv = chr.getEquipInventory();
-            Equip equip = mci.getOldEquip();
+            Equip equip;
+            if (chooseBefore) {
+                equip = mci.getOldEquip();
+            } else {
+                equip = mci.getEquip();
+            }
             Equip invEquip = (Equip) equipInv.getItemBySlot(equip.getBagIndex());
             equipInv.removeItem(invEquip);
             equipInv.addItem(equip);
             equip.updateToChar(chr);
+
+
+            // 其他情况删除记忆信息
+            chr.setMemorialCubeInfo(null);
         }
-        chr.setMemorialCubeInfo(null);
     }
 
     @Handler(op = InHeader.GOLD_HAMMER_REQUEST)

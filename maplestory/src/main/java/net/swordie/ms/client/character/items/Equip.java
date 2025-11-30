@@ -1696,7 +1696,7 @@ public class Equip extends Item {
             setOptionBonus(i, -val);
         }
     }
-
+    // 重新设置潜能
     public void releaseOptions(boolean bonus) {
         if (!ItemConstants.canEquipHavePotential(this)) {
             return;
