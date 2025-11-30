@@ -528,14 +528,27 @@ public class ItemHandler {
 //                        c.write(FieldPacket.showItemReleaseEffect(chr.getId(), ePos, true));
                         equip.updateToChar(chr);
                     } else {
+//                        if (chr.getMemorialCubeInfo() == null) {
+//                            chr.setMemorialCubeInfo(new MemorialCubeInfo(equip.deepCopy(), itemID));
+//                        }
+//                        Equip newEquip = chr.getMemorialCubeInfo().getEquip();
+//                        newEquip.setHiddenOptionBonus(hiddenValue, 0);
+//                        newEquip.releaseOptions(true);
+//                        chr.getField().broadcastPacket(UserPacket.showItemMemorialEffect(chr.getId(), true, itemID, ePos, pos));
+//                        c.write(WvsContext.whiteCubeResult(equip, chr.getMemorialCubeInfo(), cubeCount));
+
                         if (chr.getMemorialCubeInfo() == null) {
-                            chr.setMemorialCubeInfo(new MemorialCubeInfo(equip.deepCopy(), itemID));
+                            Equip oldEquip = equip.deepCopy();
+                            // 深拷贝的作为旧的
+                            MemorialCubeInfo memorialCubeInfo = new MemorialCubeInfo(equip, oldEquip, itemID, ePos, pos);
+                            chr.setMemorialCubeInfo(memorialCubeInfo);
                         }
-                        Equip newEquip = chr.getMemorialCubeInfo().getEquip();
-                        newEquip.setHiddenOptionBonus(hiddenValue, 0);
-                        newEquip.releaseOptions(true);
+
+                        equip.setHiddenOptionBonus(hiddenValue, 0);
+                        equip.releaseOptions(true);
                         chr.getField().broadcastPacket(UserPacket.showItemMemorialEffect(chr.getId(), true, itemID, ePos, pos));
                         c.write(WvsContext.whiteCubeResult(equip, chr.getMemorialCubeInfo(), cubeCount));
+
                     }
                     break;
                 case 5520001: // Platinum Scissors of Karma
