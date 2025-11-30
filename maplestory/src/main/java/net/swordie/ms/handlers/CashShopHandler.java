@@ -1,5 +1,6 @@
 package net.swordie.ms.handlers;
 
+import jnr.ffi.annotations.In;
 import lombok.extern.slf4j.Slf4j;
 import net.swordie.ms.Server;
 import net.swordie.ms.client.Account;
@@ -9,21 +10,38 @@ import net.swordie.ms.client.character.Char;
 import net.swordie.ms.client.character.items.Equip;
 import net.swordie.ms.client.character.items.Inventory;
 import net.swordie.ms.client.character.items.Item;
+import net.swordie.ms.client.character.quest.Quest;
+import net.swordie.ms.client.character.quest.QuestManager;
 import net.swordie.ms.client.trunk.Trunk;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.db.DatabaseManager;
 import net.swordie.ms.connection.packet.CCashShop;
+import net.swordie.ms.connection.packet.CUIHandler;
+import net.swordie.ms.connection.packet.WvsContext;
 import net.swordie.ms.constants.ItemConstants;
+import net.swordie.ms.constants.QuestConstants;
 import net.swordie.ms.enums.CashItemType;
 import net.swordie.ms.enums.CashShopActionType;
+import net.swordie.ms.enums.InvType;
+import net.swordie.ms.enums.QuestStatus;
 import net.swordie.ms.handlers.header.InHeader;
+import net.swordie.ms.handlers.item.VioletCubeQuestBean;
+import net.swordie.ms.handlers.item.VioletCubeQuestParser;
 import net.swordie.ms.loaders.ItemData;
+import net.swordie.ms.loaders.QuestData;
+import net.swordie.ms.util.FileTime;
 import net.swordie.ms.world.shop.cashshop.CashItemInfo;
 import net.swordie.ms.world.shop.cashshop.CashShop;
 import net.swordie.ms.world.shop.cashshop.CashShopItem;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static net.swordie.ms.constants.ItemConstants.getRandomRareSSB;
 import static net.swordie.ms.constants.ItemConstants.getRandomSSB;
+import static net.swordie.ms.enums.InvType.EQUIP;
+import static net.swordie.ms.enums.InvType.EQUIPPED;
 
 /**
  * Created on 4/23/2018.
@@ -234,6 +252,65 @@ public class CashShopHandler {
         //ToDo make this not look like shit
 
     }
+
+    /**
+     * 六角修复
+     * @param c
+     * @param inPacket
+     */
+    @Handler(op = InHeader.VIOLET_CUBE_REQUEST)
+    public static void violetCubeRequest(Client c, InPacket inPacket) {
+        Char chr = c.getChr();
+        int questID = QuestConstants.VIOLET_CUBE_INFO;
+        // 6D CF C7 11
+        // 03 00 00 00
+        // 6B 9C 00 00 5E 75 00 00 5E 75 00 00
+
+        inPacket.decodeInt();
+        int size = inPacket.decodeInt();
+
+        // 拿到option
+        List<Integer> selectOptions = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            selectOptions.add(inPacket.decodeInt());
+        }
+        QuestManager questManager = chr.getQuestManager();
+        Quest questById = questManager.getQuestById(questID);
+        String qrValue = questById.getQRValue();
+        VioletCubeQuestBean violetCubeQuestBean = VioletCubeQuestParser.parseQuestData(qrValue);
+        int ePos = violetCubeQuestBean.getEpos();
+
+        InvType invType = ePos < 0 ? EQUIPPED : EQUIP;
+        Equip equip = (Equip) chr.getInventoryByType(invType).getItemBySlot(ePos);
+        List<Integer> options = equip.getOptions();
+
+        for (int i = 0; i < selectOptions.size(); i++) {
+            options.set(i, selectOptions.get(i));
+        }
+        // 设置option
+//        equip.setOptions(selectOptions);
+
+        // 更新装备
+        Inventory equipInv = chr.getEquipInventory();
+        Equip invEquip = (Equip) equipInv.getItemBySlot(equip.getBagIndex());
+        equipInv.removeItem(invEquip);
+        equipInv.addItem(equip);
+        equip.updateToChar(chr);
+
+
+
+
+        // 取消任务
+        chr.getQuestManager().removeQuest(questID);
+
+
+
+//        //UI显示
+//        c.write(CUIHandler.violetCubeResult(0, 1, 0, Collections.emptyList()));
+
+    }
+
+
 
     public static void handleCashShopButtonPress(Char chr, InPacket inPacket) {
         chr.dispose();

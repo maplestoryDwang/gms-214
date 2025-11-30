@@ -1946,7 +1946,11 @@ public enum OutHeader {
 
     REWARD_CLAIMED_FAIL(-1), // v214
     REWARD_CLAIMED_SUCCESS(-1),
+
+
     VIOLET_CUBE_RESULT(-1),
+
+
     OPEN_DAILY_QUEST_BOARD(-1),
     UNK200_1818(-1), //
     UNK200_1819(-1), //

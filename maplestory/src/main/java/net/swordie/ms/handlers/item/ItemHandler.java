@@ -13,7 +13,6 @@ import net.swordie.ms.client.character.skills.Skill;
 import net.swordie.ms.client.character.skills.temp.CharacterTemporaryStat;
 import net.swordie.ms.client.character.skills.temp.TemporaryStatManager;
 import net.swordie.ms.connection.InPacket;
-import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.connection.packet.*;
 import net.swordie.ms.constants.GameConstants;
 import net.swordie.ms.constants.ItemConstants;
@@ -21,7 +20,6 @@ import net.swordie.ms.constants.QuestConstants;
 import net.swordie.ms.enums.*;
 import net.swordie.ms.handlers.Handler;
 import net.swordie.ms.handlers.header.InHeader;
-import net.swordie.ms.handlers.header.OutHeader;
 import net.swordie.ms.life.pet.Pet;
 import net.swordie.ms.life.pet.PetSkill;
 import net.swordie.ms.loaders.FieldData;
@@ -254,7 +252,10 @@ public class ItemHandler {
     public static void handleUserConsumeCashItemUseRequest(Client c, InPacket inPacket) {
         Char chr = c.getChr();
         Inventory cashInv = chr.getInventoryByType(InvType.CASH);
-        inPacket.decodeInt(); // tick
+//        int tick = inPacket.decodeInt();// tick
+        short s1 = inPacket.decodeShort();
+        short s2 = inPacket.decodeShort();
+
         short pos = inPacket.decodeShort();
         int itemID = inPacket.decodeInt();
         Item item = cashInv.getItemBySlot(pos);
@@ -392,7 +393,8 @@ public class ItemHandler {
                 case ItemConstants.RED_CUBE: // Red Cube
                 case ItemConstants.BLACK_CUBE: // Black cube
                     cube = chr.getCashInventory().getItemByItemID(itemID);
-                    cubeCount = cube.getQuantity();
+                    cubeCount = chr.getCashInventory().getItemAllQuantity(itemID);
+//                    cubeCount = cube.getQuantity();
                     cubeCount--;
 
                     short ePos = (short) inPacket.decodeInt();
@@ -464,7 +466,7 @@ public class ItemHandler {
                     byte line = (byte) Arrays.stream(copy.getOptionBase()).filter(option -> option > 0).count();
                     if (line <= 1) {
                         chr.chatMessage(SystemNotice, "You cannot use Violet Cube on this item.");
-                        c.write(CUIHandler.violetCubeResult(0, 1, line, Collections.emptyList()));
+                        c.write(CUIHandler.violetCubeResult( 0, 1, line, Collections.emptyList()));
                         return;
                     }
                     short optionGrade = ItemGrade.getHiddenGradeByVal(copy.getBaseGrade()).getVal();
@@ -477,6 +479,8 @@ public class ItemHandler {
                     for (byte i = 0; i < line * 2; i++) {
                         options.add(copy.getRandomOption(false, i % 3)); // ensure 2 of 4/6 options are higher rank
                     }
+
+                    // 六角居然是做任务吗？
                     Quest quest = chr.getQuestManager().getOrCreateQuestById(QuestConstants.VIOLET_CUBE_INFO);
                     quest.setProperty("o", options.toString().replace("[", "").replace("]", "").replace(" ", ""));
                     quest.setProperty("n", String.valueOf(number));

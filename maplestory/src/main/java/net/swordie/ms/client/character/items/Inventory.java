@@ -186,4 +186,14 @@ public class Inventory {
     public boolean hasItem(int itemId) {
         return getItemByItemID(itemId) != null;
     }
+
+    public int getItemAllQuantity(int itemId) {
+        List<Item> list = getItems().stream().filter(item -> item.getItemId() == itemId).toList();
+        int quantity = 0;
+        for (Item item : list) {
+            quantity += item.getQuantity();
+        }
+        return quantity;
+
+    }
 }

@@ -940,7 +940,8 @@ public class WvsContext {
         // 写入原来的bean的看看
         mci.encode(outPacket);
         outPacket.encodeInt(cubeCount);
-        outPacket.encodeInt(equip.getBagIndex());
+//        outPacket.encodeInt(equip.getBagIndex());
+        outPacket.encodeInt(1);
 
         return outPacket;
     }
