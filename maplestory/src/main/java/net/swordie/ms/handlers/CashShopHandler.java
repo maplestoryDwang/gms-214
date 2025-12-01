@@ -297,16 +297,14 @@ public class CashShopHandler {
         equipInv.addItem(equip);
         equip.updateToChar(chr);
 
-
-
-
         // 取消任务
-        chr.getQuestManager().removeQuest(questID);
+        questById.setQrValue("");
 
-
+        chr.write(WvsContext.questRecordExMessage(questById));
+        questManager.removeQuest(questID);
 
 //        //UI显示
-//        c.write(CUIHandler.violetCubeResult(0, 1, 0, Collections.emptyList()));
+        c.write(CUIHandler.violetCubeResult(0, 1, 0, Collections.emptyList()));
 
     }
 

@@ -59,7 +59,8 @@ public class ItemConstants {
     public static final int MEISTERS_CUBE = 2711004;
     public static final int VIOLET_CUBE = 5062024;  // 闪炫魔方
 
-    public static final int BONUS_POT_CUBE = 5062500;
+    // 附加
+    public static final int BONUS_POT_CUBE = 5062500;  //大师附加
     public static final int SPECIAL_BONUS_POT_CUBE = 5062501;
     public static final int WHITE_BONUS_POT_CUBE = 5062503;
 

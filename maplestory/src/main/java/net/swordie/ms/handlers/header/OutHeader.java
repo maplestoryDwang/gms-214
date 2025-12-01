@@ -1906,7 +1906,11 @@ public enum OutHeader {
     AUCTION_RESULT(1959), // v214
     UNK204_1799(1960), // v214
     //1925
-    // CUIHandler::OnPacket
+
+
+    // CUIHandler::OnPacket 1962 - 2022
+    // 2007 startplant
+    // 1980 还没找到
     ATTENDANCE_EVENT_DATA(-1), // v214 // *
     ATTENDANCE_EVENT_UI_DATA(-1), // v214
     //1928
@@ -1920,9 +1924,13 @@ public enum OutHeader {
     GROWTH_HELPER(-1), // v214
     CONTENTS_MAP(-1), // v214
     URUS_SHOP(-1), // v214
-    DAILY_GIFT(-1), // v214
+    DAILY_GIFT(1975), // v214
     JIGSAW_PUZZLE(-1), // v214
-    DISGUISE(-1), // v214
+    DISGUISE(1977), // v214
+
+
+
+
     SOME_GIFT_THING(-1), // v214
     DIMENSIONAL_MIRROR(1979), // v214
     UNK200_1795(-1), // v214
@@ -1945,10 +1953,10 @@ public enum OutHeader {
     UNK200_1813(-1), // v214
 
     REWARD_CLAIMED_FAIL(-1), // v214
-    REWARD_CLAIMED_SUCCESS(-1),
+    REWARD_CLAIMED_SUCCESS(2007),  // equal violet_cube
 
 
-    VIOLET_CUBE_RESULT(-1),
+    VIOLET_CUBE_RESULT(2007),
 
 
     OPEN_DAILY_QUEST_BOARD(-1),

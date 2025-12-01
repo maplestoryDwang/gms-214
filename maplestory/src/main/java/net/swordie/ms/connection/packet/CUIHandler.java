@@ -8,6 +8,7 @@ import net.swordie.ms.handlers.header.OutHeader;
 import java.util.List;
 import java.util.Set;
 import net.swordie.ms.client.character.union.UnionMember;
+import net.swordie.ms.util.FileTime;
 
 /**
  * @author Sjonnie
@@ -46,6 +47,37 @@ public class CUIHandler {
         return outPacket;
     }
 
+    /**
+     *
+     * @param type 0 表示开始  1表示结束 2 不懂是什么
+     * @param result
+     * @param line
+     * @param options
+     * @return
+     */
+    public static OutPacket violetCubeResult(int type, int result, int line, List<Integer> options) {
+        OutPacket outPacket = new OutPacket(OutHeader.VIOLET_CUBE_RESULT);
+        outPacket.encodeShort(result);
+        outPacket.encodeInt(0); // pointer?
+        if (result == 0) {
+            outPacket.encodeInt(line);
+            outPacket.encodeInt(options.size());
+            for (Integer option : options) {
+                outPacket.encodeInt(option);
+            }
+        } else if (result == 2) {
+            outPacket.encodeFT(FileTime.fromType(FileTime.Type.MAX_TIME));
+            outPacket.encodeInt(options.size());
+            for (Integer option : options) {
+                outPacket.encodeInt(option);
+            }
+        } else {
+            outPacket.encodeInt(0); // error code? 0: success
+        }
+        return outPacket;
+    }
+
+/*
     public static OutPacket violetCubeResult(int type, int result, int line, List<Integer> options) {
         OutPacket outPacket = new OutPacket(OutHeader.VIOLET_CUBE_RESULT);
         outPacket.encodeShort(type);
@@ -65,6 +97,7 @@ public class CUIHandler {
         }
         return outPacket;
     }
+*/
 
 
     public static OutPacket unionAssignResult(int rank, Set<Char> eligibleChars, UnionBoard activeBoard,
