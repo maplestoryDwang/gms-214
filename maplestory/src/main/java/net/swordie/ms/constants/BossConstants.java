@@ -229,6 +229,7 @@ public class BossConstants {
 
 
     public static final int HORNTAIL_TIME = 75 * 60; // 1 hr, 15 min timer
+    public static final int VON_LEON_TIME = 75 * 60; // 1 hr, 15 min timer
 
 
 }

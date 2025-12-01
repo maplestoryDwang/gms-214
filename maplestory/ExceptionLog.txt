@@ -306,3 +306,19 @@
 ------------------------ 2025-11-24 01:19:13 ------------------------
 �.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2025/11/23 19:18:42|NAME|DWANG|JOB|412|FID|993000801|WID|0|Channel|0|LastUseName||54.68.160.34|State|5|Time1|323129227|Time2|323121330|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
 
+
+------------------------ 2025-11-24 01:29:55 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2025/11/23 19:26:14|NAME|DWANG|JOB|412|FID|993000801|WID|0|Channel|0|LastUseName||54.68.160.34|State|5|Time1|323581306|Time2|323572591|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2025-11-24 20:00:07 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2025/11/24 13:57:13|NAME|DWANG|JOB|412|FID|993000801|WID|0|Channel|0|LastUseName||54.68.160.34|State|5|Time1|390242009|Time2|390233196|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2025-11-24 20:08:45 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2025/11/24 14:07:33|NAME|DWANG|JOB|412|FID|993000801|WID|0|Channel|0|LastUseName||54.68.160.34|State|5|Time1|390862735|Time2|390853300|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+
+
+------------------------ 2025-11-25 19:55:14 ------------------------
+�.....(搢u?+5'?H++4Q'櫞倉coE+SHTWLSQp�.ELog|2|MAJOR|214|MINOR|1|DATETIME|2025/11/24 17:49:48|NAME|DWANG|JOB|412|FID|993000802|WID|0|Channel|0|LastUseName|DWANG|54.68.160.34|State|5|Time1|404197459|Time2|404155997|throw CTerminateException|-|944|HR|570425345|notThrow|false|0||..
+

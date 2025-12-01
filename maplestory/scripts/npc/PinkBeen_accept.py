@@ -41,7 +41,7 @@ if sm.getFieldID() == 270050000:
 
     elif sm.checkParty() and response != 99:
         if is_party_eligible(destinations[response][1], sm.getParty()):
-            sm.setPartyDeathCount(destinations[response][3])
+            sm.setDeathCount(destinations[response][3])
             sm.warpInstanceIn(destinations[response][2], True)
             sm.setInstanceTime(BossConstants.PINKBEAN_TIME)
             sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])

@@ -18,7 +18,9 @@ public enum EventType {
     CVellum(12, "Chaos Vellum"),
     EHorntail(13, "Easy horntail"),
     Horntail(14, "Normal horntail"),
-    CHorntail(15, "Chaos horntail")
+    CHorntail(15, "Chaos horntail"),
+    EVonLeon(16, "Easy VonLeon"),
+    VonLeon(17, "Normal VonLeon")
     ;
 
     private int val;

@@ -52,7 +52,7 @@ if sm.getFieldID() == 211042400:
 #         if is_party_eligible(destinations[response][1], sm.getParty()):
 #           #  sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])
 #             sm.warpInstanceIn(destinations[response][2], True)
-#             sm.setPartyDeathCount(destinations[response][3])
+#             sm.setDeathCount(destinations[response][3])
 #             sm.setInstanceTime(BossConstants.ZAKUM_TIME)
 
         if is_party_eligible(destinations[response][1], sm.getParty()):
