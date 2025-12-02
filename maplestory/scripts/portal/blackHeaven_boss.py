@@ -51,4 +51,4 @@ if sm.getFieldID() == 350060300:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])
 else:
     if sm.sendAskYesNo("Are you sure you want to leave the battlefield?"):
-        sm.warpInstanceOutParty(807300100)
+        sm.warpInstanceOut(807300100)

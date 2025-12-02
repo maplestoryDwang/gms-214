@@ -26,5 +26,5 @@ elif sm.getFieldID() == 811000500:
     if not sm.hasMobsInField():
         dialog = "Are you sure you want to leave the battlefield?"
     if sm.sendAskYesNo(dialog):
-        sm.warpInstanceOutParty(811000008)
+        sm.warpInstanceOut(811000008)
 

@@ -46,6 +46,6 @@ if sm.getFieldID() == 105200000:
             sm.setDeathCount(destinations[response][3])
             sm.warpInstanceIn(destinations[response][2], True)
             sm.setInstanceTime(BossConstants.ROOTABYSS_TIME)
-            sm.addCoolDownInXDaysForParty(destinations[response][4], 1, 1)
+#             sm.addCoolDownInXDaysForParty(destinations[response][4], 1, 1)
         else:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])

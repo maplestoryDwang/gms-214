@@ -10,4 +10,4 @@ else:
     dialog = "Are you sure you want to leave the battlefield?"
 
 if sm.sendAskYesNo(dialog):
-    sm.warpInstanceOutParty(105200000)
+    sm.warpInstanceOut(105200000)

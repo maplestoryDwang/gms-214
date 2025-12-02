@@ -52,4 +52,4 @@ if sm.getFieldID() == 262030000:
 else:
     if 262030100 <= sm.getFieldID() <= 262031300:
         if sm.sendAskYesNo("Are you sure you want to leave the battlefield?"):
-            sm.warpInstanceOutParty(262000000)
+            sm.warpInstanceOut(262000000)

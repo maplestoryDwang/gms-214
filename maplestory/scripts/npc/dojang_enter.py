@@ -71,4 +71,4 @@ elif not sm.hasMobsInField():
     chr.chatMessage("Please wait till the mob has spawned to leave the map.")
 elif sm.hasMobsInField():
     sm.sendAskYesNo("Would you like to leave?")
-    sm.warpInstanceOutParty(925020001)
+    sm.warpInstanceOut(925020001)

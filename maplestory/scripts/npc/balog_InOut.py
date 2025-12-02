@@ -3,4 +3,4 @@
 response = sm.sendAskYesNo("Are you sure you want to leave the battlefield?")
 
 if response:
-    sm.warpInstanceOutParty(105100100)
+    sm.warpInstanceOut(105100100)

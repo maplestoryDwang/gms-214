@@ -10,6 +10,7 @@ if chr.getInstance() is not None:
     sm.showWeatherNotice("Please allow me to mourn over your imminent demise.", WeatherEffNoticeType.BossCrimsonQueenCrownPink, 10000)
     if reactor.getHitCount() == 5:
         sm.spawnMob(QueenId, 37, 135, False)
+#         sm.spawnMob(QueenId, 37, 135, 1)
         sm.removeReactor()
         field.setProperty("QueenSummoned", True)
         sleep(2)

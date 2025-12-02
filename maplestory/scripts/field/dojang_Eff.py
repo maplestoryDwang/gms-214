@@ -193,4 +193,4 @@ elif mode == CRAZY:
 
 sm.completeSDCForParty()
 sm.chat("You have completed Mu Lung Dojo in " + str(int(round(time.time())) - startTime) + " seconds.")
-sm.warpInstanceOutParty(925020001)
+sm.warpInstanceOut(925020001)

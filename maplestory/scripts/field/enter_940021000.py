@@ -114,4 +114,4 @@ if sm.getFieldID() == 940021000:
     sm.giveItem(2431128)
     sleep(5)
 
-    sm.warpInstanceOutParty(940020000)
+    sm.warpInstanceOut(940020000)
