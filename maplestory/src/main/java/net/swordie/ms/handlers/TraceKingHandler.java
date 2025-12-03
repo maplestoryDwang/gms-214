@@ -13,6 +13,7 @@ import net.swordie.ms.client.jobs.Job;
 import net.swordie.ms.connection.InPacket;
 import net.swordie.ms.connection.OutPacket;
 import net.swordie.ms.connection.packet.WvsContext;
+import net.swordie.ms.constants.QuestConstants;
 import net.swordie.ms.enums.MessageType;
 import net.swordie.ms.enums.QuestStatus;
 import net.swordie.ms.handlers.header.InHeader;
@@ -694,7 +695,7 @@ public class TraceKingHandler {
     private static void sendUserQRInit(Char chr, TraceKingUserInfo userInfo) {
         String format = String.format("shop=%d;cWeight=%d;count=%d;mWeight=%d", userInfo.getShopNpc(), userInfo.getcWeight(), userInfo.getCount(), userInfo.getmWeight());
         // 满背包125    15324 shop=-1;cWeight=0;count=50;mWeight=125
-        sendQRValue(chr, 15324, format);
+        sendQRValue(chr, QuestConstants.TRACE_KING_USER_GOLD, format);
     }
 
     private static void sendUserQR(Char chr, TraceKingUserInfo userInfo) {
@@ -702,8 +703,8 @@ public class TraceKingHandler {
         // 满背包125    15324 shop=-1;cWeight=0;count=50;mWeight=125
 //        TraceKillHandler.sendQRValue(chr, 15324, format);
 
-        chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE, 15324, format, (byte) 0));
-        chr.chatMessage(String.format("Sent QRValue with  QuestId %d, QrValue %s", 15324, format));
+        chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE, QuestConstants.TRACE_KING_USER_GOLD, format, (byte) 0));
+        chr.chatMessage(String.format("Sent QRValue with  QuestId %d, QrValue %s", QuestConstants.TRACE_KING_USER_GOLD, format));
     }
 
     // UTCshijian?
@@ -712,7 +713,7 @@ public class TraceKingHandler {
         LocalDateTime now = LocalDateTime.now().plusMinutes(1).minusHours(6);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String s = "0=" + now.format(fmt);
-        chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE, 15317, s, (byte) 0));
+        chr.write(WvsContext.message(MessageType.QUEST_RECORD_EX_MESSAGE, QuestConstants.TRACE_KING_EXPIRED_TIME, s, (byte) 0));
         return s;
     }
 
@@ -743,7 +744,7 @@ public class TraceKingHandler {
 
         // 发的下次更新时间
         String time = "0";
-        outpacket.encodeInt(15317);  // quest_id ？？？
+        outpacket.encodeInt(QuestConstants.TRACE_KING_EXPIRED_TIME);  // quest_id ？？？
         outpacket.encodeString(time);
 
 

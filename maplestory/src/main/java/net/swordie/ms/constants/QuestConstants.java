@@ -22,7 +22,6 @@ public class QuestConstants {
 
     public static final int PVAC_DATA = 9000002;
 
-    public static final int VIOLET_CUBE_INFO = 52998;
 
     public static final int SHAPESHIFT_QR = 7786;
 
@@ -43,6 +42,17 @@ public class QuestConstants {
     public static final int MEDAL_REISSUE_QUEST = 29949;
     public static final int ZERO_SET_QUEST = 41907;
     public static final int ZERO_WEAPON_WINDOW_QUEST = 40905;
+
+
+    // time
+    public static final int TRACE_KING_EXPIRED_TIME = 15317;
+    public static final int TRACE_KING_USER_GOLD = 15324;
+
+
+
+    public static final int VIOLET_CUBE_INFO = 52998;
+
+
 
     public static final int ZERO_DATA = 9000001;
 
