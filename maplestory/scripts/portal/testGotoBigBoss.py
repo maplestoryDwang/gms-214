@@ -4,7 +4,7 @@ from net.swordie.ms.enums import EventType
 # Mode, Required Level, Map ID, Death Count, Event Type, Cooldown
 
 destinations = [
-    ["Legendary", 240, 863010100, 20, EventType.Gollux, 172800000],
+    ["Legendary", 200, 863010100, 20, EventType.Gollux, 172800000],
 ]
 
 runsPerDay = 1

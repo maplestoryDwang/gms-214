@@ -36,6 +36,7 @@ import net.swordie.ms.util.Position;
 import net.swordie.ms.util.container.Tuple;
 import net.swordie.ms.world.auction.AuctionResult;
 import net.swordie.ms.world.field.Field;
+import net.swordie.ms.world.field.Instance;
 import net.swordie.ms.world.field.Portal;
 import net.swordie.ms.world.shop.cashshop.CashShop;
 
@@ -213,28 +214,36 @@ public class MigrationHandler {
                 chr.getTemporaryStatManager().removeAllStats();
             }
             int deathcount = chr.getDeathCount();
-            if (deathcount != 0) {
-                if (deathcount > 0) {
+            // 0已经不显示了
+            if (deathcount > 1) {
+                if (deathcount > 1) {
                     deathcount--;
                     chr.setDeathCount(deathcount);
                     chr.write(UserLocal.deathCountInfo(deathcount));
                 }
                 chr.warp(chr.getOrCreateFieldByCurrentInstanceType(returnMap));
             } else {
-                if (chr.getParty() != null) {
-                    //   chr.getParty().clearFieldInstances(0);
-                } else {
-                    if (chr.getTransferField() == targetField && chr.getTransferFieldReq() == chr.getField().getId()) {
-                        Field toField = chr.getOrCreateFieldByCurrentInstanceType(chr.getTransferField());
-                        if (toField != null && chr.getTransferField() > 0) {
-                            chr.warp(toField);
-                        }
-                        chr.setTransferField(0);
-                        return;
-                    } else {
-                        chr.warp(chr.getOrCreateFieldByCurrentInstanceType(chr.getField().getForcedReturn()));
+//                if (chr.getParty() != null) {
+//                    //   chr.getParty().clearFieldInstances(0);
+//                } else {
+                if (chr.getTransferField() == targetField && chr.getTransferFieldReq() == chr.getField().getId()) {
+                    Field toField = chr.getOrCreateFieldByCurrentInstanceType(chr.getTransferField());
+                    if (toField != null && chr.getTransferField() > 0) {
+                        chr.warp(toField);
                     }
+                    chr.setTransferField(0);
+                    return;
+                } else {
+//                    chr.warp(chr.getOrCreateFieldByCurrentInstanceType(chr.getField().getForcedReturn()));
+                    // 退出当前
+                    Instance instance = chr.getInstance();
+                    if (instance != null) {
+                        instance.clear();
+//                        chr.getScriptManager().warpInstanceOut(chr.getField().getForcedReturn());
+                    }
+
                 }
+//                }
             }
             chr.heal(chr.getMaxHP());
             chr.setBuffProtector(false);
