@@ -494,6 +494,7 @@ public class MobSkill {
     //                            m.die(false);
 
                             } else {
+                                // 直接死
                                 m.die(false);
                             }
                         } catch (Exception e) {

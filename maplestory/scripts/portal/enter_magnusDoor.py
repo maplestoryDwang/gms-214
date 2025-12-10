@@ -5,7 +5,7 @@ from net.swordie.ms.enums import EventType
 
 destinations = [
     ["Normal", 160, 401060200, 20, EventType.NMagnus, 64800000],
-    ["Hard", 220, 401060100, 20, EventType.HMagnus, 64800000],
+    ["Hard", 210, 401060100, 20, EventType.HMagnus, 64800000],
 ]
 
 runsPerDay = 1
@@ -52,6 +52,6 @@ if sm.getFieldID() == 401060000:
             sm.warpInstanceIn(destinations[response][2], True)
             sm.setInstanceTime(BossConstants.MAGNUS_TIME)
             sm.addCooldownTimeForParty(destinations[response][4], destinations[response][5])
-            sm.consumeItem(4033406)
+#             sm.consumeItem(4033406)
         else:
             sm.sendSayOkay("One or more party members are lacking the prerequisite entry quests, or are below level #b%d#k." % destinations[response][1])

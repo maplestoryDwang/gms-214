@@ -23,7 +23,12 @@ public enum EventType {
     VonLeon(17, "Normal VonLeon"),
     EArkarium(18, "Easy VonLeon"),
     Arkarium(19, "Normal VonLeon"),
-    Gollux(20, "Gollux")
+    EMagnus(20, "Easy Magnus"),
+    NMagnus(20, "Normal Magnus"),
+    HMagnus(20, "Chaos Magnus"),
+    Pinkbean(21, "Normal Pinkbean"),
+    CPinkbean(22, "Chaos Pinkbean"),
+    Gollux(999, "Gollux")
     ;
 
     private int val;

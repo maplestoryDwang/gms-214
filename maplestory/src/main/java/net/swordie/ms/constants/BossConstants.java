@@ -234,4 +234,32 @@ public class BossConstants {
     public static final int GOLLUX_TIME = 30 * 60; // 30 min timer
 
 
+
+
+    // 老麦
+    //  Magnus ---------------------------------------------------------------------------------------------------------
+
+    //      General
+    public static final int MAGNUS_TIME = 20  *60; // 20 minutes
+    public static final int MAGNUS_DEATHCOUNT = 20; // 20 death count
+
+
+    //      Obstacle Atoms
+    public static final int MAGNUS_OBSTACLE_ATOM_VELOCITY = 5; // Velocity at which the Obstacle Atoms fall down.
+
+    public static final int MAGNUS_GREEN_ATOM_EXECUTION_DELAY = 1000; // in ms. Delay between method executions
+    public static final int MAGNUS_GREEN_ATOM_AMOUNT = 4; // max amount of Atoms spawning attempts in 1 call
+    public static final int MAGNUS_GREEN_ATOM_PROP = 35; // % chance of actually spawning in
+    public static final int MAGNUS_GREEN_ATOM_DAMAGE = 25; // % of Max HP
+
+    public static final int MAGNUS_BLUE_ATOM_EXECUTION_DELAY = 750; // in ms. Delay between method executions
+    public static final int MAGNUS_BLUE_ATOM_AMOUNT = 4; // max amount of Atoms spawning attempts in 1 call
+    public static final int MAGNUS_BLUE_ATOM_PROP = 30; // % chance of actually spawning in
+    public static final int MAGNUS_BLUE_ATOM_DAMAGE = 50; // % of Max HP
+
+    public static final int MAGNUS_PURPLE_ATOM_EXECUTION_DELAY = 2000; // in ms. Delay between method executions
+    public static final int MAGNUS_PURPLE_ATOM_AMOUNT = 3; // max amount of Atoms spawning attempts in 1 call
+    public static final int MAGNUS_PURPLE_ATOM_PROP = 25; // % chance of actually spawning in
+    public static final int MAGNUS_PURPLE_ATOM_DAMAGE = 100; // % of Max HP
+
 }

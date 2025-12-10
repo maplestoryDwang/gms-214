@@ -12,3 +12,5 @@ sm.invokeAtFixedRate(500, BossConstants.MAGNUS_BLUE_ATOM_EXECUTION_DELAY, 0,
 
 sm.invokeAtFixedRate(750, BossConstants.MAGNUS_PURPLE_ATOM_EXECUTION_DELAY, 0,
                      "createObstacleAtom", ObtacleAtomEnum.PurpleMeteor, 1, BossConstants.MAGNUS_PURPLE_ATOM_DAMAGE, BossConstants.MAGNUS_OBSTACLE_ATOM_VELOCITY, BossConstants.MAGNUS_PURPLE_ATOM_AMOUNT, BossConstants.MAGNUS_PURPLE_ATOM_PROP)
+sm.waitForMobDeath(8880010)
+sm.stopEvents() # 停止任务

@@ -701,6 +701,10 @@ public enum InHeader {
 
     USER_SURVEY_REQUEST(-1),
     NPS_INFO(-1), // v210
+
+
+    UNKNOW_796(769), // V214 .text:02EB0430   CWvsContext::OnReturnToCharacterSelect 会进入调用
+
     USER_FLAME_ORB_REQUEST(798), // v214
     USER__SAD_RESULT_UI__CLOSE(-1),
     FREE_LOOK_CHANGE_REQUEST(-1),

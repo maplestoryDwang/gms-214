@@ -68,6 +68,8 @@ public enum OutHeader {
     CHAT_BLOCK_GUILD_FRIEND_CHAT(29),*/
 
     UNK_72(-1),
+
+
     // CMapLoadable::OnPacket
     SET_BACK_EFFECT(81), // v214
     SET_MAP_TAGGED_OBJECT_VISISBLE(82), // v214

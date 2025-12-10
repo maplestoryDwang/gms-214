@@ -241,6 +241,10 @@ public class MigrationHandler {
                         instance.clear();
 //                        chr.getScriptManager().warpInstanceOut(chr.getField().getForcedReturn());
                     }
+                    Field field = chr.getField();
+                    if (field != null) {
+                        chr.getScriptManager().warpInstanceOut(chr.getField().getForcedReturn());
+                    }
 
                 }
 //                }
