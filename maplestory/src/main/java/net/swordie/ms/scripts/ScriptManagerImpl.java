@@ -1279,6 +1279,16 @@ public class ScriptManagerImpl implements ScriptManager {
         setReturnField(chr.getFieldID());
     }
 
+
+    public boolean hasFieldProperty(String fieldProperty) {
+        return chr.getField().hasProperty(fieldProperty);
+    }
+
+    public void setFieldProperty(String key, Object value) {
+        chr.getField().setProperty(key, value);
+    }
+
+
     @Override
     public boolean hasMobsInField() {
         return hasMobsInField(chr.getFieldID());

@@ -262,4 +262,12 @@ public class BossConstants {
     public static final int MAGNUS_PURPLE_ATOM_PROP = 25; // % chance of actually spawning in
     public static final int MAGNUS_PURPLE_ATOM_DAMAGE = 100; // % of Max HP
 
+
+    // PB pinkBeen
+    public static final int PINKBEAN_TIME = 30 * 60; // 30 min timer
+
+
+
+
+
 }
