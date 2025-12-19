@@ -5,6 +5,8 @@ import java.util.Arrays;
 /**
  * Created on 1-12-2018.
  *
+ * 自定义进入地图脚本
+ *
  * @author Asura
  */
 public enum CustomFUEFieldScripts { // Custom First User Enter Field Scripts

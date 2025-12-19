@@ -28,6 +28,14 @@ public enum EventType {
     HMagnus(20, "Chaos Magnus"),
     Pinkbean(21, "Normal Pinkbean"),
     CPinkbean(22, "Chaos Pinkbean"),
+    Cygnus(23, "Cygnus"),
+    CCygnus(24, "Chaos Cygnus"),
+    TRADE_40(40, "Chaos Cygnus"),
+    TRADE_41(41, "Chaos Cygnus"),
+    TRADE_42(42, "Chaos Cygnus"),
+    TRADE_43(43, "Chaos Cygnus"),
+    TRADE_44(44, "Chaos Cygnus"),
+
     Gollux(999, "Gollux")
     ;
 

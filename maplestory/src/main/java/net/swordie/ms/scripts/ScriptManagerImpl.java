@@ -3648,4 +3648,44 @@ public class ScriptManagerImpl implements ScriptManager {
         }
 
     }
+
+
+
+
+
+
+    HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
+
+    public int getShipLevel() {
+
+        Integer id = chr.getId();
+        Integer i = integerIntegerHashMap.get(id);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    public void giveShipLevel(int addLevel) {
+        int shipLevel = getShipLevel();
+        int totalLevel = shipLevel + addLevel;
+
+        Integer id = chr.getId();
+        integerIntegerHashMap.put(id, totalLevel);
+
+    }
+    public int getShipExp() {
+        return getShipLevel();
+    }
+
+
+    public void deductShipExp(int exp) {
+
+    }
+
+
+    public void addCoolDownInXays(EventType eventType,int a, int b) {
+
+    }
+
 }

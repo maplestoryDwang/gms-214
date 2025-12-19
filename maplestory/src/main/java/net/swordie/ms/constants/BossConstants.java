@@ -266,6 +266,8 @@ public class BossConstants {
     // PB pinkBeen
     public static final int PINKBEAN_TIME = 30 * 60; // 30 min timer
 
+    public static final int CYGNUS_TIME = 30 * 60; // 30 min timer
+
 
 
 

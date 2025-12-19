@@ -10,6 +10,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import net.swordie.ms.connection.crypto.MapleCrypto;
 import net.swordie.ms.connection.packet.Login;
 import net.swordie.ms.handlers.EventManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,7 @@ import static net.swordie.ms.connection.netty.NettyClient.CLIENT_KEY;
  * Created by Tim on 2/18/2017.
  */
 public class LoginAcceptor implements Runnable{
+    static Logger logger = LoggerFactory.getLogger(LoginAcceptor.class);
 
     public static Map<String, Channel> channelPool = new HashMap<>();
     @Override
@@ -43,6 +46,7 @@ public class LoginAcceptor implements Runnable{
                     byte[] riv = new byte[]{82, 48, 25, 115};
 
                     Client c = new Client(ch, siv, riv);
+                    logger.debug("ChannelInitializer run");
                     c.write(Login.sendConnect(riv, siv));
 
                     channelPool.put(c.getIP(), ch);

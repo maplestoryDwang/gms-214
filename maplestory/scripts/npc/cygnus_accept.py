@@ -5,7 +5,7 @@ from net.swordie.ms.enums import EventType
 
 destinations = [
     ["Normal", 120, 271041100, 20, EventType.Cygnus, 64800000, 18],
-    ["Chaos", 230, 271040100, 20, EventType.CCygnus, 129600000, 36],
+    ["Chaos", 220, 271040100, 20, EventType.CCygnus, 129600000, 36],
 ]
 
 runsPerDay = 1
