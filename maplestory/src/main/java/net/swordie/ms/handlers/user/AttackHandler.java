@@ -13,6 +13,7 @@ import net.swordie.ms.client.guild.Guild;
 import net.swordie.ms.client.jobs.Job;
 import net.swordie.ms.client.jobs.adventurer.magician.FirePoison;
 import net.swordie.ms.client.jobs.adventurer.Kinesis;
+import net.swordie.ms.client.jobs.adventurer.thief.NightLord;
 import net.swordie.ms.client.jobs.cygnus.BlazeWizard;
 import net.swordie.ms.client.jobs.cygnus.NightWalker;
 import net.swordie.ms.client.jobs.nova.AngelicBuster;
@@ -65,7 +66,7 @@ public class AttackHandler {
         if (!attackInfo.byUnreliableMemory && !noCoolTimeAttackHeader && !multiAttack && (!SkillConstants.isNoMPConsumeSkill(skillID) && !chr.applyMpCon(attackInfo.skillId, attackInfo.slv))) {
             return;
         }
-        if (SkillConstants.isDelayedCooldownSkill(skillID) ||  attackInfo.byUnreliableMemory || noCoolTimeAttackHeader || multiAttack || chr.hasSkillCDBypass() || (SkillConstants.isKeyDownSkill(skillID) || chr.checkAndSetSkillCooltime(skillID)) || extraSkills) {
+        if (SkillConstants.isDelayedCooldownSkill(skillID) ||  attackInfo.byUnreliableMemory || noCoolTimeAttackHeader || multiAttack || chr.hasSkillCDBypass() || (SkillConstants.isKeyDownSkill(skillID) || chr.checkAndSetSkillCooltime(skillID)) || extraSkills || NightLord.isNightLordBarrage(skillID)) {
             int slv = attackInfo.slv;
              chr.chatMessage(Mob, "SkillID: " + skillID); // removed for now
             Job sourceJobHandler = chr.getJobHandler();

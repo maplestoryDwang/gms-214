@@ -1126,6 +1126,7 @@ public abstract class Job {
     }
 
     /**
+     * 被撞伤害
      * Handles the 'initial' part of a hit, the initial packet processing.
      *
      * @param inPacket The packet to be processed

@@ -66,8 +66,16 @@ public class NightLord extends Thief {
 
     // V skills
     public static final int DARK_LORDS_OMEN = 400041038;
-    public static final int THROWING_STAR_BARRAGE = 400041001;
+    public static final int THROWING_STAR_BARRAGE = 400041001; //多项飞镖
     public static final int SHURRIKANE = 400041020; // 风魔手里剑
+
+
+
+    public static boolean isNightLordBarrage(int skillID) {
+        return skillID == 400041018 || skillID == 400041017 || skillID == 400041016;
+    }
+
+
 
     public NightLord(Char chr) {
         super(chr);

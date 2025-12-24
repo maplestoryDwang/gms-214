@@ -14,6 +14,7 @@ import net.swordie.ms.client.character.skills.temp.TemporaryStatManager;
 import net.swordie.ms.client.friend.FriendshipRingRecord;
 import net.swordie.ms.client.guild.Guild;
 import net.swordie.ms.client.jobs.adventurer.thief.BladeMaster;
+import net.swordie.ms.client.jobs.adventurer.thief.NightLord;
 import net.swordie.ms.client.jobs.cygnus.Mihile;
 import net.swordie.ms.client.jobs.flora.Adele;
 import net.swordie.ms.client.jobs.legend.Mercedes;
@@ -220,7 +221,7 @@ public class UserRemote {
                 outPacket.encodeShort(0);
             }
 
-            if (skillID == 400041018 || skillID == 400041017 || skillID == 400041016) { // Nightlord Throwing Star Barrage related skills
+            if (NightLord.isNightLordBarrage(skillID)) { // Nightlord Throwing Star Barrage related skills
                 outPacket.encodeInt(0);
                 outPacket.encodeInt(0);
             }
