@@ -183,7 +183,7 @@ public class ChannelHandler extends SimpleChannelInboundHandler<InPacket> {
         }
 
         if (inHeader == null) {
-            log.debug(String.format("[Unhandled]\t  %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
+            log.debug(String.format("[in] - [Unhandled]\t  %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
         } else {
             log.debug(String.format("[inpacket handle method not found!]\t %s/0x%s, packet %s", opCode, Integer.toHexString(opCode).toUpperCase(), inPacket));
         }

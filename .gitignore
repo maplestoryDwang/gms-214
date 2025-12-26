@@ -26,3 +26,4 @@ hibernate.cfg.xml
 logs/
 target/
 root.log
+*.txt
