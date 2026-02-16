@@ -2,6 +2,8 @@
 
 原仓库地址：https://github.com/CoREse/gms214server
 
+## 特别说明： 
+项目不再更新，后续更新在GMS232中继续
 
 ## 服务启动步骤：
 1. 获取v214-server源码（本仓库）
